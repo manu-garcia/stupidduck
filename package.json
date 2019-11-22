@@ -1,0 +1,19 @@
+{
+  "name": "island",
+  "version": "1.0.0",
+  "description": "Island Game using XGL Web Engine",
+  "main": "main.ts",
+  "scripts": {
+    "linkxgl": "npm link ../xgl",
+    "startdev": "parcel index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}
