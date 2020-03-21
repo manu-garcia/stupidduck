@@ -1,0 +1,81 @@
+{
+    "name": "TestZone",
+    "description": "Simple test zone for testing",
+    "id": 0,
+    "objects": [
+        {
+            "name": "girl",
+            "transform": {
+                "position": {
+                    "x": 300,
+                    "y": 300
+                }
+            },
+            "components": [
+                {
+                    "name": "girlAnimatedSprite",
+                    "type": "animatedSprite",
+                    "materialName": "girl",
+                    "frameWidth": 416,
+                    "frameHeight": 454,
+                    "frameCount": 4,
+                    "frameSequence": [
+                        0,
+                        1,
+                        2,
+                        3
+                    ]
+                }
+            ],
+            "behaviors": [
+                {
+                    "name": "movementBehavior",
+                    "type": "keyboardMovement"
+                }
+            ]
+        },
+        {
+            "name": "ParentObject",
+            "transform": {
+                "position": {
+                    "x": 300,
+                    "y": 300
+                }
+            },
+            "children": [
+                {
+                    "name": "TestObject",
+                    "transform": {
+                        "position": {
+                            "x": 120,
+                            "y": 120
+                        }
+                    },
+                    "components": [
+                        {
+                            "name": "test",
+                            "type": "sprite",
+                            "materialName": "crate"
+                        }
+                    ]
+                }
+            ],
+            "components": [
+                {
+                    "name": "test",
+                    "type": "sprite",
+                    "materialName": "crate"
+                }
+            ],
+            "behaviors": [
+                {
+                    "name": "rotateX",
+                    "type": "rotation",
+                    "rotation": {
+                        "z": 0.01
+                    }
+                }
+            ]
+        }
+    ]
+}
