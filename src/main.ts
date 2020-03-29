@@ -7,8 +7,10 @@ namespace Island {
 
     window.onload = () => {
 
-        xgl = new XGLEngine();
+        xgl = new XGLEngine(320, 480);
         xgl.start();
+
+        xgl.onMessage
     }
 
     window.onresize = () => {
