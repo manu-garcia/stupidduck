@@ -5,7 +5,8 @@
   "main": "main.ts",
   "scripts": {
     "linkxgl": "npm link ../xgl",
-    "startdev": "parcel index.html --out-dir docs",
+    "startdev": "parcel index.html",
+    "build": "parcel build index.html --out-dir docs --public-url /stupidduck/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -14,6 +15,7 @@
     "typescript": "^3.7.2"
   },
   "devDependencies": {
+    "cssnano": "^4.1.10",
     "http-server": "^0.11.1"
   }
 }
