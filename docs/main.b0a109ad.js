@@ -117,14496 +117,8081 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"node_modules/xgl/node_modules/gl-matrix/esm/common.js":[function(require,module,exports) {
-"use strict";
+})({"node_modules/xgl/lib/element.js":[function(require,module,exports) {
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setMatrixArrayType = setMatrixArrayType;
-exports.toRadian = toRadian;
-exports.equals = equals;
-exports.RANDOM = exports.ARRAY_TYPE = exports.EPSILON = void 0;
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
 
-/**
- * Common utilities
- * @module glMatrix
- */
-// Configuration Constants
-var EPSILON = 0.000001;
-exports.EPSILON = EPSILON;
-var ARRAY_TYPE = typeof Float32Array !== 'undefined' ? Float32Array : Array;
-exports.ARRAY_TYPE = ARRAY_TYPE;
-var RANDOM = Math.random;
-/**
- * Sets the type of array used when creating new vectors and matrices
- *
- * @param {Type} type Array type, such as Float32Array or Array
- */
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
 
-exports.RANDOM = RANDOM;
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function setMatrixArrayType(type) {
-  exports.ARRAY_TYPE = ARRAY_TYPE = type;
-}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var degree = Math.PI / 180;
-/**
- * Convert Degree To Radian
- *
- * @param {Number} a Angle in Degrees
- */
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function toRadian(a) {
-  return a * degree;
-}
-/**
- * Tests whether or not the arguments have approximately the same value, within an absolute
- * or relative tolerance of glMatrix.EPSILON (an absolute tolerance is used for values less
- * than or equal to 1.0, and a relative tolerance is used for larger values)
- *
- * @param {Number} a The first number to test.
- * @param {Number} b The second number to test.
- * @returns {Boolean} True if the numbers are approximately equal, false otherwise.
- */
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-
-function equals(a, b) {
-  return Math.abs(a - b) <= EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
-}
-
-if (!Math.hypot) Math.hypot = function () {
-  var y = 0,
-      i = arguments.length;
-
-  while (i--) {
-    y += arguments[i] * arguments[i];
+var Element = /*#__PURE__*/function () {
+  function Element() {
+    _classCallCheck(this, Element);
   }
 
-  return Math.sqrt(y);
+  _createClass(Element, [{
+    key: "getChildElements",
+    value: function getChildElements() {
+      return this.childElements;
+    }
+  }, {
+    key: "setChildElements",
+    value: function setChildElements(childElements) {
+      this.childElements = childElements;
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(Class, properties) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        remainingArguments[_key - 2] = arguments[_key];
+      }
+
+      var element = _construct(Class, remainingArguments),
+          childElements = typeof element.childElements === 'function' ? element.childElements(properties) : properties.childElements || [];
+
+      element.setChildElements(childElements);
+      return element;
+    }
+  }]);
+
+  return Element;
+}();
+
+module.exports = Element;
+
+},{}],"node_modules/necessary/lib/utilities/array.js":[function(require,module,exports) {
+'use strict';
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function first(array) {
+  return array[0];
+}
+
+function second(array) {
+  return array[1];
+}
+
+function third(array) {
+  return array[2];
+}
+
+function fourth(array) {
+  return array[3];
+}
+
+function fifth(array) {
+  return array[4];
+}
+
+function fifthLast(array) {
+  return array[array.length - 5];
+}
+
+function fourthLast(array) {
+  return array[array.length - 4];
+}
+
+function thirdLast(array) {
+  return array[array.length - 3];
+}
+
+function secondLast(array) {
+  return array[array.length - 2];
+}
+
+function last(array) {
+  return array[array.length - 1];
+}
+
+function tail(array) {
+  return array.slice(1);
+}
+
+function push(array1, array2) {
+  Array.prototype.push.apply(array1, array2);
+}
+
+function unshift(array1, array2) {
+  Array.prototype.unshift.apply(array1, array2);
+}
+
+function concat(array1, array2) {
+  if (!(array2 instanceof Array)) {
+    array2 = [array2];
+  }
+
+  var start = 0,
+      deleteCount = 0;
+
+  splice(array1, start, deleteCount, array2);
+}
+
+function clear(array) {
+  var start = 0;
+
+  return array.splice(start);
+}
+
+function copy(array1, array2) {
+  var start = 0,
+      deleteCount = array2.length; ///
+
+  splice(array1, start, deleteCount, array2);
+}
+
+function merge(array1, array2) {
+  var start = array2.length,
+      ///
+  deleteCount = 0;
+
+  splice(array1, start, deleteCount, array2);
+}
+
+function splice(array1, start) {
+  var deleteCount = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Infinity;
+  var array2 = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : [];
+
+  var args = [start, deleteCount].concat(_toConsumableArray(array2)),
+      deletedItemsArray = Array.prototype.splice.apply(array1, args);
+
+  return deletedItemsArray;
+}
+
+function replace(array, element, test) {
+  var start = -1;
+
+  var found = array.some(function (element, index) {
+    var passed = test(element, index);
+
+    if (passed) {
+      start = index; ///
+
+      return true;
+    }
+  });
+
+  if (found) {
+    var deleteCount = 1;
+
+    array.splice(start, deleteCount, element);
+  }
+
+  return found;
+}
+
+function filter(array, test) {
+  var filteredElements = [];
+
+  backwardsForEach(array, function (element, index) {
+    var passed = test(element, index);
+
+    if (!passed) {
+      var start = index,
+          ///
+      deleteCount = 1,
+          deletedElements = array.splice(start, deleteCount),
+          firstDeletedElement = first(deletedElements);
+
+      filteredElements.unshift(firstDeletedElement); ///
+    }
+  });
+
+  return filteredElements;
+}
+
+function find(array, test) {
+  var elements = [];
+
+  forwardsForEach(array, function (element, index) {
+    var passed = test(element, index);
+
+    if (passed) {
+      elements.push(element);
+    }
+  });
+
+  return elements;
+}
+
+function prune(array, test) {
+  var prunedElement = undefined;
+
+  array.some(function (element, index) {
+    var passed = test(element, index);
+
+    if (passed) {
+      var start = index,
+          ///
+      deleteCount = 1,
+          deletedElements = array.splice(start, deleteCount),
+          firstDeletedElement = first(deletedElements);
+
+      prunedElement = firstDeletedElement; ///
+
+      return true;
+    }
+  });
+
+  return prunedElement;
+}
+
+function patch(array, element, test) {
+  var found = array.some(function (element, index) {
+    var passed = test(element, index);
+
+    if (passed) {
+      return true;
+    }
+  });
+
+  if (found) {
+    array.push(element);
+  }
+
+  return found;
+}
+
+function augment(array1, array2, test) {
+  array2.forEach(function (element, index) {
+    var passed = test(element, index);
+
+    if (passed) {
+      array1.push(element);
+    }
+  });
+}
+
+function separate(array, array1, array2, test) {
+  array.forEach(function (element, index) {
+    var passed = test(element, index);
+
+    passed ? array1.push(element) : array2.push(element);
+  });
+}
+
+function forwardsSome(array, callback) {
+  var arrayLength = array.length;
+
+  for (var index = 0; index < arrayLength; index++) {
+    var element = array[index],
+        result = callback(element, index);
+
+    if (result) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function backwardsSome(array, callback) {
+  var arrayLength = array.length;
+
+  for (var index = arrayLength - 1; index >= 0; index--) {
+    var element = array[index],
+        result = callback(element, index);
+
+    if (result) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function forwardsEvery(array, callback) {
+  var arrayLength = array.length;
+
+  for (var index = 0; index < arrayLength; index++) {
+    var element = array[index],
+        result = callback(element, index);
+
+    if (!result) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function backwardsEvery(array, callback) {
+  var arrayLength = array.length;
+
+  for (var index = arrayLength - 1; index >= 0; index--) {
+    var element = array[index],
+        result = callback(element, index);
+
+    if (!result) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function forwardsForEach(array, callback) {
+  var arrayLength = array.length;
+
+  for (var index = 0; index < arrayLength; index++) {
+    var element = array[index];
+
+    callback(element, index);
+  }
+}
+
+function backwardsForEach(array, callback) {
+  var arrayLength = array.length;
+
+  for (var index = arrayLength - 1; index >= 0; index--) {
+    var element = array[index];
+
+    callback(element, index);
+  }
+}
+
+module.exports = {
+  first: first,
+  second: second,
+  third: third,
+  fourth: fourth,
+  fifth: fifth,
+  fifthLast: fifthLast,
+  fourthLast: fourthLast,
+  thirdLast: thirdLast,
+  secondLast: secondLast,
+  last: last,
+  tail: tail,
+  push: push,
+  unshift: unshift,
+  concat: concat,
+  clear: clear,
+  copy: copy,
+  merge: merge,
+  splice: splice,
+  replace: replace,
+  filter: filter,
+  find: find,
+  prune: prune,
+  patch: patch,
+  augment: augment,
+  separate: separate,
+  forwardsSome: forwardsSome,
+  backwardsSome: backwardsSome,
+  forwardsEvery: forwardsEvery,
+  backwardsEvery: backwardsEvery,
+  forwardsForEach: forwardsForEach,
+  backwardsForEach: backwardsForEach
 };
-},{}],"node_modules/xgl/node_modules/gl-matrix/esm/mat2.js":[function(require,module,exports) {
-"use strict";
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.clone = clone;
-exports.copy = copy;
-exports.identity = identity;
-exports.fromValues = fromValues;
-exports.set = set;
-exports.transpose = transpose;
-exports.invert = invert;
-exports.adjoint = adjoint;
-exports.determinant = determinant;
-exports.multiply = multiply;
-exports.rotate = rotate;
-exports.scale = scale;
-exports.fromRotation = fromRotation;
-exports.fromScaling = fromScaling;
-exports.str = str;
-exports.frob = frob;
-exports.LDU = LDU;
-exports.add = add;
-exports.subtract = subtract;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.multiplyScalar = multiplyScalar;
-exports.multiplyScalarAndAdd = multiplyScalarAndAdd;
-exports.sub = exports.mul = void 0;
+},{}],"node_modules/necessary/lib/utilities/path.js":[function(require,module,exports) {
+'use strict';
 
-var glMatrix = _interopRequireWildcard(require("./common.js"));
+var array = require('./array');
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+var first = array.first,
+    second = array.second,
+    last = array.last;
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-/**
- * 2x2 Matrix
- * @module mat2
- */
+function isPathRelativePath(path) {
+  var position = path.search(/^\.{1,2}\//),
+      pathRelativePath = position !== -1;
 
-/**
- * Creates a new identity mat2
- *
- * @returns {mat2} a new 2x2 matrix
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(4);
+  return pathRelativePath;
+}
 
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[1] = 0;
-    out[2] = 0;
+function isPathAbsolutePath(path) {
+  var pathRelativePath = isPathRelativePath(path),
+      pathAbsolutePath = !pathRelativePath; ///
+
+  return pathAbsolutePath;
+}
+
+function isPathTopmostDirectoryName(path) {
+  var position = path.search(/^[^\/]+\/?$/),
+      pathTopmostDirectoryName = position !== -1;
+
+  return pathTopmostDirectoryName;
+}
+
+function isTopmostDirectoryNameContainedInPath(topmostDirectoryName, path) {
+  topmostDirectoryName = topmostDirectoryName.replace(/\/$/, ''); ///
+
+  var regExp = new RegExp('^' + topmostDirectoryName + '(?:\\/.+)?$'),
+      position = path.search(regExp),
+      topmostDirectoryNameContainedInFilePath = position !== -1;
+
+  return topmostDirectoryNameContainedInFilePath;
+}
+
+function combinePaths(directoryPath, relativePath) {
+  var absolutePath = null;
+
+  var directoryPathSubEntryNames = directoryPath.split('/'),
+      relativeFilePathSubEntryNames = relativePath.split('/');
+
+  var firstRelativeFilePathSubEntryName = first(relativeFilePathSubEntryNames),
+      lastDirectoryPathSubEntryName = void 0;
+
+  if (firstRelativeFilePathSubEntryName === '.') {
+    relativeFilePathSubEntryNames.shift();
   }
 
-  out[0] = 1;
-  out[3] = 1;
-  return out;
+  firstRelativeFilePathSubEntryName = first(relativeFilePathSubEntryNames);
+  lastDirectoryPathSubEntryName = last(directoryPathSubEntryNames);
+
+  while (firstRelativeFilePathSubEntryName === '..' && lastDirectoryPathSubEntryName !== undefined) {
+    relativeFilePathSubEntryNames.shift();
+    directoryPathSubEntryNames.pop();
+
+    firstRelativeFilePathSubEntryName = first(relativeFilePathSubEntryNames);
+    lastDirectoryPathSubEntryName = last(directoryPathSubEntryNames);
+  }
+
+  if (lastDirectoryPathSubEntryName !== undefined) {
+    var absoluteFilePathSubEntryNames = [].concat(directoryPathSubEntryNames).concat(relativeFilePathSubEntryNames);
+
+    absolutePath = absoluteFilePathSubEntryNames.join('/');
+  }
+
+  return absolutePath;
 }
-/**
- * Creates a new mat2 initialized with values from an existing matrix
- *
- * @param {mat2} a matrix to clone
- * @returns {mat2} a new 2x2 matrix
- */
 
+function concatenatePaths(path1, path2) {
+  path1 = path1.replace(/\/$/, ''); ///
 
-function clone(a) {
-  var out = new glMatrix.ARRAY_TYPE(4);
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  return out;
+  var combinedPath = path1 + '/' + path2;
+
+  return combinedPath;
 }
-/**
- * Copy the values from one mat2 to another
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
 
+function bottommostNameFromPath(path) {
+  var bottommostName = null;
 
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  return out;
+  var matches = path.match(/^.+\/([^\/]+\/?)$/);
+
+  if (matches !== null) {
+    var secondMatch = second(matches);
+
+    bottommostName = secondMatch; ///
+  }
+
+  return bottommostName;
 }
-/**
- * Set a mat2 to the identity matrix
- *
- * @param {mat2} out the receiving matrix
- * @returns {mat2} out
- */
 
+function topmostDirectoryPathFromPath(path) {
+  var matches = path.match(/^(.+)\/[^\/]+\/?$/),
+      secondMatch = second(matches),
+      directoryPath = secondMatch; ///
 
-function identity(out) {
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 1;
-  return out;
+  return directoryPath;
 }
-/**
- * Create a new mat2 with the given values
- *
- * @param {Number} m00 Component in column 0, row 0 position (index 0)
- * @param {Number} m01 Component in column 0, row 1 position (index 1)
- * @param {Number} m10 Component in column 1, row 0 position (index 2)
- * @param {Number} m11 Component in column 1, row 1 position (index 3)
- * @returns {mat2} out A new 2x2 matrix
- */
 
+function topmostDirectoryNameFromPath(path) {
+  var topmostDirectoryName = null;
 
-function fromValues(m00, m01, m10, m11) {
-  var out = new glMatrix.ARRAY_TYPE(4);
-  out[0] = m00;
-  out[1] = m01;
-  out[2] = m10;
-  out[3] = m11;
-  return out;
+  var matches = path.match(/^([^\/]+)\/.+$/);
+
+  if (matches !== null) {
+    var secondMatch = second(matches);
+
+    topmostDirectoryName = secondMatch; ///
+  }
+
+  return topmostDirectoryName;
 }
-/**
- * Set the components of a mat2 to the given values
- *
- * @param {mat2} out the receiving matrix
- * @param {Number} m00 Component in column 0, row 0 position (index 0)
- * @param {Number} m01 Component in column 0, row 1 position (index 1)
- * @param {Number} m10 Component in column 1, row 0 position (index 2)
- * @param {Number} m11 Component in column 1, row 1 position (index 3)
- * @returns {mat2} out
- */
 
+function pathWithoutBottommostNameFromPath(path) {
+  var pathWithoutBottommostName = null;
 
-function set(out, m00, m01, m10, m11) {
-  out[0] = m00;
-  out[1] = m01;
-  out[2] = m10;
-  out[3] = m11;
-  return out;
+  var matches = path.match(/(^.+)\/[^\/]+\/?$/);
+
+  if (matches !== null) {
+    var secondMatch = second(matches);
+
+    pathWithoutBottommostName = secondMatch; ///
+  }
+
+  return pathWithoutBottommostName;
 }
-/**
- * Transpose the values of a mat2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
+
+function pathWithoutTopmostDirectoryNameFromPath(path) {
+  var pathWithoutTopmostDirectoryName = null;
+
+  var matches = path.match(/^[^\/]+\/(.+)$/);
+
+  if (matches !== null) {
+    var secondMatch = second(matches);
+
+    pathWithoutTopmostDirectoryName = secondMatch;
+  }
+
+  return pathWithoutTopmostDirectoryName;
+}
+
+module.exports = {
+  isPathRelativePath: isPathRelativePath,
+  isPathAbsolutePath: isPathAbsolutePath,
+  isPathTopmostDirectoryName: isPathTopmostDirectoryName,
+  isTopmostDirectoryNameContainedInPath: isTopmostDirectoryNameContainedInPath,
+  combinePaths: combinePaths,
+  concatenatePaths: concatenatePaths,
+  bottommostNameFromPath: bottommostNameFromPath,
+  topmostDirectoryPathFromPath: topmostDirectoryPathFromPath,
+  topmostDirectoryNameFromPath: topmostDirectoryNameFromPath,
+  pathWithoutBottommostNameFromPath: pathWithoutBottommostNameFromPath,
+  pathWithoutTopmostDirectoryNameFromPath: pathWithoutTopmostDirectoryNameFromPath
+};
+
+},{"./array":"node_modules/necessary/lib/utilities/array.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/_empty.js":[function(require,module,exports) {
+
+},{}],"node_modules/necessary/lib/utilities/fileSystem.js":[function(require,module,exports) {
+'use strict';
+
+var fs = require('fs');
+
+function doesEntryExist(absolutePath) {
+  var entryExists = fs.existsSync(absolutePath);
+
+  return entryExists;
+}
+
+function doesFileExist(absoluteFilePath) {
+  var fileExists = false;
+
+  var absolutePath = absoluteFilePath,
+      ///
+  entryExists = doesEntryExist(absolutePath);
+
+  if (entryExists) {
+    var entryFile = isEntryFile(absolutePath);
+
+    if (entryFile) {
+      fileExists = true;
+    }
+  }
+
+  return fileExists;
+}
+
+function doesDirectoryExist(absoluteDirectoryPath) {
+  var directoryExists = false;
+
+  var absolutePath = absoluteDirectoryPath,
+      ///
+  entryExists = doesEntryExist(absolutePath);
+
+  if (entryExists) {
+    var entryDirectory = isEntryDirectory(absolutePath);
+
+    if (entryDirectory) {
+      directoryExists = true;
+    }
+  }
+
+  return directoryExists;
+}
+
+function isEntryFile(absolutePath) {
+  var stat = fs.statSync(absolutePath),
+      entryDirectory = stat.isDirectory(),
+      entryFile = !entryDirectory;
+
+  return entryFile;
+}
+
+function isEntryDirectory(absolutePath) {
+  var stat = fs.statSync(absolutePath),
+      entryDirectory = stat.isDirectory();
+
+  return entryDirectory;
+}
+
+function isDirectoryEmpty(absoluteDirectoryPath) {
+  var subEntryNames = readDirectory(absoluteDirectoryPath),
+      subEntryNamesLength = subEntryNames.length,
+      directoryEmpty = subEntryNamesLength === 0;
+
+  return directoryEmpty;
+}
+
+function readDirectory(absoluteDirectoryPath) {
+  var subEntryNames = fs.readdirSync(absoluteDirectoryPath);
+
+  return subEntryNames;
+}
+
+function readFile(absoluteFilePath) {
+  var encoding = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'utf8';
+
+  var options = {
+    encoding: encoding
+  },
+      content = fs.readFileSync(absoluteFilePath, options);
+
+  return content;
+}
+
+function writeFile(absoluteFilePath, content) {
+  fs.writeFileSync(absoluteFilePath, content);
+}
+
+function appendToFile(absoluteFilePath, content) {
+  fs.appendFileSync(absoluteFilePath, content);
+}
+
+function renameFile(oldAbsoluteFilePath, newAbsoluteFilePath) {
+  fs.renameSync(oldAbsoluteFilePath, newAbsoluteFilePath);
+}
+
+function getStats(absoluteFilePath) {
+  return fs.statSync(absoluteFilePath);
+}
+
+module.exports = {
+  doesEntryExist: doesEntryExist,
+  doesFileExist: doesFileExist,
+  doesDirectoryExist: doesDirectoryExist,
+  isEntryFile: isEntryFile,
+  isEntryDirectory: isEntryDirectory,
+  isDirectoryEmpty: isDirectoryEmpty,
+  readDirectory: readDirectory,
+  readFile: readFile,
+  writeFile: writeFile,
+  appendToFile: appendToFile,
+  renameFile: renameFile,
+  getStats: getStats
+};
+
+},{"fs":"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/_empty.js"}],"node_modules/necessary/lib/utilities/template.js":[function(require,module,exports) {
+'use strict';
+
+var fileSystemUtilities = require('../utilities/fileSystem');
+
+var readFile = fileSystemUtilities.readFile;
 
 
-function transpose(out, a) {
-  // If we are transposing ourselves we can skip a few steps but have to cache
-  // some values
-  if (out === a) {
-    var a1 = a[1];
-    out[1] = a[2];
-    out[2] = a1;
+function parseFile(filePath, args) {
+  var content = readFile(filePath),
+      parsedContent = parseContent(content, args);
+
+  return parsedContent;
+}
+
+function parseContent(content, args) {
+  var lines = content.split('\n'),
+      parsedLines = parseLines(lines, args),
+      parsedContent = parsedLines.join('\n');
+
+  return parsedContent;
+}
+
+function parseLine(line, args) {
+  var parsedLine = line.replace(/\$\{(.+?)\}/g, function (match, token) {
+    var parsedToken = parseToken(token, args);
+
+    return parsedToken;
+  });
+
+  return parsedLine;
+}
+
+module.exports = {
+  parseFile: parseFile,
+  parseContent: parseContent,
+  parseLine: parseLine
+};
+
+function parseLines(lines, args) {
+  var parsedLines = lines.map(function (line) {
+    var parsedLine = parseLine(line, args);
+
+    return parsedLine;
+  });
+
+  return parsedLines;
+}
+
+function parseToken(token, args) {
+  var parsedToken = '';
+
+  if (args.hasOwnProperty(token)) {
+    parsedToken = args[token];
+  }
+
+  return parsedToken;
+}
+
+},{"../utilities/fileSystem":"node_modules/necessary/lib/utilities/fileSystem.js"}],"node_modules/necessary/lib/utilities/asynchronous.js":[function(require,module,exports) {
+'use strict';
+
+function whilst(callback, done, context) {
+  var count = -1;
+
+  function next() {
+    count++;
+
+    var index = count,
+        ///
+    terminate = callback(next, done, context, index);
+
+    if (terminate) {
+      done();
+    }
+  }
+
+  next();
+}
+
+function forEach(array, callback, done, context) {
+  var length = array.length; ///
+
+  var count = -1;
+
+  function next() {
+    count++;
+
+    var terminate = count === length;
+
+    if (terminate) {
+      done();
+    } else {
+      var index = count,
+          ///
+      element = array[index];
+
+      callback(element, next, done, context, index);
+    }
+  }
+
+  next();
+}
+
+function sequence(callbacks, done, context) {
+  var length = callbacks.length; ///
+
+  var count = -1;
+
+  function next() {
+    count++;
+
+    var terminate = count === length;
+
+    if (terminate) {
+      done();
+    } else {
+      var index = count,
+          ///
+      callback = callbacks[index];
+
+      callback(next, done, context, index);
+    }
+  }
+
+  next();
+}
+
+function eventually(callbacks, done, context) {
+  var length = callbacks.length; ///
+
+  var count = 0;
+
+  function next() {
+    count++;
+
+    var terminate = count === length;
+
+    if (terminate) {
+      done();
+    }
+  }
+
+  callbacks.forEach(function (callback, index) {
+    callback(next, done, context, index);
+  });
+}
+
+function repeatedly(callback, length, done, context) {
+  var count = 0;
+
+  function next() {
+    count++;
+
+    var terminate = count === length;
+
+    if (terminate) {
+      done();
+    }
+  }
+
+  for (var index = 0; index < length; index++) {
+    callback(next, done, context, index);
+  }
+}
+
+function forwardsForEach(array, callback, done, context) {
+  var length = array.length; ///
+
+  var count = -1;
+
+  function next() {
+    count++;
+
+    var terminate = count === length;
+
+    if (terminate) {
+      done();
+    } else {
+      var index = count,
+          ///
+      element = array[index];
+
+      callback(element, next, done, context, index);
+    }
+  }
+
+  next();
+}
+
+function backwardsForEach(array, callback, done, context) {
+  var length = array.length; ///
+
+  var count = length;
+
+  function next() {
+    count--;
+
+    var terminate = count === -1;
+
+    if (terminate) {
+      done();
+    } else {
+      var index = count,
+          ///
+      element = array[index];
+
+      callback(element, next, done, context, index);
+    }
+  }
+
+  next();
+}
+
+module.exports = {
+  whilst: whilst,
+  forEach: forEach,
+  sequence: sequence,
+  eventually: eventually,
+  repeatedly: repeatedly,
+  forwardsForEach: forwardsForEach,
+  backwardsForEach: backwardsForEach
+};
+
+},{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js":[function(require,module,exports) {
+
+// shim for using process in browser
+var process = module.exports = {}; // cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+  throw new Error('setTimeout has not been defined');
+}
+
+function defaultClearTimeout() {
+  throw new Error('clearTimeout has not been defined');
+}
+
+(function () {
+  try {
+    if (typeof setTimeout === 'function') {
+      cachedSetTimeout = setTimeout;
+    } else {
+      cachedSetTimeout = defaultSetTimout;
+    }
+  } catch (e) {
+    cachedSetTimeout = defaultSetTimout;
+  }
+
+  try {
+    if (typeof clearTimeout === 'function') {
+      cachedClearTimeout = clearTimeout;
+    } else {
+      cachedClearTimeout = defaultClearTimeout;
+    }
+  } catch (e) {
+    cachedClearTimeout = defaultClearTimeout;
+  }
+})();
+
+function runTimeout(fun) {
+  if (cachedSetTimeout === setTimeout) {
+    //normal enviroments in sane situations
+    return setTimeout(fun, 0);
+  } // if setTimeout wasn't available but was latter defined
+
+
+  if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+    cachedSetTimeout = setTimeout;
+    return setTimeout(fun, 0);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedSetTimeout(fun, 0);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+      return cachedSetTimeout.call(null, fun, 0);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+      return cachedSetTimeout.call(this, fun, 0);
+    }
+  }
+}
+
+function runClearTimeout(marker) {
+  if (cachedClearTimeout === clearTimeout) {
+    //normal enviroments in sane situations
+    return clearTimeout(marker);
+  } // if clearTimeout wasn't available but was latter defined
+
+
+  if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+    cachedClearTimeout = clearTimeout;
+    return clearTimeout(marker);
+  }
+
+  try {
+    // when when somebody has screwed with setTimeout but no I.E. maddness
+    return cachedClearTimeout(marker);
+  } catch (e) {
+    try {
+      // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+      return cachedClearTimeout.call(null, marker);
+    } catch (e) {
+      // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+      // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+      return cachedClearTimeout.call(this, marker);
+    }
+  }
+}
+
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+  if (!draining || !currentQueue) {
+    return;
+  }
+
+  draining = false;
+
+  if (currentQueue.length) {
+    queue = currentQueue.concat(queue);
   } else {
-    out[0] = a[0];
-    out[1] = a[2];
-    out[2] = a[1];
-    out[3] = a[3];
+    queueIndex = -1;
   }
 
-  return out;
+  if (queue.length) {
+    drainQueue();
+  }
 }
-/**
- * Inverts a mat2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
 
-
-function invert(out, a) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3]; // Calculate the determinant
-
-  var det = a0 * a3 - a2 * a1;
-
-  if (!det) {
-    return null;
+function drainQueue() {
+  if (draining) {
+    return;
   }
 
-  det = 1.0 / det;
-  out[0] = a3 * det;
-  out[1] = -a1 * det;
-  out[2] = -a2 * det;
-  out[3] = a0 * det;
-  return out;
-}
-/**
- * Calculates the adjugate of a mat2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the source matrix
- * @returns {mat2} out
- */
+  var timeout = runTimeout(cleanUpNextTick);
+  draining = true;
+  var len = queue.length;
 
+  while (len) {
+    currentQueue = queue;
+    queue = [];
 
-function adjoint(out, a) {
-  // Caching this value is nessecary if out == a
-  var a0 = a[0];
-  out[0] = a[3];
-  out[1] = -a[1];
-  out[2] = -a[2];
-  out[3] = a0;
-  return out;
-}
-/**
- * Calculates the determinant of a mat2
- *
- * @param {mat2} a the source matrix
- * @returns {Number} determinant of a
- */
+    while (++queueIndex < len) {
+      if (currentQueue) {
+        currentQueue[queueIndex].run();
+      }
+    }
 
-
-function determinant(a) {
-  return a[0] * a[3] - a[2] * a[1];
-}
-/**
- * Multiplies two mat2's
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the first operand
- * @param {mat2} b the second operand
- * @returns {mat2} out
- */
-
-
-function multiply(out, a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3];
-  out[0] = a0 * b0 + a2 * b1;
-  out[1] = a1 * b0 + a3 * b1;
-  out[2] = a0 * b2 + a2 * b3;
-  out[3] = a1 * b2 + a3 * b3;
-  return out;
-}
-/**
- * Rotates a mat2 by the given angle
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat2} out
- */
-
-
-function rotate(out, a, rad) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3];
-  var s = Math.sin(rad);
-  var c = Math.cos(rad);
-  out[0] = a0 * c + a2 * s;
-  out[1] = a1 * c + a3 * s;
-  out[2] = a0 * -s + a2 * c;
-  out[3] = a1 * -s + a3 * c;
-  return out;
-}
-/**
- * Scales the mat2 by the dimensions in the given vec2
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the matrix to rotate
- * @param {vec2} v the vec2 to scale the matrix by
- * @returns {mat2} out
- **/
-
-
-function scale(out, a, v) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3];
-  var v0 = v[0],
-      v1 = v[1];
-  out[0] = a0 * v0;
-  out[1] = a1 * v0;
-  out[2] = a2 * v1;
-  out[3] = a3 * v1;
-  return out;
-}
-/**
- * Creates a matrix from a given angle
- * This is equivalent to (but much faster than):
- *
- *     mat2.identity(dest);
- *     mat2.rotate(dest, dest, rad);
- *
- * @param {mat2} out mat2 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat2} out
- */
-
-
-function fromRotation(out, rad) {
-  var s = Math.sin(rad);
-  var c = Math.cos(rad);
-  out[0] = c;
-  out[1] = s;
-  out[2] = -s;
-  out[3] = c;
-  return out;
-}
-/**
- * Creates a matrix from a vector scaling
- * This is equivalent to (but much faster than):
- *
- *     mat2.identity(dest);
- *     mat2.scale(dest, dest, vec);
- *
- * @param {mat2} out mat2 receiving operation result
- * @param {vec2} v Scaling vector
- * @returns {mat2} out
- */
-
-
-function fromScaling(out, v) {
-  out[0] = v[0];
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = v[1];
-  return out;
-}
-/**
- * Returns a string representation of a mat2
- *
- * @param {mat2} a matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-
-
-function str(a) {
-  return 'mat2(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
-}
-/**
- * Returns Frobenius norm of a mat2
- *
- * @param {mat2} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-
-
-function frob(a) {
-  return Math.hypot(a[0], a[1], a[2], a[3]);
-}
-/**
- * Returns L, D and U matrices (Lower triangular, Diagonal and Upper triangular) by factorizing the input matrix
- * @param {mat2} L the lower triangular matrix
- * @param {mat2} D the diagonal matrix
- * @param {mat2} U the upper triangular matrix
- * @param {mat2} a the input matrix to factorize
- */
-
-
-function LDU(L, D, U, a) {
-  L[2] = a[2] / a[0];
-  U[0] = a[0];
-  U[1] = a[1];
-  U[3] = a[3] - L[2] * U[1];
-  return [L, D, U];
-}
-/**
- * Adds two mat2's
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the first operand
- * @param {mat2} b the second operand
- * @returns {mat2} out
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  out[2] = a[2] + b[2];
-  out[3] = a[3] + b[3];
-  return out;
-}
-/**
- * Subtracts matrix b from matrix a
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the first operand
- * @param {mat2} b the second operand
- * @returns {mat2} out
- */
-
-
-function subtract(out, a, b) {
-  out[0] = a[0] - b[0];
-  out[1] = a[1] - b[1];
-  out[2] = a[2] - b[2];
-  out[3] = a[3] - b[3];
-  return out;
-}
-/**
- * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
- *
- * @param {mat2} a The first matrix.
- * @param {mat2} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
-}
-/**
- * Returns whether or not the matrices have approximately the same elements in the same position.
- *
- * @param {mat2} a The first matrix.
- * @param {mat2} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3));
-}
-/**
- * Multiply each element of the matrix by a scalar.
- *
- * @param {mat2} out the receiving matrix
- * @param {mat2} a the matrix to scale
- * @param {Number} b amount to scale the matrix's elements by
- * @returns {mat2} out
- */
-
-
-function multiplyScalar(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  out[2] = a[2] * b;
-  out[3] = a[3] * b;
-  return out;
-}
-/**
- * Adds two mat2's after multiplying each element of the second operand by a scalar value.
- *
- * @param {mat2} out the receiving vector
- * @param {mat2} a the first operand
- * @param {mat2} b the second operand
- * @param {Number} scale the amount to scale b's elements by before adding
- * @returns {mat2} out
- */
-
-
-function multiplyScalarAndAdd(out, a, b, scale) {
-  out[0] = a[0] + b[0] * scale;
-  out[1] = a[1] + b[1] * scale;
-  out[2] = a[2] + b[2] * scale;
-  out[3] = a[3] + b[3] * scale;
-  return out;
-}
-/**
- * Alias for {@link mat2.multiply}
- * @function
- */
-
-
-var mul = multiply;
-/**
- * Alias for {@link mat2.subtract}
- * @function
- */
-
-exports.mul = mul;
-var sub = subtract;
-exports.sub = sub;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/mat2d.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.clone = clone;
-exports.copy = copy;
-exports.identity = identity;
-exports.fromValues = fromValues;
-exports.set = set;
-exports.invert = invert;
-exports.determinant = determinant;
-exports.multiply = multiply;
-exports.rotate = rotate;
-exports.scale = scale;
-exports.translate = translate;
-exports.fromRotation = fromRotation;
-exports.fromScaling = fromScaling;
-exports.fromTranslation = fromTranslation;
-exports.str = str;
-exports.frob = frob;
-exports.add = add;
-exports.subtract = subtract;
-exports.multiplyScalar = multiplyScalar;
-exports.multiplyScalarAndAdd = multiplyScalarAndAdd;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.sub = exports.mul = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * 2x3 Matrix
- * @module mat2d
- *
- * @description
- * A mat2d contains six elements defined as:
- * <pre>
- * [a, b, c,
- *  d, tx, ty]
- * </pre>
- * This is a short form for the 3x3 matrix:
- * <pre>
- * [a, b, 0,
- *  c, d, 0,
- *  tx, ty, 1]
- * </pre>
- * The last column is ignored so the array is shorter and operations are faster.
- */
-
-/**
- * Creates a new identity mat2d
- *
- * @returns {mat2d} a new 2x3 matrix
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(6);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[1] = 0;
-    out[2] = 0;
-    out[4] = 0;
-    out[5] = 0;
+    queueIndex = -1;
+    len = queue.length;
   }
 
-  out[0] = 1;
-  out[3] = 1;
-  return out;
+  currentQueue = null;
+  draining = false;
+  runClearTimeout(timeout);
 }
-/**
- * Creates a new mat2d initialized with values from an existing matrix
- *
- * @param {mat2d} a matrix to clone
- * @returns {mat2d} a new 2x3 matrix
- */
 
+process.nextTick = function (fun) {
+  var args = new Array(arguments.length - 1);
 
-function clone(a) {
-  var out = new glMatrix.ARRAY_TYPE(6);
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  out[4] = a[4];
-  out[5] = a[5];
-  return out;
-}
-/**
- * Copy the values from one mat2d to another
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the source matrix
- * @returns {mat2d} out
- */
-
-
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  out[4] = a[4];
-  out[5] = a[5];
-  return out;
-}
-/**
- * Set a mat2d to the identity matrix
- *
- * @param {mat2d} out the receiving matrix
- * @returns {mat2d} out
- */
-
-
-function identity(out) {
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 1;
-  out[4] = 0;
-  out[5] = 0;
-  return out;
-}
-/**
- * Create a new mat2d with the given values
- *
- * @param {Number} a Component A (index 0)
- * @param {Number} b Component B (index 1)
- * @param {Number} c Component C (index 2)
- * @param {Number} d Component D (index 3)
- * @param {Number} tx Component TX (index 4)
- * @param {Number} ty Component TY (index 5)
- * @returns {mat2d} A new mat2d
- */
-
-
-function fromValues(a, b, c, d, tx, ty) {
-  var out = new glMatrix.ARRAY_TYPE(6);
-  out[0] = a;
-  out[1] = b;
-  out[2] = c;
-  out[3] = d;
-  out[4] = tx;
-  out[5] = ty;
-  return out;
-}
-/**
- * Set the components of a mat2d to the given values
- *
- * @param {mat2d} out the receiving matrix
- * @param {Number} a Component A (index 0)
- * @param {Number} b Component B (index 1)
- * @param {Number} c Component C (index 2)
- * @param {Number} d Component D (index 3)
- * @param {Number} tx Component TX (index 4)
- * @param {Number} ty Component TY (index 5)
- * @returns {mat2d} out
- */
-
-
-function set(out, a, b, c, d, tx, ty) {
-  out[0] = a;
-  out[1] = b;
-  out[2] = c;
-  out[3] = d;
-  out[4] = tx;
-  out[5] = ty;
-  return out;
-}
-/**
- * Inverts a mat2d
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the source matrix
- * @returns {mat2d} out
- */
-
-
-function invert(out, a) {
-  var aa = a[0],
-      ab = a[1],
-      ac = a[2],
-      ad = a[3];
-  var atx = a[4],
-      aty = a[5];
-  var det = aa * ad - ab * ac;
-
-  if (!det) {
-    return null;
+  if (arguments.length > 1) {
+    for (var i = 1; i < arguments.length; i++) {
+      args[i - 1] = arguments[i];
+    }
   }
 
-  det = 1.0 / det;
-  out[0] = ad * det;
-  out[1] = -ab * det;
-  out[2] = -ac * det;
-  out[3] = aa * det;
-  out[4] = (ac * aty - ad * atx) * det;
-  out[5] = (ab * atx - aa * aty) * det;
-  return out;
+  queue.push(new Item(fun, args));
+
+  if (queue.length === 1 && !draining) {
+    runTimeout(drainQueue);
+  }
+}; // v8 likes predictible objects
+
+
+function Item(fun, array) {
+  this.fun = fun;
+  this.array = array;
 }
-/**
- * Calculates the determinant of a mat2d
- *
- * @param {mat2d} a the source matrix
- * @returns {Number} determinant of a
- */
 
+Item.prototype.run = function () {
+  this.fun.apply(null, this.array);
+};
 
-function determinant(a) {
-  return a[0] * a[3] - a[1] * a[2];
-}
-/**
- * Multiplies two mat2d's
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the first operand
- * @param {mat2d} b the second operand
- * @returns {mat2d} out
- */
+process.title = 'browser';
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
 
+process.versions = {};
 
-function multiply(out, a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3],
-      a4 = a[4],
-      a5 = a[5];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3],
-      b4 = b[4],
-      b5 = b[5];
-  out[0] = a0 * b0 + a2 * b1;
-  out[1] = a1 * b0 + a3 * b1;
-  out[2] = a0 * b2 + a2 * b3;
-  out[3] = a1 * b2 + a3 * b3;
-  out[4] = a0 * b4 + a2 * b5 + a4;
-  out[5] = a1 * b4 + a3 * b5 + a5;
-  return out;
-}
-/**
- * Rotates a mat2d by the given angle
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat2d} out
- */
+function noop() {}
 
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
 
-function rotate(out, a, rad) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3],
-      a4 = a[4],
-      a5 = a[5];
-  var s = Math.sin(rad);
-  var c = Math.cos(rad);
-  out[0] = a0 * c + a2 * s;
-  out[1] = a1 * c + a3 * s;
-  out[2] = a0 * -s + a2 * c;
-  out[3] = a1 * -s + a3 * c;
-  out[4] = a4;
-  out[5] = a5;
-  return out;
-}
-/**
- * Scales the mat2d by the dimensions in the given vec2
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the matrix to translate
- * @param {vec2} v the vec2 to scale the matrix by
- * @returns {mat2d} out
- **/
+process.listeners = function (name) {
+  return [];
+};
 
+process.binding = function (name) {
+  throw new Error('process.binding is not supported');
+};
 
-function scale(out, a, v) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3],
-      a4 = a[4],
-      a5 = a[5];
-  var v0 = v[0],
-      v1 = v[1];
-  out[0] = a0 * v0;
-  out[1] = a1 * v0;
-  out[2] = a2 * v1;
-  out[3] = a3 * v1;
-  out[4] = a4;
-  out[5] = a5;
-  return out;
-}
-/**
- * Translates the mat2d by the dimensions in the given vec2
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the matrix to translate
- * @param {vec2} v the vec2 to translate the matrix by
- * @returns {mat2d} out
- **/
+process.cwd = function () {
+  return '/';
+};
 
+process.chdir = function (dir) {
+  throw new Error('process.chdir is not supported');
+};
 
-function translate(out, a, v) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3],
-      a4 = a[4],
-      a5 = a[5];
-  var v0 = v[0],
-      v1 = v[1];
-  out[0] = a0;
-  out[1] = a1;
-  out[2] = a2;
-  out[3] = a3;
-  out[4] = a0 * v0 + a2 * v1 + a4;
-  out[5] = a1 * v0 + a3 * v1 + a5;
-  return out;
-}
-/**
- * Creates a matrix from a given angle
- * This is equivalent to (but much faster than):
- *
- *     mat2d.identity(dest);
- *     mat2d.rotate(dest, dest, rad);
- *
- * @param {mat2d} out mat2d receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat2d} out
- */
+process.umask = function () {
+  return 0;
+};
+},{}],"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/path-browserify/index.js":[function(require,module,exports) {
+var process = require("process");
+// .dirname, .basename, and .extname methods are extracted from Node.js v8.11.1,
+// backported and transplited with Babel, with backwards-compat fixes
 
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-function fromRotation(out, rad) {
-  var s = Math.sin(rad),
-      c = Math.cos(rad);
-  out[0] = c;
-  out[1] = s;
-  out[2] = -s;
-  out[3] = c;
-  out[4] = 0;
-  out[5] = 0;
-  return out;
-}
-/**
- * Creates a matrix from a vector scaling
- * This is equivalent to (but much faster than):
- *
- *     mat2d.identity(dest);
- *     mat2d.scale(dest, dest, vec);
- *
- * @param {mat2d} out mat2d receiving operation result
- * @param {vec2} v Scaling vector
- * @returns {mat2d} out
- */
-
-
-function fromScaling(out, v) {
-  out[0] = v[0];
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = v[1];
-  out[4] = 0;
-  out[5] = 0;
-  return out;
-}
-/**
- * Creates a matrix from a vector translation
- * This is equivalent to (but much faster than):
- *
- *     mat2d.identity(dest);
- *     mat2d.translate(dest, dest, vec);
- *
- * @param {mat2d} out mat2d receiving operation result
- * @param {vec2} v Translation vector
- * @returns {mat2d} out
- */
-
-
-function fromTranslation(out, v) {
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 1;
-  out[4] = v[0];
-  out[5] = v[1];
-  return out;
-}
-/**
- * Returns a string representation of a mat2d
- *
- * @param {mat2d} a matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-
-
-function str(a) {
-  return 'mat2d(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' + a[4] + ', ' + a[5] + ')';
-}
-/**
- * Returns Frobenius norm of a mat2d
- *
- * @param {mat2d} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-
-
-function frob(a) {
-  return Math.hypot(a[0], a[1], a[2], a[3], a[4], a[5], 1);
-}
-/**
- * Adds two mat2d's
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the first operand
- * @param {mat2d} b the second operand
- * @returns {mat2d} out
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  out[2] = a[2] + b[2];
-  out[3] = a[3] + b[3];
-  out[4] = a[4] + b[4];
-  out[5] = a[5] + b[5];
-  return out;
-}
-/**
- * Subtracts matrix b from matrix a
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the first operand
- * @param {mat2d} b the second operand
- * @returns {mat2d} out
- */
-
-
-function subtract(out, a, b) {
-  out[0] = a[0] - b[0];
-  out[1] = a[1] - b[1];
-  out[2] = a[2] - b[2];
-  out[3] = a[3] - b[3];
-  out[4] = a[4] - b[4];
-  out[5] = a[5] - b[5];
-  return out;
-}
-/**
- * Multiply each element of the matrix by a scalar.
- *
- * @param {mat2d} out the receiving matrix
- * @param {mat2d} a the matrix to scale
- * @param {Number} b amount to scale the matrix's elements by
- * @returns {mat2d} out
- */
-
-
-function multiplyScalar(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  out[2] = a[2] * b;
-  out[3] = a[3] * b;
-  out[4] = a[4] * b;
-  out[5] = a[5] * b;
-  return out;
-}
-/**
- * Adds two mat2d's after multiplying each element of the second operand by a scalar value.
- *
- * @param {mat2d} out the receiving vector
- * @param {mat2d} a the first operand
- * @param {mat2d} b the second operand
- * @param {Number} scale the amount to scale b's elements by before adding
- * @returns {mat2d} out
- */
-
-
-function multiplyScalarAndAdd(out, a, b, scale) {
-  out[0] = a[0] + b[0] * scale;
-  out[1] = a[1] + b[1] * scale;
-  out[2] = a[2] + b[2] * scale;
-  out[3] = a[3] + b[3] * scale;
-  out[4] = a[4] + b[4] * scale;
-  out[5] = a[5] + b[5] * scale;
-  return out;
-}
-/**
- * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
- *
- * @param {mat2d} a The first matrix.
- * @param {mat2d} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5];
-}
-/**
- * Returns whether or not the matrices have approximately the same elements in the same position.
- *
- * @param {mat2d} a The first matrix.
- * @param {mat2d} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3],
-      a4 = a[4],
-      a5 = a[5];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3],
-      b4 = b[4],
-      b5 = b[5];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5));
-}
-/**
- * Alias for {@link mat2d.multiply}
- * @function
- */
-
-
-var mul = multiply;
-/**
- * Alias for {@link mat2d.subtract}
- * @function
- */
-
-exports.mul = mul;
-var sub = subtract;
-exports.sub = sub;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/mat3.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.fromMat4 = fromMat4;
-exports.clone = clone;
-exports.copy = copy;
-exports.fromValues = fromValues;
-exports.set = set;
-exports.identity = identity;
-exports.transpose = transpose;
-exports.invert = invert;
-exports.adjoint = adjoint;
-exports.determinant = determinant;
-exports.multiply = multiply;
-exports.translate = translate;
-exports.rotate = rotate;
-exports.scale = scale;
-exports.fromTranslation = fromTranslation;
-exports.fromRotation = fromRotation;
-exports.fromScaling = fromScaling;
-exports.fromMat2d = fromMat2d;
-exports.fromQuat = fromQuat;
-exports.normalFromMat4 = normalFromMat4;
-exports.projection = projection;
-exports.str = str;
-exports.frob = frob;
-exports.add = add;
-exports.subtract = subtract;
-exports.multiplyScalar = multiplyScalar;
-exports.multiplyScalarAndAdd = multiplyScalarAndAdd;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.sub = exports.mul = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * 3x3 Matrix
- * @module mat3
- */
-
-/**
- * Creates a new identity mat3
- *
- * @returns {mat3} a new 3x3 matrix
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(9);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[5] = 0;
-    out[6] = 0;
-    out[7] = 0;
+// resolves . and .. elements in a path array with directory names there
+// must be no slashes, empty elements, or device names (c:\) in the array
+// (so also no leading and trailing slashes - it does not distinguish
+// relative and absolute paths)
+function normalizeArray(parts, allowAboveRoot) {
+  // if the path tries to go above the root, `up` ends up > 0
+  var up = 0;
+  for (var i = parts.length - 1; i >= 0; i--) {
+    var last = parts[i];
+    if (last === '.') {
+      parts.splice(i, 1);
+    } else if (last === '..') {
+      parts.splice(i, 1);
+      up++;
+    } else if (up) {
+      parts.splice(i, 1);
+      up--;
+    }
   }
 
-  out[0] = 1;
-  out[4] = 1;
-  out[8] = 1;
-  return out;
-}
-/**
- * Copies the upper-left 3x3 values into the given mat3.
- *
- * @param {mat3} out the receiving 3x3 matrix
- * @param {mat4} a   the source 4x4 matrix
- * @returns {mat3} out
- */
-
-
-function fromMat4(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[4];
-  out[4] = a[5];
-  out[5] = a[6];
-  out[6] = a[8];
-  out[7] = a[9];
-  out[8] = a[10];
-  return out;
-}
-/**
- * Creates a new mat3 initialized with values from an existing matrix
- *
- * @param {mat3} a matrix to clone
- * @returns {mat3} a new 3x3 matrix
- */
-
-
-function clone(a) {
-  var out = new glMatrix.ARRAY_TYPE(9);
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  out[4] = a[4];
-  out[5] = a[5];
-  out[6] = a[6];
-  out[7] = a[7];
-  out[8] = a[8];
-  return out;
-}
-/**
- * Copy the values from one mat3 to another
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
-
-
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  out[4] = a[4];
-  out[5] = a[5];
-  out[6] = a[6];
-  out[7] = a[7];
-  out[8] = a[8];
-  return out;
-}
-/**
- * Create a new mat3 with the given values
- *
- * @param {Number} m00 Component in column 0, row 0 position (index 0)
- * @param {Number} m01 Component in column 0, row 1 position (index 1)
- * @param {Number} m02 Component in column 0, row 2 position (index 2)
- * @param {Number} m10 Component in column 1, row 0 position (index 3)
- * @param {Number} m11 Component in column 1, row 1 position (index 4)
- * @param {Number} m12 Component in column 1, row 2 position (index 5)
- * @param {Number} m20 Component in column 2, row 0 position (index 6)
- * @param {Number} m21 Component in column 2, row 1 position (index 7)
- * @param {Number} m22 Component in column 2, row 2 position (index 8)
- * @returns {mat3} A new mat3
- */
-
-
-function fromValues(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
-  var out = new glMatrix.ARRAY_TYPE(9);
-  out[0] = m00;
-  out[1] = m01;
-  out[2] = m02;
-  out[3] = m10;
-  out[4] = m11;
-  out[5] = m12;
-  out[6] = m20;
-  out[7] = m21;
-  out[8] = m22;
-  return out;
-}
-/**
- * Set the components of a mat3 to the given values
- *
- * @param {mat3} out the receiving matrix
- * @param {Number} m00 Component in column 0, row 0 position (index 0)
- * @param {Number} m01 Component in column 0, row 1 position (index 1)
- * @param {Number} m02 Component in column 0, row 2 position (index 2)
- * @param {Number} m10 Component in column 1, row 0 position (index 3)
- * @param {Number} m11 Component in column 1, row 1 position (index 4)
- * @param {Number} m12 Component in column 1, row 2 position (index 5)
- * @param {Number} m20 Component in column 2, row 0 position (index 6)
- * @param {Number} m21 Component in column 2, row 1 position (index 7)
- * @param {Number} m22 Component in column 2, row 2 position (index 8)
- * @returns {mat3} out
- */
-
-
-function set(out, m00, m01, m02, m10, m11, m12, m20, m21, m22) {
-  out[0] = m00;
-  out[1] = m01;
-  out[2] = m02;
-  out[3] = m10;
-  out[4] = m11;
-  out[5] = m12;
-  out[6] = m20;
-  out[7] = m21;
-  out[8] = m22;
-  return out;
-}
-/**
- * Set a mat3 to the identity matrix
- *
- * @param {mat3} out the receiving matrix
- * @returns {mat3} out
- */
-
-
-function identity(out) {
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 1;
-  out[5] = 0;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 1;
-  return out;
-}
-/**
- * Transpose the values of a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
-
-
-function transpose(out, a) {
-  // If we are transposing ourselves we can skip a few steps but have to cache some values
-  if (out === a) {
-    var a01 = a[1],
-        a02 = a[2],
-        a12 = a[5];
-    out[1] = a[3];
-    out[2] = a[6];
-    out[3] = a01;
-    out[5] = a[7];
-    out[6] = a02;
-    out[7] = a12;
-  } else {
-    out[0] = a[0];
-    out[1] = a[3];
-    out[2] = a[6];
-    out[3] = a[1];
-    out[4] = a[4];
-    out[5] = a[7];
-    out[6] = a[2];
-    out[7] = a[5];
-    out[8] = a[8];
+  // if the path is allowed to go above the root, restore leading ..s
+  if (allowAboveRoot) {
+    for (; up--; up) {
+      parts.unshift('..');
+    }
   }
 
-  return out;
+  return parts;
 }
-/**
- * Inverts a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
 
+// path.resolve([from ...], to)
+// posix version
+exports.resolve = function() {
+  var resolvedPath = '',
+      resolvedAbsolute = false;
 
-function invert(out, a) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2];
-  var a10 = a[3],
-      a11 = a[4],
-      a12 = a[5];
-  var a20 = a[6],
-      a21 = a[7],
-      a22 = a[8];
-  var b01 = a22 * a11 - a12 * a21;
-  var b11 = -a22 * a10 + a12 * a20;
-  var b21 = a21 * a10 - a11 * a20; // Calculate the determinant
+  for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i--) {
+    var path = (i >= 0) ? arguments[i] : process.cwd();
 
-  var det = a00 * b01 + a01 * b11 + a02 * b21;
+    // Skip empty and invalid entries
+    if (typeof path !== 'string') {
+      throw new TypeError('Arguments to path.resolve must be strings');
+    } else if (!path) {
+      continue;
+    }
 
-  if (!det) {
-    return null;
+    resolvedPath = path + '/' + resolvedPath;
+    resolvedAbsolute = path.charAt(0) === '/';
   }
 
-  det = 1.0 / det;
-  out[0] = b01 * det;
-  out[1] = (-a22 * a01 + a02 * a21) * det;
-  out[2] = (a12 * a01 - a02 * a11) * det;
-  out[3] = b11 * det;
-  out[4] = (a22 * a00 - a02 * a20) * det;
-  out[5] = (-a12 * a00 + a02 * a10) * det;
-  out[6] = b21 * det;
-  out[7] = (-a21 * a00 + a01 * a20) * det;
-  out[8] = (a11 * a00 - a01 * a10) * det;
-  return out;
-}
-/**
- * Calculates the adjugate of a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the source matrix
- * @returns {mat3} out
- */
+  // At this point the path should be resolved to a full absolute path, but
+  // handle relative paths to be safe (might happen when process.cwd() fails)
+
+  // Normalize the path
+  resolvedPath = normalizeArray(filter(resolvedPath.split('/'), function(p) {
+    return !!p;
+  }), !resolvedAbsolute).join('/');
+
+  return ((resolvedAbsolute ? '/' : '') + resolvedPath) || '.';
+};
+
+// path.normalize(path)
+// posix version
+exports.normalize = function(path) {
+  var isAbsolute = exports.isAbsolute(path),
+      trailingSlash = substr(path, -1) === '/';
+
+  // Normalize the path
+  path = normalizeArray(filter(path.split('/'), function(p) {
+    return !!p;
+  }), !isAbsolute).join('/');
+
+  if (!path && !isAbsolute) {
+    path = '.';
+  }
+  if (path && trailingSlash) {
+    path += '/';
+  }
+
+  return (isAbsolute ? '/' : '') + path;
+};
+
+// posix version
+exports.isAbsolute = function(path) {
+  return path.charAt(0) === '/';
+};
+
+// posix version
+exports.join = function() {
+  var paths = Array.prototype.slice.call(arguments, 0);
+  return exports.normalize(filter(paths, function(p, index) {
+    if (typeof p !== 'string') {
+      throw new TypeError('Arguments to path.join must be strings');
+    }
+    return p;
+  }).join('/'));
+};
 
 
-function adjoint(out, a) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2];
-  var a10 = a[3],
-      a11 = a[4],
-      a12 = a[5];
-  var a20 = a[6],
-      a21 = a[7],
-      a22 = a[8];
-  out[0] = a11 * a22 - a12 * a21;
-  out[1] = a02 * a21 - a01 * a22;
-  out[2] = a01 * a12 - a02 * a11;
-  out[3] = a12 * a20 - a10 * a22;
-  out[4] = a00 * a22 - a02 * a20;
-  out[5] = a02 * a10 - a00 * a12;
-  out[6] = a10 * a21 - a11 * a20;
-  out[7] = a01 * a20 - a00 * a21;
-  out[8] = a00 * a11 - a01 * a10;
-  return out;
-}
-/**
- * Calculates the determinant of a mat3
- *
- * @param {mat3} a the source matrix
- * @returns {Number} determinant of a
- */
+// path.relative(from, to)
+// posix version
+exports.relative = function(from, to) {
+  from = exports.resolve(from).substr(1);
+  to = exports.resolve(to).substr(1);
 
+  function trim(arr) {
+    var start = 0;
+    for (; start < arr.length; start++) {
+      if (arr[start] !== '') break;
+    }
 
-function determinant(a) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2];
-  var a10 = a[3],
-      a11 = a[4],
-      a12 = a[5];
-  var a20 = a[6],
-      a21 = a[7],
-      a22 = a[8];
-  return a00 * (a22 * a11 - a12 * a21) + a01 * (-a22 * a10 + a12 * a20) + a02 * (a21 * a10 - a11 * a20);
-}
-/**
- * Multiplies two mat3's
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the first operand
- * @param {mat3} b the second operand
- * @returns {mat3} out
- */
+    var end = arr.length - 1;
+    for (; end >= 0; end--) {
+      if (arr[end] !== '') break;
+    }
 
+    if (start > end) return [];
+    return arr.slice(start, end - start + 1);
+  }
 
-function multiply(out, a, b) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2];
-  var a10 = a[3],
-      a11 = a[4],
-      a12 = a[5];
-  var a20 = a[6],
-      a21 = a[7],
-      a22 = a[8];
-  var b00 = b[0],
-      b01 = b[1],
-      b02 = b[2];
-  var b10 = b[3],
-      b11 = b[4],
-      b12 = b[5];
-  var b20 = b[6],
-      b21 = b[7],
-      b22 = b[8];
-  out[0] = b00 * a00 + b01 * a10 + b02 * a20;
-  out[1] = b00 * a01 + b01 * a11 + b02 * a21;
-  out[2] = b00 * a02 + b01 * a12 + b02 * a22;
-  out[3] = b10 * a00 + b11 * a10 + b12 * a20;
-  out[4] = b10 * a01 + b11 * a11 + b12 * a21;
-  out[5] = b10 * a02 + b11 * a12 + b12 * a22;
-  out[6] = b20 * a00 + b21 * a10 + b22 * a20;
-  out[7] = b20 * a01 + b21 * a11 + b22 * a21;
-  out[8] = b20 * a02 + b21 * a12 + b22 * a22;
-  return out;
-}
-/**
- * Translate a mat3 by the given vector
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the matrix to translate
- * @param {vec2} v vector to translate by
- * @returns {mat3} out
- */
+  var fromParts = trim(from.split('/'));
+  var toParts = trim(to.split('/'));
 
+  var length = Math.min(fromParts.length, toParts.length);
+  var samePartsLength = length;
+  for (var i = 0; i < length; i++) {
+    if (fromParts[i] !== toParts[i]) {
+      samePartsLength = i;
+      break;
+    }
+  }
 
-function translate(out, a, v) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a10 = a[3],
-      a11 = a[4],
-      a12 = a[5],
-      a20 = a[6],
-      a21 = a[7],
-      a22 = a[8],
-      x = v[0],
-      y = v[1];
-  out[0] = a00;
-  out[1] = a01;
-  out[2] = a02;
-  out[3] = a10;
-  out[4] = a11;
-  out[5] = a12;
-  out[6] = x * a00 + y * a10 + a20;
-  out[7] = x * a01 + y * a11 + a21;
-  out[8] = x * a02 + y * a12 + a22;
-  return out;
-}
-/**
- * Rotates a mat3 by the given angle
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat3} out
- */
+  var outputParts = [];
+  for (var i = samePartsLength; i < fromParts.length; i++) {
+    outputParts.push('..');
+  }
 
+  outputParts = outputParts.concat(toParts.slice(samePartsLength));
 
-function rotate(out, a, rad) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a10 = a[3],
-      a11 = a[4],
-      a12 = a[5],
-      a20 = a[6],
-      a21 = a[7],
-      a22 = a[8],
-      s = Math.sin(rad),
-      c = Math.cos(rad);
-  out[0] = c * a00 + s * a10;
-  out[1] = c * a01 + s * a11;
-  out[2] = c * a02 + s * a12;
-  out[3] = c * a10 - s * a00;
-  out[4] = c * a11 - s * a01;
-  out[5] = c * a12 - s * a02;
-  out[6] = a20;
-  out[7] = a21;
-  out[8] = a22;
-  return out;
+  return outputParts.join('/');
+};
+
+exports.sep = '/';
+exports.delimiter = ':';
+
+exports.dirname = function (path) {
+  if (typeof path !== 'string') path = path + '';
+  if (path.length === 0) return '.';
+  var code = path.charCodeAt(0);
+  var hasRoot = code === 47 /*/*/;
+  var end = -1;
+  var matchedSlash = true;
+  for (var i = path.length - 1; i >= 1; --i) {
+    code = path.charCodeAt(i);
+    if (code === 47 /*/*/) {
+        if (!matchedSlash) {
+          end = i;
+          break;
+        }
+      } else {
+      // We saw the first non-path separator
+      matchedSlash = false;
+    }
+  }
+
+  if (end === -1) return hasRoot ? '/' : '.';
+  if (hasRoot && end === 1) {
+    // return '//';
+    // Backwards-compat fix:
+    return '/';
+  }
+  return path.slice(0, end);
+};
+
+function basename(path) {
+  if (typeof path !== 'string') path = path + '';
+
+  var start = 0;
+  var end = -1;
+  var matchedSlash = true;
+  var i;
+
+  for (i = path.length - 1; i >= 0; --i) {
+    if (path.charCodeAt(i) === 47 /*/*/) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          start = i + 1;
+          break;
+        }
+      } else if (end === -1) {
+      // We saw the first non-path separator, mark this as the end of our
+      // path component
+      matchedSlash = false;
+      end = i + 1;
+    }
+  }
+
+  if (end === -1) return '';
+  return path.slice(start, end);
 }
 
+// Uses a mixed approach for backwards-compatibility, as ext behavior changed
+// in new Node.js versions, so only basename() above is backported here
+exports.basename = function (path, ext) {
+  var f = basename(path);
+  if (ext && f.substr(-1 * ext.length) === ext) {
+    f = f.substr(0, f.length - ext.length);
+  }
+  return f;
+};
+
+exports.extname = function (path) {
+  if (typeof path !== 'string') path = path + '';
+  var startDot = -1;
+  var startPart = 0;
+  var end = -1;
+  var matchedSlash = true;
+  // Track the state of characters (if any) we see before our first dot and
+  // after any path separator we find
+  var preDotState = 0;
+  for (var i = path.length - 1; i >= 0; --i) {
+    var code = path.charCodeAt(i);
+    if (code === 47 /*/*/) {
+        // If we reached a path separator that was not part of a set of path
+        // separators at the end of the string, stop now
+        if (!matchedSlash) {
+          startPart = i + 1;
+          break;
+        }
+        continue;
+      }
+    if (end === -1) {
+      // We saw the first non-path separator, mark this as the end of our
+      // extension
+      matchedSlash = false;
+      end = i + 1;
+    }
+    if (code === 46 /*.*/) {
+        // If this is our first dot, mark it as the start of our extension
+        if (startDot === -1)
+          startDot = i;
+        else if (preDotState !== 1)
+          preDotState = 1;
+    } else if (startDot !== -1) {
+      // We saw a non-dot and non-path separator before our dot, so we should
+      // have a good chance at having a non-empty extension
+      preDotState = -1;
+    }
+  }
+
+  if (startDot === -1 || end === -1 ||
+      // We saw a non-dot character immediately before the dot
+      preDotState === 0 ||
+      // The (right-most) trimmed path component is exactly '..'
+      preDotState === 1 && startDot === end - 1 && startDot === startPart + 1) {
+    return '';
+  }
+  return path.slice(startDot, end);
+};
+
+function filter (xs, f) {
+    if (xs.filter) return xs.filter(f);
+    var res = [];
+    for (var i = 0; i < xs.length; i++) {
+        if (f(xs[i], i, xs)) res.push(xs[i]);
+    }
+    return res;
+}
+
+// String.prototype.substr - negative index don't work in IE8
+var substr = 'ab'.substr(-1) === 'b'
+    ? function (str, start, len) { return str.substr(start, len) }
+    : function (str, start, len) {
+        if (start < 0) start = str.length + start;
+        return str.substr(start, len);
+    }
 ;
-/**
- * Scales the mat3 by the dimensions in the given vec2
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the matrix to rotate
- * @param {vec2} v the vec2 to scale the matrix by
- * @returns {mat3} out
- **/
 
-function scale(out, a, v) {
-  var x = v[0],
-      y = v[1];
-  out[0] = x * a[0];
-  out[1] = x * a[1];
-  out[2] = x * a[2];
-  out[3] = y * a[3];
-  out[4] = y * a[4];
-  out[5] = y * a[5];
-  out[6] = a[6];
-  out[7] = a[7];
-  out[8] = a[8];
-  return out;
-}
-/**
- * Creates a matrix from a vector translation
- * This is equivalent to (but much faster than):
- *
- *     mat3.identity(dest);
- *     mat3.translate(dest, dest, vec);
- *
- * @param {mat3} out mat3 receiving operation result
- * @param {vec2} v Translation vector
- * @returns {mat3} out
- */
+},{"process":"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/necessary/lib/utilities/miscellaneous/rc.js":[function(require,module,exports) {
+'use strict';
+
+var path = require('path');
+
+var arrayUtilities = require('../../utilities/array'),
+    fileSystemUtilities = require('../../utilities/fileSystem');
+
+var first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    readFile = fileSystemUtilities.readFile,
+    writeFile = fileSystemUtilities.writeFile;
 
 
-function fromTranslation(out, v) {
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 1;
-  out[5] = 0;
-  out[6] = v[0];
-  out[7] = v[1];
-  out[8] = 1;
-  return out;
-}
-/**
- * Creates a matrix from a given angle
- * This is equivalent to (but much faster than):
- *
- *     mat3.identity(dest);
- *     mat3.rotate(dest, dest, rad);
- *
- * @param {mat3} out mat3 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat3} out
- */
+var rcBaseExtension = '';
 
+function rc() {
+  var environmentNameOrArgv = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-function fromRotation(out, rad) {
-  var s = Math.sin(rad),
-      c = Math.cos(rad);
-  out[0] = c;
-  out[1] = s;
-  out[2] = 0;
-  out[3] = -s;
-  out[4] = c;
-  out[5] = 0;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 1;
-  return out;
-}
-/**
- * Creates a matrix from a vector scaling
- * This is equivalent to (but much faster than):
- *
- *     mat3.identity(dest);
- *     mat3.scale(dest, dest, vec);
- *
- * @param {mat3} out mat3 receiving operation result
- * @param {vec2} v Scaling vector
- * @returns {mat3} out
- */
+  var environment = void 0,
+      environmentName = void 0;
 
+  if (environmentNameOrArgv instanceof Array) {
+    var argv = environmentNameOrArgv;
 
-function fromScaling(out, v) {
-  out[0] = v[0];
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = v[1];
-  out[5] = 0;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 1;
-  return out;
-}
-/**
- * Copies the values from a mat2d into a mat3
- *
- * @param {mat3} out the receiving matrix
- * @param {mat2d} a the matrix to copy
- * @returns {mat3} out
- **/
-
-
-function fromMat2d(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = 0;
-  out[3] = a[2];
-  out[4] = a[3];
-  out[5] = 0;
-  out[6] = a[4];
-  out[7] = a[5];
-  out[8] = 1;
-  return out;
-}
-/**
-* Calculates a 3x3 matrix from the given quaternion
-*
-* @param {mat3} out mat3 receiving operation result
-* @param {quat} q Quaternion to create matrix from
-*
-* @returns {mat3} out
-*/
-
-
-function fromQuat(out, q) {
-  var x = q[0],
-      y = q[1],
-      z = q[2],
-      w = q[3];
-  var x2 = x + x;
-  var y2 = y + y;
-  var z2 = z + z;
-  var xx = x * x2;
-  var yx = y * x2;
-  var yy = y * y2;
-  var zx = z * x2;
-  var zy = z * y2;
-  var zz = z * z2;
-  var wx = w * x2;
-  var wy = w * y2;
-  var wz = w * z2;
-  out[0] = 1 - yy - zz;
-  out[3] = yx - wz;
-  out[6] = zx + wy;
-  out[1] = yx + wz;
-  out[4] = 1 - xx - zz;
-  out[7] = zy - wx;
-  out[2] = zx - wy;
-  out[5] = zy + wx;
-  out[8] = 1 - xx - yy;
-  return out;
-}
-/**
-* Calculates a 3x3 normal matrix (transpose inverse) from the 4x4 matrix
-*
-* @param {mat3} out mat3 receiving operation result
-* @param {mat4} a Mat4 to derive the normal matrix from
-*
-* @returns {mat3} out
-*/
-
-
-function normalFromMat4(out, a) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a03 = a[3];
-  var a10 = a[4],
-      a11 = a[5],
-      a12 = a[6],
-      a13 = a[7];
-  var a20 = a[8],
-      a21 = a[9],
-      a22 = a[10],
-      a23 = a[11];
-  var a30 = a[12],
-      a31 = a[13],
-      a32 = a[14],
-      a33 = a[15];
-  var b00 = a00 * a11 - a01 * a10;
-  var b01 = a00 * a12 - a02 * a10;
-  var b02 = a00 * a13 - a03 * a10;
-  var b03 = a01 * a12 - a02 * a11;
-  var b04 = a01 * a13 - a03 * a11;
-  var b05 = a02 * a13 - a03 * a12;
-  var b06 = a20 * a31 - a21 * a30;
-  var b07 = a20 * a32 - a22 * a30;
-  var b08 = a20 * a33 - a23 * a30;
-  var b09 = a21 * a32 - a22 * a31;
-  var b10 = a21 * a33 - a23 * a31;
-  var b11 = a22 * a33 - a23 * a32; // Calculate the determinant
-
-  var det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-
-  if (!det) {
-    return null;
-  }
-
-  det = 1.0 / det;
-  out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
-  out[1] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
-  out[2] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
-  out[3] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
-  out[4] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
-  out[5] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
-  out[6] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
-  out[7] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
-  out[8] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
-  return out;
-}
-/**
- * Generates a 2D projection matrix with the given bounds
- *
- * @param {mat3} out mat3 frustum matrix will be written into
- * @param {number} width Width of your gl context
- * @param {number} height Height of gl context
- * @returns {mat3} out
- */
-
-
-function projection(out, width, height) {
-  out[0] = 2 / width;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = -2 / height;
-  out[5] = 0;
-  out[6] = -1;
-  out[7] = 1;
-  out[8] = 1;
-  return out;
-}
-/**
- * Returns a string representation of a mat3
- *
- * @param {mat3} a matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-
-
-function str(a) {
-  return 'mat3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' + a[8] + ')';
-}
-/**
- * Returns Frobenius norm of a mat3
- *
- * @param {mat3} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
-
-
-function frob(a) {
-  return Math.hypot(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8]);
-}
-/**
- * Adds two mat3's
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the first operand
- * @param {mat3} b the second operand
- * @returns {mat3} out
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  out[2] = a[2] + b[2];
-  out[3] = a[3] + b[3];
-  out[4] = a[4] + b[4];
-  out[5] = a[5] + b[5];
-  out[6] = a[6] + b[6];
-  out[7] = a[7] + b[7];
-  out[8] = a[8] + b[8];
-  return out;
-}
-/**
- * Subtracts matrix b from matrix a
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the first operand
- * @param {mat3} b the second operand
- * @returns {mat3} out
- */
-
-
-function subtract(out, a, b) {
-  out[0] = a[0] - b[0];
-  out[1] = a[1] - b[1];
-  out[2] = a[2] - b[2];
-  out[3] = a[3] - b[3];
-  out[4] = a[4] - b[4];
-  out[5] = a[5] - b[5];
-  out[6] = a[6] - b[6];
-  out[7] = a[7] - b[7];
-  out[8] = a[8] - b[8];
-  return out;
-}
-/**
- * Multiply each element of the matrix by a scalar.
- *
- * @param {mat3} out the receiving matrix
- * @param {mat3} a the matrix to scale
- * @param {Number} b amount to scale the matrix's elements by
- * @returns {mat3} out
- */
-
-
-function multiplyScalar(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  out[2] = a[2] * b;
-  out[3] = a[3] * b;
-  out[4] = a[4] * b;
-  out[5] = a[5] * b;
-  out[6] = a[6] * b;
-  out[7] = a[7] * b;
-  out[8] = a[8] * b;
-  return out;
-}
-/**
- * Adds two mat3's after multiplying each element of the second operand by a scalar value.
- *
- * @param {mat3} out the receiving vector
- * @param {mat3} a the first operand
- * @param {mat3} b the second operand
- * @param {Number} scale the amount to scale b's elements by before adding
- * @returns {mat3} out
- */
-
-
-function multiplyScalarAndAdd(out, a, b, scale) {
-  out[0] = a[0] + b[0] * scale;
-  out[1] = a[1] + b[1] * scale;
-  out[2] = a[2] + b[2] * scale;
-  out[3] = a[3] + b[3] * scale;
-  out[4] = a[4] + b[4] * scale;
-  out[5] = a[5] + b[5] * scale;
-  out[6] = a[6] + b[6] * scale;
-  out[7] = a[7] + b[7] * scale;
-  out[8] = a[8] + b[8] * scale;
-  return out;
-}
-/**
- * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
- *
- * @param {mat3} a The first matrix.
- * @param {mat3} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5] && a[6] === b[6] && a[7] === b[7] && a[8] === b[8];
-}
-/**
- * Returns whether or not the matrices have approximately the same elements in the same position.
- *
- * @param {mat3} a The first matrix.
- * @param {mat3} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3],
-      a4 = a[4],
-      a5 = a[5],
-      a6 = a[6],
-      a7 = a[7],
-      a8 = a[8];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3],
-      b4 = b[4],
-      b5 = b[5],
-      b6 = b[6],
-      b7 = b[7],
-      b8 = b[8];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5)) && Math.abs(a6 - b6) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a6), Math.abs(b6)) && Math.abs(a7 - b7) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a7), Math.abs(b7)) && Math.abs(a8 - b8) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a8), Math.abs(b8));
-}
-/**
- * Alias for {@link mat3.multiply}
- * @function
- */
-
-
-var mul = multiply;
-/**
- * Alias for {@link mat3.subtract}
- * @function
- */
-
-exports.mul = mul;
-var sub = subtract;
-exports.sub = sub;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/mat4.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.clone = clone;
-exports.copy = copy;
-exports.fromValues = fromValues;
-exports.set = set;
-exports.identity = identity;
-exports.transpose = transpose;
-exports.invert = invert;
-exports.adjoint = adjoint;
-exports.determinant = determinant;
-exports.multiply = multiply;
-exports.translate = translate;
-exports.scale = scale;
-exports.rotate = rotate;
-exports.rotateX = rotateX;
-exports.rotateY = rotateY;
-exports.rotateZ = rotateZ;
-exports.fromTranslation = fromTranslation;
-exports.fromScaling = fromScaling;
-exports.fromRotation = fromRotation;
-exports.fromXRotation = fromXRotation;
-exports.fromYRotation = fromYRotation;
-exports.fromZRotation = fromZRotation;
-exports.fromRotationTranslation = fromRotationTranslation;
-exports.fromQuat2 = fromQuat2;
-exports.getTranslation = getTranslation;
-exports.getScaling = getScaling;
-exports.getRotation = getRotation;
-exports.fromRotationTranslationScale = fromRotationTranslationScale;
-exports.fromRotationTranslationScaleOrigin = fromRotationTranslationScaleOrigin;
-exports.fromQuat = fromQuat;
-exports.frustum = frustum;
-exports.perspective = perspective;
-exports.perspectiveFromFieldOfView = perspectiveFromFieldOfView;
-exports.ortho = ortho;
-exports.lookAt = lookAt;
-exports.targetTo = targetTo;
-exports.str = str;
-exports.frob = frob;
-exports.add = add;
-exports.subtract = subtract;
-exports.multiplyScalar = multiplyScalar;
-exports.multiplyScalarAndAdd = multiplyScalarAndAdd;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.sub = exports.mul = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * 4x4 Matrix<br>Format: column-major, when typed out it looks like row-major<br>The matrices are being post multiplied.
- * @module mat4
- */
-
-/**
- * Creates a new identity mat4
- *
- * @returns {mat4} a new 4x4 matrix
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(16);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-    out[4] = 0;
-    out[6] = 0;
-    out[7] = 0;
-    out[8] = 0;
-    out[9] = 0;
-    out[11] = 0;
-    out[12] = 0;
-    out[13] = 0;
-    out[14] = 0;
-  }
-
-  out[0] = 1;
-  out[5] = 1;
-  out[10] = 1;
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a new mat4 initialized with values from an existing matrix
- *
- * @param {mat4} a matrix to clone
- * @returns {mat4} a new 4x4 matrix
- */
-
-
-function clone(a) {
-  var out = new glMatrix.ARRAY_TYPE(16);
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  out[4] = a[4];
-  out[5] = a[5];
-  out[6] = a[6];
-  out[7] = a[7];
-  out[8] = a[8];
-  out[9] = a[9];
-  out[10] = a[10];
-  out[11] = a[11];
-  out[12] = a[12];
-  out[13] = a[13];
-  out[14] = a[14];
-  out[15] = a[15];
-  return out;
-}
-/**
- * Copy the values from one mat4 to another
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-
-
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  out[4] = a[4];
-  out[5] = a[5];
-  out[6] = a[6];
-  out[7] = a[7];
-  out[8] = a[8];
-  out[9] = a[9];
-  out[10] = a[10];
-  out[11] = a[11];
-  out[12] = a[12];
-  out[13] = a[13];
-  out[14] = a[14];
-  out[15] = a[15];
-  return out;
-}
-/**
- * Create a new mat4 with the given values
- *
- * @param {Number} m00 Component in column 0, row 0 position (index 0)
- * @param {Number} m01 Component in column 0, row 1 position (index 1)
- * @param {Number} m02 Component in column 0, row 2 position (index 2)
- * @param {Number} m03 Component in column 0, row 3 position (index 3)
- * @param {Number} m10 Component in column 1, row 0 position (index 4)
- * @param {Number} m11 Component in column 1, row 1 position (index 5)
- * @param {Number} m12 Component in column 1, row 2 position (index 6)
- * @param {Number} m13 Component in column 1, row 3 position (index 7)
- * @param {Number} m20 Component in column 2, row 0 position (index 8)
- * @param {Number} m21 Component in column 2, row 1 position (index 9)
- * @param {Number} m22 Component in column 2, row 2 position (index 10)
- * @param {Number} m23 Component in column 2, row 3 position (index 11)
- * @param {Number} m30 Component in column 3, row 0 position (index 12)
- * @param {Number} m31 Component in column 3, row 1 position (index 13)
- * @param {Number} m32 Component in column 3, row 2 position (index 14)
- * @param {Number} m33 Component in column 3, row 3 position (index 15)
- * @returns {mat4} A new mat4
- */
-
-
-function fromValues(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
-  var out = new glMatrix.ARRAY_TYPE(16);
-  out[0] = m00;
-  out[1] = m01;
-  out[2] = m02;
-  out[3] = m03;
-  out[4] = m10;
-  out[5] = m11;
-  out[6] = m12;
-  out[7] = m13;
-  out[8] = m20;
-  out[9] = m21;
-  out[10] = m22;
-  out[11] = m23;
-  out[12] = m30;
-  out[13] = m31;
-  out[14] = m32;
-  out[15] = m33;
-  return out;
-}
-/**
- * Set the components of a mat4 to the given values
- *
- * @param {mat4} out the receiving matrix
- * @param {Number} m00 Component in column 0, row 0 position (index 0)
- * @param {Number} m01 Component in column 0, row 1 position (index 1)
- * @param {Number} m02 Component in column 0, row 2 position (index 2)
- * @param {Number} m03 Component in column 0, row 3 position (index 3)
- * @param {Number} m10 Component in column 1, row 0 position (index 4)
- * @param {Number} m11 Component in column 1, row 1 position (index 5)
- * @param {Number} m12 Component in column 1, row 2 position (index 6)
- * @param {Number} m13 Component in column 1, row 3 position (index 7)
- * @param {Number} m20 Component in column 2, row 0 position (index 8)
- * @param {Number} m21 Component in column 2, row 1 position (index 9)
- * @param {Number} m22 Component in column 2, row 2 position (index 10)
- * @param {Number} m23 Component in column 2, row 3 position (index 11)
- * @param {Number} m30 Component in column 3, row 0 position (index 12)
- * @param {Number} m31 Component in column 3, row 1 position (index 13)
- * @param {Number} m32 Component in column 3, row 2 position (index 14)
- * @param {Number} m33 Component in column 3, row 3 position (index 15)
- * @returns {mat4} out
- */
-
-
-function set(out, m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
-  out[0] = m00;
-  out[1] = m01;
-  out[2] = m02;
-  out[3] = m03;
-  out[4] = m10;
-  out[5] = m11;
-  out[6] = m12;
-  out[7] = m13;
-  out[8] = m20;
-  out[9] = m21;
-  out[10] = m22;
-  out[11] = m23;
-  out[12] = m30;
-  out[13] = m31;
-  out[14] = m32;
-  out[15] = m33;
-  return out;
-}
-/**
- * Set a mat4 to the identity matrix
- *
- * @param {mat4} out the receiving matrix
- * @returns {mat4} out
- */
-
-
-function identity(out) {
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = 1;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 0;
-  out[9] = 0;
-  out[10] = 1;
-  out[11] = 0;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = 0;
-  out[15] = 1;
-  return out;
-}
-/**
- * Transpose the values of a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-
-
-function transpose(out, a) {
-  // If we are transposing ourselves we can skip a few steps but have to cache some values
-  if (out === a) {
-    var a01 = a[1],
-        a02 = a[2],
-        a03 = a[3];
-    var a12 = a[6],
-        a13 = a[7];
-    var a23 = a[11];
-    out[1] = a[4];
-    out[2] = a[8];
-    out[3] = a[12];
-    out[4] = a01;
-    out[6] = a[9];
-    out[7] = a[13];
-    out[8] = a02;
-    out[9] = a12;
-    out[11] = a[14];
-    out[12] = a03;
-    out[13] = a13;
-    out[14] = a23;
+    environmentName = environmentNameFromArgv(argv);
   } else {
-    out[0] = a[0];
-    out[1] = a[4];
-    out[2] = a[8];
-    out[3] = a[12];
-    out[4] = a[1];
-    out[5] = a[5];
-    out[6] = a[9];
-    out[7] = a[13];
-    out[8] = a[2];
-    out[9] = a[6];
-    out[10] = a[10];
-    out[11] = a[14];
-    out[12] = a[3];
-    out[13] = a[7];
-    out[14] = a[11];
-    out[15] = a[15];
+    environmentName = environmentNameOrArgv;
   }
 
-  return out;
-}
-/**
- * Inverts a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
+  var json = readRCFile(),
+      environments = json.environments;
 
 
-function invert(out, a) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a03 = a[3];
-  var a10 = a[4],
-      a11 = a[5],
-      a12 = a[6],
-      a13 = a[7];
-  var a20 = a[8],
-      a21 = a[9],
-      a22 = a[10],
-      a23 = a[11];
-  var a30 = a[12],
-      a31 = a[13],
-      a32 = a[14],
-      a33 = a[15];
-  var b00 = a00 * a11 - a01 * a10;
-  var b01 = a00 * a12 - a02 * a10;
-  var b02 = a00 * a13 - a03 * a10;
-  var b03 = a01 * a12 - a02 * a11;
-  var b04 = a01 * a13 - a03 * a11;
-  var b05 = a02 * a13 - a03 * a12;
-  var b06 = a20 * a31 - a21 * a30;
-  var b07 = a20 * a32 - a22 * a30;
-  var b08 = a20 * a33 - a23 * a30;
-  var b09 = a21 * a32 - a22 * a31;
-  var b10 = a21 * a33 - a23 * a31;
-  var b11 = a22 * a33 - a23 * a32; // Calculate the determinant
+  if (environmentName === null) {
+    var firstEnvironment = first(environments);
 
-  var det = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-
-  if (!det) {
-    return null;
-  }
-
-  det = 1.0 / det;
-  out[0] = (a11 * b11 - a12 * b10 + a13 * b09) * det;
-  out[1] = (a02 * b10 - a01 * b11 - a03 * b09) * det;
-  out[2] = (a31 * b05 - a32 * b04 + a33 * b03) * det;
-  out[3] = (a22 * b04 - a21 * b05 - a23 * b03) * det;
-  out[4] = (a12 * b08 - a10 * b11 - a13 * b07) * det;
-  out[5] = (a00 * b11 - a02 * b08 + a03 * b07) * det;
-  out[6] = (a32 * b02 - a30 * b05 - a33 * b01) * det;
-  out[7] = (a20 * b05 - a22 * b02 + a23 * b01) * det;
-  out[8] = (a10 * b10 - a11 * b08 + a13 * b06) * det;
-  out[9] = (a01 * b08 - a00 * b10 - a03 * b06) * det;
-  out[10] = (a30 * b04 - a31 * b02 + a33 * b00) * det;
-  out[11] = (a21 * b02 - a20 * b04 - a23 * b00) * det;
-  out[12] = (a11 * b07 - a10 * b09 - a12 * b06) * det;
-  out[13] = (a00 * b09 - a01 * b07 + a02 * b06) * det;
-  out[14] = (a31 * b01 - a30 * b03 - a32 * b00) * det;
-  out[15] = (a20 * b03 - a21 * b01 + a22 * b00) * det;
-  return out;
-}
-/**
- * Calculates the adjugate of a mat4
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the source matrix
- * @returns {mat4} out
- */
-
-
-function adjoint(out, a) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a03 = a[3];
-  var a10 = a[4],
-      a11 = a[5],
-      a12 = a[6],
-      a13 = a[7];
-  var a20 = a[8],
-      a21 = a[9],
-      a22 = a[10],
-      a23 = a[11];
-  var a30 = a[12],
-      a31 = a[13],
-      a32 = a[14],
-      a33 = a[15];
-  out[0] = a11 * (a22 * a33 - a23 * a32) - a21 * (a12 * a33 - a13 * a32) + a31 * (a12 * a23 - a13 * a22);
-  out[1] = -(a01 * (a22 * a33 - a23 * a32) - a21 * (a02 * a33 - a03 * a32) + a31 * (a02 * a23 - a03 * a22));
-  out[2] = a01 * (a12 * a33 - a13 * a32) - a11 * (a02 * a33 - a03 * a32) + a31 * (a02 * a13 - a03 * a12);
-  out[3] = -(a01 * (a12 * a23 - a13 * a22) - a11 * (a02 * a23 - a03 * a22) + a21 * (a02 * a13 - a03 * a12));
-  out[4] = -(a10 * (a22 * a33 - a23 * a32) - a20 * (a12 * a33 - a13 * a32) + a30 * (a12 * a23 - a13 * a22));
-  out[5] = a00 * (a22 * a33 - a23 * a32) - a20 * (a02 * a33 - a03 * a32) + a30 * (a02 * a23 - a03 * a22);
-  out[6] = -(a00 * (a12 * a33 - a13 * a32) - a10 * (a02 * a33 - a03 * a32) + a30 * (a02 * a13 - a03 * a12));
-  out[7] = a00 * (a12 * a23 - a13 * a22) - a10 * (a02 * a23 - a03 * a22) + a20 * (a02 * a13 - a03 * a12);
-  out[8] = a10 * (a21 * a33 - a23 * a31) - a20 * (a11 * a33 - a13 * a31) + a30 * (a11 * a23 - a13 * a21);
-  out[9] = -(a00 * (a21 * a33 - a23 * a31) - a20 * (a01 * a33 - a03 * a31) + a30 * (a01 * a23 - a03 * a21));
-  out[10] = a00 * (a11 * a33 - a13 * a31) - a10 * (a01 * a33 - a03 * a31) + a30 * (a01 * a13 - a03 * a11);
-  out[11] = -(a00 * (a11 * a23 - a13 * a21) - a10 * (a01 * a23 - a03 * a21) + a20 * (a01 * a13 - a03 * a11));
-  out[12] = -(a10 * (a21 * a32 - a22 * a31) - a20 * (a11 * a32 - a12 * a31) + a30 * (a11 * a22 - a12 * a21));
-  out[13] = a00 * (a21 * a32 - a22 * a31) - a20 * (a01 * a32 - a02 * a31) + a30 * (a01 * a22 - a02 * a21);
-  out[14] = -(a00 * (a11 * a32 - a12 * a31) - a10 * (a01 * a32 - a02 * a31) + a30 * (a01 * a12 - a02 * a11));
-  out[15] = a00 * (a11 * a22 - a12 * a21) - a10 * (a01 * a22 - a02 * a21) + a20 * (a01 * a12 - a02 * a11);
-  return out;
-}
-/**
- * Calculates the determinant of a mat4
- *
- * @param {mat4} a the source matrix
- * @returns {Number} determinant of a
- */
-
-
-function determinant(a) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a03 = a[3];
-  var a10 = a[4],
-      a11 = a[5],
-      a12 = a[6],
-      a13 = a[7];
-  var a20 = a[8],
-      a21 = a[9],
-      a22 = a[10],
-      a23 = a[11];
-  var a30 = a[12],
-      a31 = a[13],
-      a32 = a[14],
-      a33 = a[15];
-  var b00 = a00 * a11 - a01 * a10;
-  var b01 = a00 * a12 - a02 * a10;
-  var b02 = a00 * a13 - a03 * a10;
-  var b03 = a01 * a12 - a02 * a11;
-  var b04 = a01 * a13 - a03 * a11;
-  var b05 = a02 * a13 - a03 * a12;
-  var b06 = a20 * a31 - a21 * a30;
-  var b07 = a20 * a32 - a22 * a30;
-  var b08 = a20 * a33 - a23 * a30;
-  var b09 = a21 * a32 - a22 * a31;
-  var b10 = a21 * a33 - a23 * a31;
-  var b11 = a22 * a33 - a23 * a32; // Calculate the determinant
-
-  return b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
-}
-/**
- * Multiplies two mat4s
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the first operand
- * @param {mat4} b the second operand
- * @returns {mat4} out
- */
-
-
-function multiply(out, a, b) {
-  var a00 = a[0],
-      a01 = a[1],
-      a02 = a[2],
-      a03 = a[3];
-  var a10 = a[4],
-      a11 = a[5],
-      a12 = a[6],
-      a13 = a[7];
-  var a20 = a[8],
-      a21 = a[9],
-      a22 = a[10],
-      a23 = a[11];
-  var a30 = a[12],
-      a31 = a[13],
-      a32 = a[14],
-      a33 = a[15]; // Cache only the current line of the second matrix
-
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3];
-  out[0] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[1] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[2] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[3] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  b0 = b[4];
-  b1 = b[5];
-  b2 = b[6];
-  b3 = b[7];
-  out[4] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[5] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[6] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[7] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  b0 = b[8];
-  b1 = b[9];
-  b2 = b[10];
-  b3 = b[11];
-  out[8] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[9] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[10] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[11] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  b0 = b[12];
-  b1 = b[13];
-  b2 = b[14];
-  b3 = b[15];
-  out[12] = b0 * a00 + b1 * a10 + b2 * a20 + b3 * a30;
-  out[13] = b0 * a01 + b1 * a11 + b2 * a21 + b3 * a31;
-  out[14] = b0 * a02 + b1 * a12 + b2 * a22 + b3 * a32;
-  out[15] = b0 * a03 + b1 * a13 + b2 * a23 + b3 * a33;
-  return out;
-}
-/**
- * Translate a mat4 by the given vector
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to translate
- * @param {vec3} v vector to translate by
- * @returns {mat4} out
- */
-
-
-function translate(out, a, v) {
-  var x = v[0],
-      y = v[1],
-      z = v[2];
-  var a00, a01, a02, a03;
-  var a10, a11, a12, a13;
-  var a20, a21, a22, a23;
-
-  if (a === out) {
-    out[12] = a[0] * x + a[4] * y + a[8] * z + a[12];
-    out[13] = a[1] * x + a[5] * y + a[9] * z + a[13];
-    out[14] = a[2] * x + a[6] * y + a[10] * z + a[14];
-    out[15] = a[3] * x + a[7] * y + a[11] * z + a[15];
+    environment = firstEnvironment; ///
   } else {
-    a00 = a[0];
-    a01 = a[1];
-    a02 = a[2];
-    a03 = a[3];
-    a10 = a[4];
-    a11 = a[5];
-    a12 = a[6];
-    a13 = a[7];
-    a20 = a[8];
-    a21 = a[9];
-    a22 = a[10];
-    a23 = a[11];
-    out[0] = a00;
-    out[1] = a01;
-    out[2] = a02;
-    out[3] = a03;
-    out[4] = a10;
-    out[5] = a11;
-    out[6] = a12;
-    out[7] = a13;
-    out[8] = a20;
-    out[9] = a21;
-    out[10] = a22;
-    out[11] = a23;
-    out[12] = a00 * x + a10 * y + a20 * z + a[12];
-    out[13] = a01 * x + a11 * y + a21 * z + a[13];
-    out[14] = a02 * x + a12 * y + a22 * z + a[14];
-    out[15] = a03 * x + a13 * y + a23 * z + a[15];
+    environment = environments.find(function (environment) {
+      var name = environment.name,
+          found = name === environmentName;
+
+
+      return found;
+    });
   }
 
-  return out;
+  delete environment.name;
+
+  Object.assign(rc, environment);
+
+  return environment;
 }
-/**
- * Scales the mat4 by the dimensions in the given vec3 not using vectorization
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to scale
- * @param {vec3} v the vec3 to scale the matrix by
- * @returns {mat4} out
- **/
 
+function readRCFile() {
+  var filePath = './.' + rcBaseExtension + 'rc',
+      absoluteFilePath = path.resolve(filePath),
+      fileContent = readFile(absoluteFilePath),
+      json = JSON.parse(fileContent);
 
-function scale(out, a, v) {
-  var x = v[0],
-      y = v[1],
-      z = v[2];
-  out[0] = a[0] * x;
-  out[1] = a[1] * x;
-  out[2] = a[2] * x;
-  out[3] = a[3] * x;
-  out[4] = a[4] * y;
-  out[5] = a[5] * y;
-  out[6] = a[6] * y;
-  out[7] = a[7] * y;
-  out[8] = a[8] * z;
-  out[9] = a[9] * z;
-  out[10] = a[10] * z;
-  out[11] = a[11] * z;
-  out[12] = a[12];
-  out[13] = a[13];
-  out[14] = a[14];
-  out[15] = a[15];
-  return out;
+  return json;
 }
-/**
- * Rotates a mat4 by the given angle around the given axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @param {vec3} axis the axis to rotate around
- * @returns {mat4} out
- */
 
+function writeRCFile(json) {
+  var filePath = './.' + rcBaseExtension + 'rc',
+      absoluteFilePath = path.resolve(filePath),
+      fileContent = JSON.stringify(json, null, '\t');
 
-function rotate(out, a, rad, axis) {
-  var x = axis[0],
-      y = axis[1],
-      z = axis[2];
-  var len = Math.hypot(x, y, z);
-  var s, c, t;
-  var a00, a01, a02, a03;
-  var a10, a11, a12, a13;
-  var a20, a21, a22, a23;
-  var b00, b01, b02;
-  var b10, b11, b12;
-  var b20, b21, b22;
+  writeFile(absoluteFilePath, fileContent);
+}
 
-  if (len < glMatrix.EPSILON) {
-    return null;
+function updateRCFile(addedPropperties) {
+  var json = readRCFile();
+
+  if (addedPropperties) {
+    Object.assign(json, addedPropperties);
   }
 
-  len = 1 / len;
-  x *= len;
-  y *= len;
-  z *= len;
-  s = Math.sin(rad);
-  c = Math.cos(rad);
-  t = 1 - c;
-  a00 = a[0];
-  a01 = a[1];
-  a02 = a[2];
-  a03 = a[3];
-  a10 = a[4];
-  a11 = a[5];
-  a12 = a[6];
-  a13 = a[7];
-  a20 = a[8];
-  a21 = a[9];
-  a22 = a[10];
-  a23 = a[11]; // Construct the elements of the rotation matrix
-
-  b00 = x * x * t + c;
-  b01 = y * x * t + z * s;
-  b02 = z * x * t - y * s;
-  b10 = x * y * t - z * s;
-  b11 = y * y * t + c;
-  b12 = z * y * t + x * s;
-  b20 = x * z * t + y * s;
-  b21 = y * z * t - x * s;
-  b22 = z * z * t + c; // Perform rotation-specific matrix multiplication
-
-  out[0] = a00 * b00 + a10 * b01 + a20 * b02;
-  out[1] = a01 * b00 + a11 * b01 + a21 * b02;
-  out[2] = a02 * b00 + a12 * b01 + a22 * b02;
-  out[3] = a03 * b00 + a13 * b01 + a23 * b02;
-  out[4] = a00 * b10 + a10 * b11 + a20 * b12;
-  out[5] = a01 * b10 + a11 * b11 + a21 * b12;
-  out[6] = a02 * b10 + a12 * b11 + a22 * b12;
-  out[7] = a03 * b10 + a13 * b11 + a23 * b12;
-  out[8] = a00 * b20 + a10 * b21 + a20 * b22;
-  out[9] = a01 * b20 + a11 * b21 + a21 * b22;
-  out[10] = a02 * b20 + a12 * b21 + a22 * b22;
-  out[11] = a03 * b20 + a13 * b21 + a23 * b22;
-
-  if (a !== out) {
-    // If the source and destination differ, copy the unchanged last row
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
+  for (var _len = arguments.length, deletedPropertyNames = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+    deletedPropertyNames[_key - 1] = arguments[_key];
   }
 
-  return out;
-}
-/**
- * Rotates a matrix by the given angle around the X axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-
-
-function rotateX(out, a, rad) {
-  var s = Math.sin(rad);
-  var c = Math.cos(rad);
-  var a10 = a[4];
-  var a11 = a[5];
-  var a12 = a[6];
-  var a13 = a[7];
-  var a20 = a[8];
-  var a21 = a[9];
-  var a22 = a[10];
-  var a23 = a[11];
-
-  if (a !== out) {
-    // If the source and destination differ, copy the unchanged rows
-    out[0] = a[0];
-    out[1] = a[1];
-    out[2] = a[2];
-    out[3] = a[3];
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-  } // Perform axis-specific matrix multiplication
-
-
-  out[4] = a10 * c + a20 * s;
-  out[5] = a11 * c + a21 * s;
-  out[6] = a12 * c + a22 * s;
-  out[7] = a13 * c + a23 * s;
-  out[8] = a20 * c - a10 * s;
-  out[9] = a21 * c - a11 * s;
-  out[10] = a22 * c - a12 * s;
-  out[11] = a23 * c - a13 * s;
-  return out;
-}
-/**
- * Rotates a matrix by the given angle around the Y axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-
-
-function rotateY(out, a, rad) {
-  var s = Math.sin(rad);
-  var c = Math.cos(rad);
-  var a00 = a[0];
-  var a01 = a[1];
-  var a02 = a[2];
-  var a03 = a[3];
-  var a20 = a[8];
-  var a21 = a[9];
-  var a22 = a[10];
-  var a23 = a[11];
-
-  if (a !== out) {
-    // If the source and destination differ, copy the unchanged rows
-    out[4] = a[4];
-    out[5] = a[5];
-    out[6] = a[6];
-    out[7] = a[7];
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-  } // Perform axis-specific matrix multiplication
-
-
-  out[0] = a00 * c - a20 * s;
-  out[1] = a01 * c - a21 * s;
-  out[2] = a02 * c - a22 * s;
-  out[3] = a03 * c - a23 * s;
-  out[8] = a00 * s + a20 * c;
-  out[9] = a01 * s + a21 * c;
-  out[10] = a02 * s + a22 * c;
-  out[11] = a03 * s + a23 * c;
-  return out;
-}
-/**
- * Rotates a matrix by the given angle around the Z axis
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to rotate
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-
-
-function rotateZ(out, a, rad) {
-  var s = Math.sin(rad);
-  var c = Math.cos(rad);
-  var a00 = a[0];
-  var a01 = a[1];
-  var a02 = a[2];
-  var a03 = a[3];
-  var a10 = a[4];
-  var a11 = a[5];
-  var a12 = a[6];
-  var a13 = a[7];
-
-  if (a !== out) {
-    // If the source and destination differ, copy the unchanged last row
-    out[8] = a[8];
-    out[9] = a[9];
-    out[10] = a[10];
-    out[11] = a[11];
-    out[12] = a[12];
-    out[13] = a[13];
-    out[14] = a[14];
-    out[15] = a[15];
-  } // Perform axis-specific matrix multiplication
-
-
-  out[0] = a00 * c + a10 * s;
-  out[1] = a01 * c + a11 * s;
-  out[2] = a02 * c + a12 * s;
-  out[3] = a03 * c + a13 * s;
-  out[4] = a10 * c - a00 * s;
-  out[5] = a11 * c - a01 * s;
-  out[6] = a12 * c - a02 * s;
-  out[7] = a13 * c - a03 * s;
-  return out;
-}
-/**
- * Creates a matrix from a vector translation
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.translate(dest, dest, vec);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {vec3} v Translation vector
- * @returns {mat4} out
- */
-
-
-function fromTranslation(out, v) {
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = 1;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 0;
-  out[9] = 0;
-  out[10] = 1;
-  out[11] = 0;
-  out[12] = v[0];
-  out[13] = v[1];
-  out[14] = v[2];
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a matrix from a vector scaling
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.scale(dest, dest, vec);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {vec3} v Scaling vector
- * @returns {mat4} out
- */
-
-
-function fromScaling(out, v) {
-  out[0] = v[0];
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = v[1];
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 0;
-  out[9] = 0;
-  out[10] = v[2];
-  out[11] = 0;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = 0;
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a matrix from a given angle around a given axis
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.rotate(dest, dest, rad, axis);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @param {vec3} axis the axis to rotate around
- * @returns {mat4} out
- */
-
-
-function fromRotation(out, rad, axis) {
-  var x = axis[0],
-      y = axis[1],
-      z = axis[2];
-  var len = Math.hypot(x, y, z);
-  var s, c, t;
-
-  if (len < glMatrix.EPSILON) {
-    return null;
-  }
-
-  len = 1 / len;
-  x *= len;
-  y *= len;
-  z *= len;
-  s = Math.sin(rad);
-  c = Math.cos(rad);
-  t = 1 - c; // Perform rotation-specific matrix multiplication
-
-  out[0] = x * x * t + c;
-  out[1] = y * x * t + z * s;
-  out[2] = z * x * t - y * s;
-  out[3] = 0;
-  out[4] = x * y * t - z * s;
-  out[5] = y * y * t + c;
-  out[6] = z * y * t + x * s;
-  out[7] = 0;
-  out[8] = x * z * t + y * s;
-  out[9] = y * z * t - x * s;
-  out[10] = z * z * t + c;
-  out[11] = 0;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = 0;
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a matrix from the given angle around the X axis
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.rotateX(dest, dest, rad);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-
-
-function fromXRotation(out, rad) {
-  var s = Math.sin(rad);
-  var c = Math.cos(rad); // Perform axis-specific matrix multiplication
-
-  out[0] = 1;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = c;
-  out[6] = s;
-  out[7] = 0;
-  out[8] = 0;
-  out[9] = -s;
-  out[10] = c;
-  out[11] = 0;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = 0;
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a matrix from the given angle around the Y axis
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.rotateY(dest, dest, rad);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-
-
-function fromYRotation(out, rad) {
-  var s = Math.sin(rad);
-  var c = Math.cos(rad); // Perform axis-specific matrix multiplication
-
-  out[0] = c;
-  out[1] = 0;
-  out[2] = -s;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = 1;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = s;
-  out[9] = 0;
-  out[10] = c;
-  out[11] = 0;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = 0;
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a matrix from the given angle around the Z axis
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.rotateZ(dest, dest, rad);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {Number} rad the angle to rotate the matrix by
- * @returns {mat4} out
- */
-
-
-function fromZRotation(out, rad) {
-  var s = Math.sin(rad);
-  var c = Math.cos(rad); // Perform axis-specific matrix multiplication
-
-  out[0] = c;
-  out[1] = s;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = -s;
-  out[5] = c;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 0;
-  out[9] = 0;
-  out[10] = 1;
-  out[11] = 0;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = 0;
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a matrix from a quaternion rotation and vector translation
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.translate(dest, vec);
- *     let quatMat = mat4.create();
- *     quat4.toMat4(quat, quatMat);
- *     mat4.multiply(dest, quatMat);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {quat4} q Rotation quaternion
- * @param {vec3} v Translation vector
- * @returns {mat4} out
- */
-
-
-function fromRotationTranslation(out, q, v) {
-  // Quaternion math
-  var x = q[0],
-      y = q[1],
-      z = q[2],
-      w = q[3];
-  var x2 = x + x;
-  var y2 = y + y;
-  var z2 = z + z;
-  var xx = x * x2;
-  var xy = x * y2;
-  var xz = x * z2;
-  var yy = y * y2;
-  var yz = y * z2;
-  var zz = z * z2;
-  var wx = w * x2;
-  var wy = w * y2;
-  var wz = w * z2;
-  out[0] = 1 - (yy + zz);
-  out[1] = xy + wz;
-  out[2] = xz - wy;
-  out[3] = 0;
-  out[4] = xy - wz;
-  out[5] = 1 - (xx + zz);
-  out[6] = yz + wx;
-  out[7] = 0;
-  out[8] = xz + wy;
-  out[9] = yz - wx;
-  out[10] = 1 - (xx + yy);
-  out[11] = 0;
-  out[12] = v[0];
-  out[13] = v[1];
-  out[14] = v[2];
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a new mat4 from a dual quat.
- *
- * @param {mat4} out Matrix
- * @param {quat2} a Dual Quaternion
- * @returns {mat4} mat4 receiving operation result
- */
-
-
-function fromQuat2(out, a) {
-  var translation = new glMatrix.ARRAY_TYPE(3);
-  var bx = -a[0],
-      by = -a[1],
-      bz = -a[2],
-      bw = a[3],
-      ax = a[4],
-      ay = a[5],
-      az = a[6],
-      aw = a[7];
-  var magnitude = bx * bx + by * by + bz * bz + bw * bw; //Only scale if it makes sense
-
-  if (magnitude > 0) {
-    translation[0] = (ax * bw + aw * bx + ay * bz - az * by) * 2 / magnitude;
-    translation[1] = (ay * bw + aw * by + az * bx - ax * bz) * 2 / magnitude;
-    translation[2] = (az * bw + aw * bz + ax * by - ay * bx) * 2 / magnitude;
-  } else {
-    translation[0] = (ax * bw + aw * bx + ay * bz - az * by) * 2;
-    translation[1] = (ay * bw + aw * by + az * bx - ax * bz) * 2;
-    translation[2] = (az * bw + aw * bz + ax * by - ay * bx) * 2;
-  }
-
-  fromRotationTranslation(out, a, translation);
-  return out;
-}
-/**
- * Returns the translation vector component of a transformation
- *  matrix. If a matrix is built with fromRotationTranslation,
- *  the returned vector will be the same as the translation vector
- *  originally supplied.
- * @param  {vec3} out Vector to receive translation component
- * @param  {mat4} mat Matrix to be decomposed (input)
- * @return {vec3} out
- */
-
-
-function getTranslation(out, mat) {
-  out[0] = mat[12];
-  out[1] = mat[13];
-  out[2] = mat[14];
-  return out;
-}
-/**
- * Returns the scaling factor component of a transformation
- *  matrix. If a matrix is built with fromRotationTranslationScale
- *  with a normalized Quaternion paramter, the returned vector will be
- *  the same as the scaling vector
- *  originally supplied.
- * @param  {vec3} out Vector to receive scaling factor component
- * @param  {mat4} mat Matrix to be decomposed (input)
- * @return {vec3} out
- */
-
-
-function getScaling(out, mat) {
-  var m11 = mat[0];
-  var m12 = mat[1];
-  var m13 = mat[2];
-  var m21 = mat[4];
-  var m22 = mat[5];
-  var m23 = mat[6];
-  var m31 = mat[8];
-  var m32 = mat[9];
-  var m33 = mat[10];
-  out[0] = Math.hypot(m11, m12, m13);
-  out[1] = Math.hypot(m21, m22, m23);
-  out[2] = Math.hypot(m31, m32, m33);
-  return out;
-}
-/**
- * Returns a quaternion representing the rotational component
- *  of a transformation matrix. If a matrix is built with
- *  fromRotationTranslation, the returned quaternion will be the
- *  same as the quaternion originally supplied.
- * @param {quat} out Quaternion to receive the rotation component
- * @param {mat4} mat Matrix to be decomposed (input)
- * @return {quat} out
- */
-
-
-function getRotation(out, mat) {
-  var scaling = new glMatrix.ARRAY_TYPE(3);
-  getScaling(scaling, mat);
-  var is1 = 1 / scaling[0];
-  var is2 = 1 / scaling[1];
-  var is3 = 1 / scaling[2];
-  var sm11 = mat[0] * is1;
-  var sm12 = mat[1] * is2;
-  var sm13 = mat[2] * is3;
-  var sm21 = mat[4] * is1;
-  var sm22 = mat[5] * is2;
-  var sm23 = mat[6] * is3;
-  var sm31 = mat[8] * is1;
-  var sm32 = mat[9] * is2;
-  var sm33 = mat[10] * is3;
-  var trace = sm11 + sm22 + sm33;
-  var S = 0;
-
-  if (trace > 0) {
-    S = Math.sqrt(trace + 1.0) * 2;
-    out[3] = 0.25 * S;
-    out[0] = (sm23 - sm32) / S;
-    out[1] = (sm31 - sm13) / S;
-    out[2] = (sm12 - sm21) / S;
-  } else if (sm11 > sm22 && sm11 > sm33) {
-    S = Math.sqrt(1.0 + sm11 - sm22 - sm33) * 2;
-    out[3] = (sm23 - sm32) / S;
-    out[0] = 0.25 * S;
-    out[1] = (sm12 + sm21) / S;
-    out[2] = (sm31 + sm13) / S;
-  } else if (sm22 > sm33) {
-    S = Math.sqrt(1.0 + sm22 - sm11 - sm33) * 2;
-    out[3] = (sm31 - sm13) / S;
-    out[0] = (sm12 + sm21) / S;
-    out[1] = 0.25 * S;
-    out[2] = (sm23 + sm32) / S;
-  } else {
-    S = Math.sqrt(1.0 + sm33 - sm11 - sm22) * 2;
-    out[3] = (sm12 - sm21) / S;
-    out[0] = (sm31 + sm13) / S;
-    out[1] = (sm23 + sm32) / S;
-    out[2] = 0.25 * S;
-  }
-
-  return out;
-}
-/**
- * Creates a matrix from a quaternion rotation, vector translation and vector scale
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.translate(dest, vec);
- *     let quatMat = mat4.create();
- *     quat4.toMat4(quat, quatMat);
- *     mat4.multiply(dest, quatMat);
- *     mat4.scale(dest, scale)
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {quat4} q Rotation quaternion
- * @param {vec3} v Translation vector
- * @param {vec3} s Scaling vector
- * @returns {mat4} out
- */
-
-
-function fromRotationTranslationScale(out, q, v, s) {
-  // Quaternion math
-  var x = q[0],
-      y = q[1],
-      z = q[2],
-      w = q[3];
-  var x2 = x + x;
-  var y2 = y + y;
-  var z2 = z + z;
-  var xx = x * x2;
-  var xy = x * y2;
-  var xz = x * z2;
-  var yy = y * y2;
-  var yz = y * z2;
-  var zz = z * z2;
-  var wx = w * x2;
-  var wy = w * y2;
-  var wz = w * z2;
-  var sx = s[0];
-  var sy = s[1];
-  var sz = s[2];
-  out[0] = (1 - (yy + zz)) * sx;
-  out[1] = (xy + wz) * sx;
-  out[2] = (xz - wy) * sx;
-  out[3] = 0;
-  out[4] = (xy - wz) * sy;
-  out[5] = (1 - (xx + zz)) * sy;
-  out[6] = (yz + wx) * sy;
-  out[7] = 0;
-  out[8] = (xz + wy) * sz;
-  out[9] = (yz - wx) * sz;
-  out[10] = (1 - (xx + yy)) * sz;
-  out[11] = 0;
-  out[12] = v[0];
-  out[13] = v[1];
-  out[14] = v[2];
-  out[15] = 1;
-  return out;
-}
-/**
- * Creates a matrix from a quaternion rotation, vector translation and vector scale, rotating and scaling around the given origin
- * This is equivalent to (but much faster than):
- *
- *     mat4.identity(dest);
- *     mat4.translate(dest, vec);
- *     mat4.translate(dest, origin);
- *     let quatMat = mat4.create();
- *     quat4.toMat4(quat, quatMat);
- *     mat4.multiply(dest, quatMat);
- *     mat4.scale(dest, scale)
- *     mat4.translate(dest, negativeOrigin);
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {quat4} q Rotation quaternion
- * @param {vec3} v Translation vector
- * @param {vec3} s Scaling vector
- * @param {vec3} o The origin vector around which to scale and rotate
- * @returns {mat4} out
- */
-
-
-function fromRotationTranslationScaleOrigin(out, q, v, s, o) {
-  // Quaternion math
-  var x = q[0],
-      y = q[1],
-      z = q[2],
-      w = q[3];
-  var x2 = x + x;
-  var y2 = y + y;
-  var z2 = z + z;
-  var xx = x * x2;
-  var xy = x * y2;
-  var xz = x * z2;
-  var yy = y * y2;
-  var yz = y * z2;
-  var zz = z * z2;
-  var wx = w * x2;
-  var wy = w * y2;
-  var wz = w * z2;
-  var sx = s[0];
-  var sy = s[1];
-  var sz = s[2];
-  var ox = o[0];
-  var oy = o[1];
-  var oz = o[2];
-  var out0 = (1 - (yy + zz)) * sx;
-  var out1 = (xy + wz) * sx;
-  var out2 = (xz - wy) * sx;
-  var out4 = (xy - wz) * sy;
-  var out5 = (1 - (xx + zz)) * sy;
-  var out6 = (yz + wx) * sy;
-  var out8 = (xz + wy) * sz;
-  var out9 = (yz - wx) * sz;
-  var out10 = (1 - (xx + yy)) * sz;
-  out[0] = out0;
-  out[1] = out1;
-  out[2] = out2;
-  out[3] = 0;
-  out[4] = out4;
-  out[5] = out5;
-  out[6] = out6;
-  out[7] = 0;
-  out[8] = out8;
-  out[9] = out9;
-  out[10] = out10;
-  out[11] = 0;
-  out[12] = v[0] + ox - (out0 * ox + out4 * oy + out8 * oz);
-  out[13] = v[1] + oy - (out1 * ox + out5 * oy + out9 * oz);
-  out[14] = v[2] + oz - (out2 * ox + out6 * oy + out10 * oz);
-  out[15] = 1;
-  return out;
-}
-/**
- * Calculates a 4x4 matrix from the given quaternion
- *
- * @param {mat4} out mat4 receiving operation result
- * @param {quat} q Quaternion to create matrix from
- *
- * @returns {mat4} out
- */
-
-
-function fromQuat(out, q) {
-  var x = q[0],
-      y = q[1],
-      z = q[2],
-      w = q[3];
-  var x2 = x + x;
-  var y2 = y + y;
-  var z2 = z + z;
-  var xx = x * x2;
-  var yx = y * x2;
-  var yy = y * y2;
-  var zx = z * x2;
-  var zy = z * y2;
-  var zz = z * z2;
-  var wx = w * x2;
-  var wy = w * y2;
-  var wz = w * z2;
-  out[0] = 1 - yy - zz;
-  out[1] = yx + wz;
-  out[2] = zx - wy;
-  out[3] = 0;
-  out[4] = yx - wz;
-  out[5] = 1 - xx - zz;
-  out[6] = zy + wx;
-  out[7] = 0;
-  out[8] = zx + wy;
-  out[9] = zy - wx;
-  out[10] = 1 - xx - yy;
-  out[11] = 0;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = 0;
-  out[15] = 1;
-  return out;
-}
-/**
- * Generates a frustum matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {Number} left Left bound of the frustum
- * @param {Number} right Right bound of the frustum
- * @param {Number} bottom Bottom bound of the frustum
- * @param {Number} top Top bound of the frustum
- * @param {Number} near Near bound of the frustum
- * @param {Number} far Far bound of the frustum
- * @returns {mat4} out
- */
-
-
-function frustum(out, left, right, bottom, top, near, far) {
-  var rl = 1 / (right - left);
-  var tb = 1 / (top - bottom);
-  var nf = 1 / (near - far);
-  out[0] = near * 2 * rl;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = near * 2 * tb;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = (right + left) * rl;
-  out[9] = (top + bottom) * tb;
-  out[10] = (far + near) * nf;
-  out[11] = -1;
-  out[12] = 0;
-  out[13] = 0;
-  out[14] = far * near * 2 * nf;
-  out[15] = 0;
-  return out;
-}
-/**
- * Generates a perspective projection matrix with the given bounds.
- * Passing null/undefined/no value for far will generate infinite projection matrix.
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} fovy Vertical field of view in radians
- * @param {number} aspect Aspect ratio. typically viewport width/height
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum, can be null or Infinity
- * @returns {mat4} out
- */
-
-
-function perspective(out, fovy, aspect, near, far) {
-  var f = 1.0 / Math.tan(fovy / 2),
-      nf;
-  out[0] = f / aspect;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = f;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 0;
-  out[9] = 0;
-  out[11] = -1;
-  out[12] = 0;
-  out[13] = 0;
-  out[15] = 0;
-
-  if (far != null && far !== Infinity) {
-    nf = 1 / (near - far);
-    out[10] = (far + near) * nf;
-    out[14] = 2 * far * near * nf;
-  } else {
-    out[10] = -1;
-    out[14] = -2 * near;
-  }
-
-  return out;
-}
-/**
- * Generates a perspective projection matrix with the given field of view.
- * This is primarily useful for generating projection matrices to be used
- * with the still experiemental WebVR API.
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {Object} fov Object containing the following values: upDegrees, downDegrees, leftDegrees, rightDegrees
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum
- * @returns {mat4} out
- */
-
-
-function perspectiveFromFieldOfView(out, fov, near, far) {
-  var upTan = Math.tan(fov.upDegrees * Math.PI / 180.0);
-  var downTan = Math.tan(fov.downDegrees * Math.PI / 180.0);
-  var leftTan = Math.tan(fov.leftDegrees * Math.PI / 180.0);
-  var rightTan = Math.tan(fov.rightDegrees * Math.PI / 180.0);
-  var xScale = 2.0 / (leftTan + rightTan);
-  var yScale = 2.0 / (upTan + downTan);
-  out[0] = xScale;
-  out[1] = 0.0;
-  out[2] = 0.0;
-  out[3] = 0.0;
-  out[4] = 0.0;
-  out[5] = yScale;
-  out[6] = 0.0;
-  out[7] = 0.0;
-  out[8] = -((leftTan - rightTan) * xScale * 0.5);
-  out[9] = (upTan - downTan) * yScale * 0.5;
-  out[10] = far / (near - far);
-  out[11] = -1.0;
-  out[12] = 0.0;
-  out[13] = 0.0;
-  out[14] = far * near / (near - far);
-  out[15] = 0.0;
-  return out;
-}
-/**
- * Generates a orthogonal projection matrix with the given bounds
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {number} left Left bound of the frustum
- * @param {number} right Right bound of the frustum
- * @param {number} bottom Bottom bound of the frustum
- * @param {number} top Top bound of the frustum
- * @param {number} near Near bound of the frustum
- * @param {number} far Far bound of the frustum
- * @returns {mat4} out
- */
-
-
-function ortho(out, left, right, bottom, top, near, far) {
-  var lr = 1 / (left - right);
-  var bt = 1 / (bottom - top);
-  var nf = 1 / (near - far);
-  out[0] = -2 * lr;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 0;
-  out[4] = 0;
-  out[5] = -2 * bt;
-  out[6] = 0;
-  out[7] = 0;
-  out[8] = 0;
-  out[9] = 0;
-  out[10] = 2 * nf;
-  out[11] = 0;
-  out[12] = (left + right) * lr;
-  out[13] = (top + bottom) * bt;
-  out[14] = (far + near) * nf;
-  out[15] = 1;
-  return out;
-}
-/**
- * Generates a look-at matrix with the given eye position, focal point, and up axis.
- * If you want a matrix that actually makes an object look at another object, you should use targetTo instead.
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {vec3} eye Position of the viewer
- * @param {vec3} center Point the viewer is looking at
- * @param {vec3} up vec3 pointing up
- * @returns {mat4} out
- */
-
-
-function lookAt(out, eye, center, up) {
-  var x0, x1, x2, y0, y1, y2, z0, z1, z2, len;
-  var eyex = eye[0];
-  var eyey = eye[1];
-  var eyez = eye[2];
-  var upx = up[0];
-  var upy = up[1];
-  var upz = up[2];
-  var centerx = center[0];
-  var centery = center[1];
-  var centerz = center[2];
-
-  if (Math.abs(eyex - centerx) < glMatrix.EPSILON && Math.abs(eyey - centery) < glMatrix.EPSILON && Math.abs(eyez - centerz) < glMatrix.EPSILON) {
-    return identity(out);
-  }
-
-  z0 = eyex - centerx;
-  z1 = eyey - centery;
-  z2 = eyez - centerz;
-  len = 1 / Math.hypot(z0, z1, z2);
-  z0 *= len;
-  z1 *= len;
-  z2 *= len;
-  x0 = upy * z2 - upz * z1;
-  x1 = upz * z0 - upx * z2;
-  x2 = upx * z1 - upy * z0;
-  len = Math.hypot(x0, x1, x2);
-
-  if (!len) {
-    x0 = 0;
-    x1 = 0;
-    x2 = 0;
-  } else {
-    len = 1 / len;
-    x0 *= len;
-    x1 *= len;
-    x2 *= len;
-  }
-
-  y0 = z1 * x2 - z2 * x1;
-  y1 = z2 * x0 - z0 * x2;
-  y2 = z0 * x1 - z1 * x0;
-  len = Math.hypot(y0, y1, y2);
-
-  if (!len) {
-    y0 = 0;
-    y1 = 0;
-    y2 = 0;
-  } else {
-    len = 1 / len;
-    y0 *= len;
-    y1 *= len;
-    y2 *= len;
-  }
-
-  out[0] = x0;
-  out[1] = y0;
-  out[2] = z0;
-  out[3] = 0;
-  out[4] = x1;
-  out[5] = y1;
-  out[6] = z1;
-  out[7] = 0;
-  out[8] = x2;
-  out[9] = y2;
-  out[10] = z2;
-  out[11] = 0;
-  out[12] = -(x0 * eyex + x1 * eyey + x2 * eyez);
-  out[13] = -(y0 * eyex + y1 * eyey + y2 * eyez);
-  out[14] = -(z0 * eyex + z1 * eyey + z2 * eyez);
-  out[15] = 1;
-  return out;
-}
-/**
- * Generates a matrix that makes something look at something else.
- *
- * @param {mat4} out mat4 frustum matrix will be written into
- * @param {vec3} eye Position of the viewer
- * @param {vec3} center Point the viewer is looking at
- * @param {vec3} up vec3 pointing up
- * @returns {mat4} out
- */
-
-
-function targetTo(out, eye, target, up) {
-  var eyex = eye[0],
-      eyey = eye[1],
-      eyez = eye[2],
-      upx = up[0],
-      upy = up[1],
-      upz = up[2];
-  var z0 = eyex - target[0],
-      z1 = eyey - target[1],
-      z2 = eyez - target[2];
-  var len = z0 * z0 + z1 * z1 + z2 * z2;
-
-  if (len > 0) {
-    len = 1 / Math.sqrt(len);
-    z0 *= len;
-    z1 *= len;
-    z2 *= len;
-  }
-
-  var x0 = upy * z2 - upz * z1,
-      x1 = upz * z0 - upx * z2,
-      x2 = upx * z1 - upy * z0;
-  len = x0 * x0 + x1 * x1 + x2 * x2;
-
-  if (len > 0) {
-    len = 1 / Math.sqrt(len);
-    x0 *= len;
-    x1 *= len;
-    x2 *= len;
-  }
-
-  out[0] = x0;
-  out[1] = x1;
-  out[2] = x2;
-  out[3] = 0;
-  out[4] = z1 * x2 - z2 * x1;
-  out[5] = z2 * x0 - z0 * x2;
-  out[6] = z0 * x1 - z1 * x0;
-  out[7] = 0;
-  out[8] = z0;
-  out[9] = z1;
-  out[10] = z2;
-  out[11] = 0;
-  out[12] = eyex;
-  out[13] = eyey;
-  out[14] = eyez;
-  out[15] = 1;
-  return out;
+  deletedPropertyNames.forEach(function (deletedPropertyName) {
+    delete json[deletedPropertyName];
+  });
+
+  writeRCFile(json);
 }
 
-;
-/**
- * Returns a string representation of a mat4
- *
- * @param {mat4} a matrix to represent as a string
- * @returns {String} string representation of the matrix
- */
-
-function str(a) {
-  return 'mat4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ', ' + a[8] + ', ' + a[9] + ', ' + a[10] + ', ' + a[11] + ', ' + a[12] + ', ' + a[13] + ', ' + a[14] + ', ' + a[15] + ')';
+function setRCBaseExtension(baseExtension) {
+  rcBaseExtension = baseExtension;
 }
-/**
- * Returns Frobenius norm of a mat4
- *
- * @param {mat4} a the matrix to calculate Frobenius norm of
- * @returns {Number} Frobenius norm
- */
 
-
-function frob(a) {
-  return Math.hypot(a[0], a[1], a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12], a[13], a[14], a[15]);
-}
-/**
- * Adds two mat4's
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the first operand
- * @param {mat4} b the second operand
- * @returns {mat4} out
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  out[2] = a[2] + b[2];
-  out[3] = a[3] + b[3];
-  out[4] = a[4] + b[4];
-  out[5] = a[5] + b[5];
-  out[6] = a[6] + b[6];
-  out[7] = a[7] + b[7];
-  out[8] = a[8] + b[8];
-  out[9] = a[9] + b[9];
-  out[10] = a[10] + b[10];
-  out[11] = a[11] + b[11];
-  out[12] = a[12] + b[12];
-  out[13] = a[13] + b[13];
-  out[14] = a[14] + b[14];
-  out[15] = a[15] + b[15];
-  return out;
-}
-/**
- * Subtracts matrix b from matrix a
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the first operand
- * @param {mat4} b the second operand
- * @returns {mat4} out
- */
-
-
-function subtract(out, a, b) {
-  out[0] = a[0] - b[0];
-  out[1] = a[1] - b[1];
-  out[2] = a[2] - b[2];
-  out[3] = a[3] - b[3];
-  out[4] = a[4] - b[4];
-  out[5] = a[5] - b[5];
-  out[6] = a[6] - b[6];
-  out[7] = a[7] - b[7];
-  out[8] = a[8] - b[8];
-  out[9] = a[9] - b[9];
-  out[10] = a[10] - b[10];
-  out[11] = a[11] - b[11];
-  out[12] = a[12] - b[12];
-  out[13] = a[13] - b[13];
-  out[14] = a[14] - b[14];
-  out[15] = a[15] - b[15];
-  return out;
-}
-/**
- * Multiply each element of the matrix by a scalar.
- *
- * @param {mat4} out the receiving matrix
- * @param {mat4} a the matrix to scale
- * @param {Number} b amount to scale the matrix's elements by
- * @returns {mat4} out
- */
-
-
-function multiplyScalar(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  out[2] = a[2] * b;
-  out[3] = a[3] * b;
-  out[4] = a[4] * b;
-  out[5] = a[5] * b;
-  out[6] = a[6] * b;
-  out[7] = a[7] * b;
-  out[8] = a[8] * b;
-  out[9] = a[9] * b;
-  out[10] = a[10] * b;
-  out[11] = a[11] * b;
-  out[12] = a[12] * b;
-  out[13] = a[13] * b;
-  out[14] = a[14] * b;
-  out[15] = a[15] * b;
-  return out;
-}
-/**
- * Adds two mat4's after multiplying each element of the second operand by a scalar value.
- *
- * @param {mat4} out the receiving vector
- * @param {mat4} a the first operand
- * @param {mat4} b the second operand
- * @param {Number} scale the amount to scale b's elements by before adding
- * @returns {mat4} out
- */
-
-
-function multiplyScalarAndAdd(out, a, b, scale) {
-  out[0] = a[0] + b[0] * scale;
-  out[1] = a[1] + b[1] * scale;
-  out[2] = a[2] + b[2] * scale;
-  out[3] = a[3] + b[3] * scale;
-  out[4] = a[4] + b[4] * scale;
-  out[5] = a[5] + b[5] * scale;
-  out[6] = a[6] + b[6] * scale;
-  out[7] = a[7] + b[7] * scale;
-  out[8] = a[8] + b[8] * scale;
-  out[9] = a[9] + b[9] * scale;
-  out[10] = a[10] + b[10] * scale;
-  out[11] = a[11] + b[11] * scale;
-  out[12] = a[12] + b[12] * scale;
-  out[13] = a[13] + b[13] * scale;
-  out[14] = a[14] + b[14] * scale;
-  out[15] = a[15] + b[15] * scale;
-  return out;
-}
-/**
- * Returns whether or not the matrices have exactly the same elements in the same position (when compared with ===)
- *
- * @param {mat4} a The first matrix.
- * @param {mat4} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5] && a[6] === b[6] && a[7] === b[7] && a[8] === b[8] && a[9] === b[9] && a[10] === b[10] && a[11] === b[11] && a[12] === b[12] && a[13] === b[13] && a[14] === b[14] && a[15] === b[15];
-}
-/**
- * Returns whether or not the matrices have approximately the same elements in the same position.
- *
- * @param {mat4} a The first matrix.
- * @param {mat4} b The second matrix.
- * @returns {Boolean} True if the matrices are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3];
-  var a4 = a[4],
-      a5 = a[5],
-      a6 = a[6],
-      a7 = a[7];
-  var a8 = a[8],
-      a9 = a[9],
-      a10 = a[10],
-      a11 = a[11];
-  var a12 = a[12],
-      a13 = a[13],
-      a14 = a[14],
-      a15 = a[15];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3];
-  var b4 = b[4],
-      b5 = b[5],
-      b6 = b[6],
-      b7 = b[7];
-  var b8 = b[8],
-      b9 = b[9],
-      b10 = b[10],
-      b11 = b[11];
-  var b12 = b[12],
-      b13 = b[13],
-      b14 = b[14],
-      b15 = b[15];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5)) && Math.abs(a6 - b6) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a6), Math.abs(b6)) && Math.abs(a7 - b7) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a7), Math.abs(b7)) && Math.abs(a8 - b8) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a8), Math.abs(b8)) && Math.abs(a9 - b9) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a9), Math.abs(b9)) && Math.abs(a10 - b10) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a10), Math.abs(b10)) && Math.abs(a11 - b11) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a11), Math.abs(b11)) && Math.abs(a12 - b12) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a12), Math.abs(b12)) && Math.abs(a13 - b13) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a13), Math.abs(b13)) && Math.abs(a14 - b14) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a14), Math.abs(b14)) && Math.abs(a15 - b15) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a15), Math.abs(b15));
-}
-/**
- * Alias for {@link mat4.multiply}
- * @function
- */
-
-
-var mul = multiply;
-/**
- * Alias for {@link mat4.subtract}
- * @function
- */
-
-exports.mul = mul;
-var sub = subtract;
-exports.sub = sub;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/vec3.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.assign(rc, {
+  readRCFile: readRCFile,
+  writeRCFile: writeRCFile,
+  updateRCFile: updateRCFile,
+  setRCBaseExtension: setRCBaseExtension
 });
-exports.create = create;
-exports.clone = clone;
-exports.length = length;
-exports.fromValues = fromValues;
-exports.copy = copy;
-exports.set = set;
-exports.add = add;
-exports.subtract = subtract;
-exports.multiply = multiply;
-exports.divide = divide;
-exports.ceil = ceil;
-exports.floor = floor;
-exports.min = min;
-exports.max = max;
-exports.round = round;
-exports.scale = scale;
-exports.scaleAndAdd = scaleAndAdd;
-exports.distance = distance;
-exports.squaredDistance = squaredDistance;
-exports.squaredLength = squaredLength;
-exports.negate = negate;
-exports.inverse = inverse;
-exports.normalize = normalize;
-exports.dot = dot;
-exports.cross = cross;
-exports.lerp = lerp;
-exports.hermite = hermite;
-exports.bezier = bezier;
-exports.random = random;
-exports.transformMat4 = transformMat4;
-exports.transformMat3 = transformMat3;
-exports.transformQuat = transformQuat;
-exports.rotateX = rotateX;
-exports.rotateY = rotateY;
-exports.rotateZ = rotateZ;
-exports.angle = angle;
-exports.zero = zero;
-exports.str = str;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.forEach = exports.sqrLen = exports.len = exports.sqrDist = exports.dist = exports.div = exports.mul = exports.sub = void 0;
 
-var glMatrix = _interopRequireWildcard(require("./common.js"));
+module.exports = rc;
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+function environmentNameFromArgv(argv) {
+  var environmentName = null;
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+  argv.find(function (argument) {
+    ///
+    var matches = argument.match(/\-\-environment=(.+)/),
+        found = matches !== null;
 
-/**
- * 3 Dimensional Vector
- * @module vec3
- */
+    if (found) {
+      var secondMatch = second(matches);
 
-/**
- * Creates a new, empty vec3
- *
- * @returns {vec3} a new 3D vector
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(3);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-  }
-
-  return out;
-}
-/**
- * Creates a new vec3 initialized with values from an existing vector
- *
- * @param {vec3} a vector to clone
- * @returns {vec3} a new 3D vector
- */
-
-
-function clone(a) {
-  var out = new glMatrix.ARRAY_TYPE(3);
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  return out;
-}
-/**
- * Calculates the length of a vec3
- *
- * @param {vec3} a vector to calculate length of
- * @returns {Number} length of a
- */
-
-
-function length(a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  return Math.hypot(x, y, z);
-}
-/**
- * Creates a new vec3 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @returns {vec3} a new 3D vector
- */
-
-
-function fromValues(x, y, z) {
-  var out = new glMatrix.ARRAY_TYPE(3);
-  out[0] = x;
-  out[1] = y;
-  out[2] = z;
-  return out;
-}
-/**
- * Copy the values from one vec3 to another
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the source vector
- * @returns {vec3} out
- */
-
-
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  return out;
-}
-/**
- * Set the components of a vec3 to the given values
- *
- * @param {vec3} out the receiving vector
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @returns {vec3} out
- */
-
-
-function set(out, x, y, z) {
-  out[0] = x;
-  out[1] = y;
-  out[2] = z;
-  return out;
-}
-/**
- * Adds two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  out[2] = a[2] + b[2];
-  return out;
-}
-/**
- * Subtracts vector b from vector a
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function subtract(out, a, b) {
-  out[0] = a[0] - b[0];
-  out[1] = a[1] - b[1];
-  out[2] = a[2] - b[2];
-  return out;
-}
-/**
- * Multiplies two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function multiply(out, a, b) {
-  out[0] = a[0] * b[0];
-  out[1] = a[1] * b[1];
-  out[2] = a[2] * b[2];
-  return out;
-}
-/**
- * Divides two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function divide(out, a, b) {
-  out[0] = a[0] / b[0];
-  out[1] = a[1] / b[1];
-  out[2] = a[2] / b[2];
-  return out;
-}
-/**
- * Math.ceil the components of a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to ceil
- * @returns {vec3} out
- */
-
-
-function ceil(out, a) {
-  out[0] = Math.ceil(a[0]);
-  out[1] = Math.ceil(a[1]);
-  out[2] = Math.ceil(a[2]);
-  return out;
-}
-/**
- * Math.floor the components of a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to floor
- * @returns {vec3} out
- */
-
-
-function floor(out, a) {
-  out[0] = Math.floor(a[0]);
-  out[1] = Math.floor(a[1]);
-  out[2] = Math.floor(a[2]);
-  return out;
-}
-/**
- * Returns the minimum of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function min(out, a, b) {
-  out[0] = Math.min(a[0], b[0]);
-  out[1] = Math.min(a[1], b[1]);
-  out[2] = Math.min(a[2], b[2]);
-  return out;
-}
-/**
- * Returns the maximum of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function max(out, a, b) {
-  out[0] = Math.max(a[0], b[0]);
-  out[1] = Math.max(a[1], b[1]);
-  out[2] = Math.max(a[2], b[2]);
-  return out;
-}
-/**
- * Math.round the components of a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to round
- * @returns {vec3} out
- */
-
-
-function round(out, a) {
-  out[0] = Math.round(a[0]);
-  out[1] = Math.round(a[1]);
-  out[2] = Math.round(a[2]);
-  return out;
-}
-/**
- * Scales a vec3 by a scalar number
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {vec3} out
- */
-
-
-function scale(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  out[2] = a[2] * b;
-  return out;
-}
-/**
- * Adds two vec3's after scaling the second operand by a scalar value
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @param {Number} scale the amount to scale b by before adding
- * @returns {vec3} out
- */
-
-
-function scaleAndAdd(out, a, b, scale) {
-  out[0] = a[0] + b[0] * scale;
-  out[1] = a[1] + b[1] * scale;
-  out[2] = a[2] + b[2] * scale;
-  return out;
-}
-/**
- * Calculates the euclidian distance between two vec3's
- *
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {Number} distance between a and b
- */
-
-
-function distance(a, b) {
-  var x = b[0] - a[0];
-  var y = b[1] - a[1];
-  var z = b[2] - a[2];
-  return Math.hypot(x, y, z);
-}
-/**
- * Calculates the squared euclidian distance between two vec3's
- *
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {Number} squared distance between a and b
- */
-
-
-function squaredDistance(a, b) {
-  var x = b[0] - a[0];
-  var y = b[1] - a[1];
-  var z = b[2] - a[2];
-  return x * x + y * y + z * z;
-}
-/**
- * Calculates the squared length of a vec3
- *
- * @param {vec3} a vector to calculate squared length of
- * @returns {Number} squared length of a
- */
-
-
-function squaredLength(a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  return x * x + y * y + z * z;
-}
-/**
- * Negates the components of a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to negate
- * @returns {vec3} out
- */
-
-
-function negate(out, a) {
-  out[0] = -a[0];
-  out[1] = -a[1];
-  out[2] = -a[2];
-  return out;
-}
-/**
- * Returns the inverse of the components of a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to invert
- * @returns {vec3} out
- */
-
-
-function inverse(out, a) {
-  out[0] = 1.0 / a[0];
-  out[1] = 1.0 / a[1];
-  out[2] = 1.0 / a[2];
-  return out;
-}
-/**
- * Normalize a vec3
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a vector to normalize
- * @returns {vec3} out
- */
-
-
-function normalize(out, a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  var len = x * x + y * y + z * z;
-
-  if (len > 0) {
-    //TODO: evaluate use of glm_invsqrt here?
-    len = 1 / Math.sqrt(len);
-  }
-
-  out[0] = a[0] * len;
-  out[1] = a[1] * len;
-  out[2] = a[2] * len;
-  return out;
-}
-/**
- * Calculates the dot product of two vec3's
- *
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {Number} dot product of a and b
- */
-
-
-function dot(a, b) {
-  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-}
-/**
- * Computes the cross product of two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @returns {vec3} out
- */
-
-
-function cross(out, a, b) {
-  var ax = a[0],
-      ay = a[1],
-      az = a[2];
-  var bx = b[0],
-      by = b[1],
-      bz = b[2];
-  out[0] = ay * bz - az * by;
-  out[1] = az * bx - ax * bz;
-  out[2] = ax * by - ay * bx;
-  return out;
-}
-/**
- * Performs a linear interpolation between two vec3's
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {vec3} out
- */
-
-
-function lerp(out, a, b, t) {
-  var ax = a[0];
-  var ay = a[1];
-  var az = a[2];
-  out[0] = ax + t * (b[0] - ax);
-  out[1] = ay + t * (b[1] - ay);
-  out[2] = az + t * (b[2] - az);
-  return out;
-}
-/**
- * Performs a hermite interpolation with two control points
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @param {vec3} c the third operand
- * @param {vec3} d the fourth operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {vec3} out
- */
-
-
-function hermite(out, a, b, c, d, t) {
-  var factorTimes2 = t * t;
-  var factor1 = factorTimes2 * (2 * t - 3) + 1;
-  var factor2 = factorTimes2 * (t - 2) + t;
-  var factor3 = factorTimes2 * (t - 1);
-  var factor4 = factorTimes2 * (3 - 2 * t);
-  out[0] = a[0] * factor1 + b[0] * factor2 + c[0] * factor3 + d[0] * factor4;
-  out[1] = a[1] * factor1 + b[1] * factor2 + c[1] * factor3 + d[1] * factor4;
-  out[2] = a[2] * factor1 + b[2] * factor2 + c[2] * factor3 + d[2] * factor4;
-  return out;
-}
-/**
- * Performs a bezier interpolation with two control points
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the first operand
- * @param {vec3} b the second operand
- * @param {vec3} c the third operand
- * @param {vec3} d the fourth operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {vec3} out
- */
-
-
-function bezier(out, a, b, c, d, t) {
-  var inverseFactor = 1 - t;
-  var inverseFactorTimesTwo = inverseFactor * inverseFactor;
-  var factorTimes2 = t * t;
-  var factor1 = inverseFactorTimesTwo * inverseFactor;
-  var factor2 = 3 * t * inverseFactorTimesTwo;
-  var factor3 = 3 * factorTimes2 * inverseFactor;
-  var factor4 = factorTimes2 * t;
-  out[0] = a[0] * factor1 + b[0] * factor2 + c[0] * factor3 + d[0] * factor4;
-  out[1] = a[1] * factor1 + b[1] * factor2 + c[1] * factor3 + d[1] * factor4;
-  out[2] = a[2] * factor1 + b[2] * factor2 + c[2] * factor3 + d[2] * factor4;
-  return out;
-}
-/**
- * Generates a random vector with the given scale
- *
- * @param {vec3} out the receiving vector
- * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
- * @returns {vec3} out
- */
-
-
-function random(out, scale) {
-  scale = scale || 1.0;
-  var r = glMatrix.RANDOM() * 2.0 * Math.PI;
-  var z = glMatrix.RANDOM() * 2.0 - 1.0;
-  var zScale = Math.sqrt(1.0 - z * z) * scale;
-  out[0] = Math.cos(r) * zScale;
-  out[1] = Math.sin(r) * zScale;
-  out[2] = z * scale;
-  return out;
-}
-/**
- * Transforms the vec3 with a mat4.
- * 4th vector component is implicitly '1'
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to transform
- * @param {mat4} m matrix to transform with
- * @returns {vec3} out
- */
-
-
-function transformMat4(out, a, m) {
-  var x = a[0],
-      y = a[1],
-      z = a[2];
-  var w = m[3] * x + m[7] * y + m[11] * z + m[15];
-  w = w || 1.0;
-  out[0] = (m[0] * x + m[4] * y + m[8] * z + m[12]) / w;
-  out[1] = (m[1] * x + m[5] * y + m[9] * z + m[13]) / w;
-  out[2] = (m[2] * x + m[6] * y + m[10] * z + m[14]) / w;
-  return out;
-}
-/**
- * Transforms the vec3 with a mat3.
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to transform
- * @param {mat3} m the 3x3 matrix to transform with
- * @returns {vec3} out
- */
-
-
-function transformMat3(out, a, m) {
-  var x = a[0],
-      y = a[1],
-      z = a[2];
-  out[0] = x * m[0] + y * m[3] + z * m[6];
-  out[1] = x * m[1] + y * m[4] + z * m[7];
-  out[2] = x * m[2] + y * m[5] + z * m[8];
-  return out;
-}
-/**
- * Transforms the vec3 with a quat
- * Can also be used for dual quaternions. (Multiply it with the real part)
- *
- * @param {vec3} out the receiving vector
- * @param {vec3} a the vector to transform
- * @param {quat} q quaternion to transform with
- * @returns {vec3} out
- */
-
-
-function transformQuat(out, a, q) {
-  // benchmarks: https://jsperf.com/quaternion-transform-vec3-implementations-fixed
-  var qx = q[0],
-      qy = q[1],
-      qz = q[2],
-      qw = q[3];
-  var x = a[0],
-      y = a[1],
-      z = a[2]; // var qvec = [qx, qy, qz];
-  // var uv = vec3.cross([], qvec, a);
-
-  var uvx = qy * z - qz * y,
-      uvy = qz * x - qx * z,
-      uvz = qx * y - qy * x; // var uuv = vec3.cross([], qvec, uv);
-
-  var uuvx = qy * uvz - qz * uvy,
-      uuvy = qz * uvx - qx * uvz,
-      uuvz = qx * uvy - qy * uvx; // vec3.scale(uv, uv, 2 * w);
-
-  var w2 = qw * 2;
-  uvx *= w2;
-  uvy *= w2;
-  uvz *= w2; // vec3.scale(uuv, uuv, 2);
-
-  uuvx *= 2;
-  uuvy *= 2;
-  uuvz *= 2; // return vec3.add(out, a, vec3.add(out, uv, uuv));
-
-  out[0] = x + uvx + uuvx;
-  out[1] = y + uvy + uuvy;
-  out[2] = z + uvz + uuvz;
-  return out;
-}
-/**
- * Rotate a 3D vector around the x-axis
- * @param {vec3} out The receiving vec3
- * @param {vec3} a The vec3 point to rotate
- * @param {vec3} b The origin of the rotation
- * @param {Number} c The angle of rotation
- * @returns {vec3} out
- */
-
-
-function rotateX(out, a, b, c) {
-  var p = [],
-      r = []; //Translate point to the origin
-
-  p[0] = a[0] - b[0];
-  p[1] = a[1] - b[1];
-  p[2] = a[2] - b[2]; //perform rotation
-
-  r[0] = p[0];
-  r[1] = p[1] * Math.cos(c) - p[2] * Math.sin(c);
-  r[2] = p[1] * Math.sin(c) + p[2] * Math.cos(c); //translate to correct position
-
-  out[0] = r[0] + b[0];
-  out[1] = r[1] + b[1];
-  out[2] = r[2] + b[2];
-  return out;
-}
-/**
- * Rotate a 3D vector around the y-axis
- * @param {vec3} out The receiving vec3
- * @param {vec3} a The vec3 point to rotate
- * @param {vec3} b The origin of the rotation
- * @param {Number} c The angle of rotation
- * @returns {vec3} out
- */
-
-
-function rotateY(out, a, b, c) {
-  var p = [],
-      r = []; //Translate point to the origin
-
-  p[0] = a[0] - b[0];
-  p[1] = a[1] - b[1];
-  p[2] = a[2] - b[2]; //perform rotation
-
-  r[0] = p[2] * Math.sin(c) + p[0] * Math.cos(c);
-  r[1] = p[1];
-  r[2] = p[2] * Math.cos(c) - p[0] * Math.sin(c); //translate to correct position
-
-  out[0] = r[0] + b[0];
-  out[1] = r[1] + b[1];
-  out[2] = r[2] + b[2];
-  return out;
-}
-/**
- * Rotate a 3D vector around the z-axis
- * @param {vec3} out The receiving vec3
- * @param {vec3} a The vec3 point to rotate
- * @param {vec3} b The origin of the rotation
- * @param {Number} c The angle of rotation
- * @returns {vec3} out
- */
-
-
-function rotateZ(out, a, b, c) {
-  var p = [],
-      r = []; //Translate point to the origin
-
-  p[0] = a[0] - b[0];
-  p[1] = a[1] - b[1];
-  p[2] = a[2] - b[2]; //perform rotation
-
-  r[0] = p[0] * Math.cos(c) - p[1] * Math.sin(c);
-  r[1] = p[0] * Math.sin(c) + p[1] * Math.cos(c);
-  r[2] = p[2]; //translate to correct position
-
-  out[0] = r[0] + b[0];
-  out[1] = r[1] + b[1];
-  out[2] = r[2] + b[2];
-  return out;
-}
-/**
- * Get the angle between two 3D vectors
- * @param {vec3} a The first operand
- * @param {vec3} b The second operand
- * @returns {Number} The angle in radians
- */
-
-
-function angle(a, b) {
-  var tempA = fromValues(a[0], a[1], a[2]);
-  var tempB = fromValues(b[0], b[1], b[2]);
-  normalize(tempA, tempA);
-  normalize(tempB, tempB);
-  var cosine = dot(tempA, tempB);
-
-  if (cosine > 1.0) {
-    return 0;
-  } else if (cosine < -1.0) {
-    return Math.PI;
-  } else {
-    return Math.acos(cosine);
-  }
-}
-/**
- * Set the components of a vec3 to zero
- *
- * @param {vec3} out the receiving vector
- * @returns {vec3} out
- */
-
-
-function zero(out) {
-  out[0] = 0.0;
-  out[1] = 0.0;
-  out[2] = 0.0;
-  return out;
-}
-/**
- * Returns a string representation of a vector
- *
- * @param {vec3} a vector to represent as a string
- * @returns {String} string representation of the vector
- */
-
-
-function str(a) {
-  return 'vec3(' + a[0] + ', ' + a[1] + ', ' + a[2] + ')';
-}
-/**
- * Returns whether or not the vectors have exactly the same elements in the same position (when compared with ===)
- *
- * @param {vec3} a The first vector.
- * @param {vec3} b The second vector.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2];
-}
-/**
- * Returns whether or not the vectors have approximately the same elements in the same position.
- *
- * @param {vec3} a The first vector.
- * @param {vec3} b The second vector.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2));
-}
-/**
- * Alias for {@link vec3.subtract}
- * @function
- */
-
-
-var sub = subtract;
-/**
- * Alias for {@link vec3.multiply}
- * @function
- */
-
-exports.sub = sub;
-var mul = multiply;
-/**
- * Alias for {@link vec3.divide}
- * @function
- */
-
-exports.mul = mul;
-var div = divide;
-/**
- * Alias for {@link vec3.distance}
- * @function
- */
-
-exports.div = div;
-var dist = distance;
-/**
- * Alias for {@link vec3.squaredDistance}
- * @function
- */
-
-exports.dist = dist;
-var sqrDist = squaredDistance;
-/**
- * Alias for {@link vec3.length}
- * @function
- */
-
-exports.sqrDist = sqrDist;
-var len = length;
-/**
- * Alias for {@link vec3.squaredLength}
- * @function
- */
-
-exports.len = len;
-var sqrLen = squaredLength;
-/**
- * Perform some operation over an array of vec3s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec3. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec3s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-
-exports.sqrLen = sqrLen;
-
-var forEach = function () {
-  var vec = create();
-  return function (a, stride, offset, count, fn, arg) {
-    var i, l;
-
-    if (!stride) {
-      stride = 3;
+      environmentName = secondMatch;
     }
 
-    if (!offset) {
-      offset = 0;
-    }
+    return found;
+  });
 
-    if (count) {
-      l = Math.min(count * stride + offset, a.length);
-    } else {
-      l = a.length;
-    }
-
-    for (i = offset; i < l; i += stride) {
-      vec[0] = a[i];
-      vec[1] = a[i + 1];
-      vec[2] = a[i + 2];
-      fn(vec, vec, arg);
-      a[i] = vec[0];
-      a[i + 1] = vec[1];
-      a[i + 2] = vec[2];
-    }
-
-    return a;
-  };
-}();
-
-exports.forEach = forEach;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/vec4.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.clone = clone;
-exports.fromValues = fromValues;
-exports.copy = copy;
-exports.set = set;
-exports.add = add;
-exports.subtract = subtract;
-exports.multiply = multiply;
-exports.divide = divide;
-exports.ceil = ceil;
-exports.floor = floor;
-exports.min = min;
-exports.max = max;
-exports.round = round;
-exports.scale = scale;
-exports.scaleAndAdd = scaleAndAdd;
-exports.distance = distance;
-exports.squaredDistance = squaredDistance;
-exports.length = length;
-exports.squaredLength = squaredLength;
-exports.negate = negate;
-exports.inverse = inverse;
-exports.normalize = normalize;
-exports.dot = dot;
-exports.cross = cross;
-exports.lerp = lerp;
-exports.random = random;
-exports.transformMat4 = transformMat4;
-exports.transformQuat = transformQuat;
-exports.zero = zero;
-exports.str = str;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.forEach = exports.sqrLen = exports.len = exports.sqrDist = exports.dist = exports.div = exports.mul = exports.sub = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * 4 Dimensional Vector
- * @module vec4
- */
-
-/**
- * Creates a new, empty vec4
- *
- * @returns {vec4} a new 4D vector
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(4);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-    out[3] = 0;
-  }
-
-  return out;
-}
-/**
- * Creates a new vec4 initialized with values from an existing vector
- *
- * @param {vec4} a vector to clone
- * @returns {vec4} a new 4D vector
- */
-
-
-function clone(a) {
-  var out = new glMatrix.ARRAY_TYPE(4);
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  return out;
-}
-/**
- * Creates a new vec4 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {vec4} a new 4D vector
- */
-
-
-function fromValues(x, y, z, w) {
-  var out = new glMatrix.ARRAY_TYPE(4);
-  out[0] = x;
-  out[1] = y;
-  out[2] = z;
-  out[3] = w;
-  return out;
-}
-/**
- * Copy the values from one vec4 to another
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the source vector
- * @returns {vec4} out
- */
-
-
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  return out;
-}
-/**
- * Set the components of a vec4 to the given values
- *
- * @param {vec4} out the receiving vector
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {vec4} out
- */
-
-
-function set(out, x, y, z, w) {
-  out[0] = x;
-  out[1] = y;
-  out[2] = z;
-  out[3] = w;
-  return out;
-}
-/**
- * Adds two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  out[2] = a[2] + b[2];
-  out[3] = a[3] + b[3];
-  return out;
-}
-/**
- * Subtracts vector b from vector a
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-
-
-function subtract(out, a, b) {
-  out[0] = a[0] - b[0];
-  out[1] = a[1] - b[1];
-  out[2] = a[2] - b[2];
-  out[3] = a[3] - b[3];
-  return out;
-}
-/**
- * Multiplies two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-
-
-function multiply(out, a, b) {
-  out[0] = a[0] * b[0];
-  out[1] = a[1] * b[1];
-  out[2] = a[2] * b[2];
-  out[3] = a[3] * b[3];
-  return out;
-}
-/**
- * Divides two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-
-
-function divide(out, a, b) {
-  out[0] = a[0] / b[0];
-  out[1] = a[1] / b[1];
-  out[2] = a[2] / b[2];
-  out[3] = a[3] / b[3];
-  return out;
-}
-/**
- * Math.ceil the components of a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to ceil
- * @returns {vec4} out
- */
-
-
-function ceil(out, a) {
-  out[0] = Math.ceil(a[0]);
-  out[1] = Math.ceil(a[1]);
-  out[2] = Math.ceil(a[2]);
-  out[3] = Math.ceil(a[3]);
-  return out;
-}
-/**
- * Math.floor the components of a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to floor
- * @returns {vec4} out
- */
-
-
-function floor(out, a) {
-  out[0] = Math.floor(a[0]);
-  out[1] = Math.floor(a[1]);
-  out[2] = Math.floor(a[2]);
-  out[3] = Math.floor(a[3]);
-  return out;
-}
-/**
- * Returns the minimum of two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-
-
-function min(out, a, b) {
-  out[0] = Math.min(a[0], b[0]);
-  out[1] = Math.min(a[1], b[1]);
-  out[2] = Math.min(a[2], b[2]);
-  out[3] = Math.min(a[3], b[3]);
-  return out;
-}
-/**
- * Returns the maximum of two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {vec4} out
- */
-
-
-function max(out, a, b) {
-  out[0] = Math.max(a[0], b[0]);
-  out[1] = Math.max(a[1], b[1]);
-  out[2] = Math.max(a[2], b[2]);
-  out[3] = Math.max(a[3], b[3]);
-  return out;
-}
-/**
- * Math.round the components of a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to round
- * @returns {vec4} out
- */
-
-
-function round(out, a) {
-  out[0] = Math.round(a[0]);
-  out[1] = Math.round(a[1]);
-  out[2] = Math.round(a[2]);
-  out[3] = Math.round(a[3]);
-  return out;
-}
-/**
- * Scales a vec4 by a scalar number
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {vec4} out
- */
-
-
-function scale(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  out[2] = a[2] * b;
-  out[3] = a[3] * b;
-  return out;
-}
-/**
- * Adds two vec4's after scaling the second operand by a scalar value
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @param {Number} scale the amount to scale b by before adding
- * @returns {vec4} out
- */
-
-
-function scaleAndAdd(out, a, b, scale) {
-  out[0] = a[0] + b[0] * scale;
-  out[1] = a[1] + b[1] * scale;
-  out[2] = a[2] + b[2] * scale;
-  out[3] = a[3] + b[3] * scale;
-  return out;
-}
-/**
- * Calculates the euclidian distance between two vec4's
- *
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {Number} distance between a and b
- */
-
-
-function distance(a, b) {
-  var x = b[0] - a[0];
-  var y = b[1] - a[1];
-  var z = b[2] - a[2];
-  var w = b[3] - a[3];
-  return Math.hypot(x, y, z, w);
-}
-/**
- * Calculates the squared euclidian distance between two vec4's
- *
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {Number} squared distance between a and b
- */
-
-
-function squaredDistance(a, b) {
-  var x = b[0] - a[0];
-  var y = b[1] - a[1];
-  var z = b[2] - a[2];
-  var w = b[3] - a[3];
-  return x * x + y * y + z * z + w * w;
-}
-/**
- * Calculates the length of a vec4
- *
- * @param {vec4} a vector to calculate length of
- * @returns {Number} length of a
- */
-
-
-function length(a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  var w = a[3];
-  return Math.hypot(x, y, z, w);
-}
-/**
- * Calculates the squared length of a vec4
- *
- * @param {vec4} a vector to calculate squared length of
- * @returns {Number} squared length of a
- */
-
-
-function squaredLength(a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  var w = a[3];
-  return x * x + y * y + z * z + w * w;
-}
-/**
- * Negates the components of a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to negate
- * @returns {vec4} out
- */
-
-
-function negate(out, a) {
-  out[0] = -a[0];
-  out[1] = -a[1];
-  out[2] = -a[2];
-  out[3] = -a[3];
-  return out;
-}
-/**
- * Returns the inverse of the components of a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to invert
- * @returns {vec4} out
- */
-
-
-function inverse(out, a) {
-  out[0] = 1.0 / a[0];
-  out[1] = 1.0 / a[1];
-  out[2] = 1.0 / a[2];
-  out[3] = 1.0 / a[3];
-  return out;
-}
-/**
- * Normalize a vec4
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a vector to normalize
- * @returns {vec4} out
- */
-
-
-function normalize(out, a) {
-  var x = a[0];
-  var y = a[1];
-  var z = a[2];
-  var w = a[3];
-  var len = x * x + y * y + z * z + w * w;
-
-  if (len > 0) {
-    len = 1 / Math.sqrt(len);
-  }
-
-  out[0] = x * len;
-  out[1] = y * len;
-  out[2] = z * len;
-  out[3] = w * len;
-  return out;
-}
-/**
- * Calculates the dot product of two vec4's
- *
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @returns {Number} dot product of a and b
- */
-
-
-function dot(a, b) {
-  return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
-}
-/**
- * Returns the cross-product of three vectors in a 4-dimensional space
- *
- * @param {vec4} result the receiving vector
- * @param {vec4} U the first vector
- * @param {vec4} V the second vector
- * @param {vec4} W the third vector
- * @returns {vec4} result
- */
-
-
-function cross(out, u, v, w) {
-  var A = v[0] * w[1] - v[1] * w[0],
-      B = v[0] * w[2] - v[2] * w[0],
-      C = v[0] * w[3] - v[3] * w[0],
-      D = v[1] * w[2] - v[2] * w[1],
-      E = v[1] * w[3] - v[3] * w[1],
-      F = v[2] * w[3] - v[3] * w[2];
-  var G = u[0];
-  var H = u[1];
-  var I = u[2];
-  var J = u[3];
-  out[0] = H * F - I * E + J * D;
-  out[1] = -(G * F) + I * C - J * B;
-  out[2] = G * E - H * C + J * A;
-  out[3] = -(G * D) + H * B - I * A;
-  return out;
-}
-
-;
-/**
- * Performs a linear interpolation between two vec4's
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the first operand
- * @param {vec4} b the second operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {vec4} out
- */
-
-function lerp(out, a, b, t) {
-  var ax = a[0];
-  var ay = a[1];
-  var az = a[2];
-  var aw = a[3];
-  out[0] = ax + t * (b[0] - ax);
-  out[1] = ay + t * (b[1] - ay);
-  out[2] = az + t * (b[2] - az);
-  out[3] = aw + t * (b[3] - aw);
-  return out;
-}
-/**
- * Generates a random vector with the given scale
- *
- * @param {vec4} out the receiving vector
- * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
- * @returns {vec4} out
- */
-
-
-function random(out, scale) {
-  scale = scale || 1.0; // Marsaglia, George. Choosing a Point from the Surface of a
-  // Sphere. Ann. Math. Statist. 43 (1972), no. 2, 645--646.
-  // http://projecteuclid.org/euclid.aoms/1177692644;
-
-  var v1, v2, v3, v4;
-  var s1, s2;
-
-  do {
-    v1 = glMatrix.RANDOM() * 2 - 1;
-    v2 = glMatrix.RANDOM() * 2 - 1;
-    s1 = v1 * v1 + v2 * v2;
-  } while (s1 >= 1);
-
-  do {
-    v3 = glMatrix.RANDOM() * 2 - 1;
-    v4 = glMatrix.RANDOM() * 2 - 1;
-    s2 = v3 * v3 + v4 * v4;
-  } while (s2 >= 1);
-
-  var d = Math.sqrt((1 - s1) / s2);
-  out[0] = scale * v1;
-  out[1] = scale * v2;
-  out[2] = scale * v3 * d;
-  out[3] = scale * v4 * d;
-  return out;
-}
-/**
- * Transforms the vec4 with a mat4.
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the vector to transform
- * @param {mat4} m matrix to transform with
- * @returns {vec4} out
- */
-
-
-function transformMat4(out, a, m) {
-  var x = a[0],
-      y = a[1],
-      z = a[2],
-      w = a[3];
-  out[0] = m[0] * x + m[4] * y + m[8] * z + m[12] * w;
-  out[1] = m[1] * x + m[5] * y + m[9] * z + m[13] * w;
-  out[2] = m[2] * x + m[6] * y + m[10] * z + m[14] * w;
-  out[3] = m[3] * x + m[7] * y + m[11] * z + m[15] * w;
-  return out;
-}
-/**
- * Transforms the vec4 with a quat
- *
- * @param {vec4} out the receiving vector
- * @param {vec4} a the vector to transform
- * @param {quat} q quaternion to transform with
- * @returns {vec4} out
- */
-
-
-function transformQuat(out, a, q) {
-  var x = a[0],
-      y = a[1],
-      z = a[2];
-  var qx = q[0],
-      qy = q[1],
-      qz = q[2],
-      qw = q[3]; // calculate quat * vec
-
-  var ix = qw * x + qy * z - qz * y;
-  var iy = qw * y + qz * x - qx * z;
-  var iz = qw * z + qx * y - qy * x;
-  var iw = -qx * x - qy * y - qz * z; // calculate result * inverse quat
-
-  out[0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
-  out[1] = iy * qw + iw * -qy + iz * -qx - ix * -qz;
-  out[2] = iz * qw + iw * -qz + ix * -qy - iy * -qx;
-  out[3] = a[3];
-  return out;
-}
-/**
- * Set the components of a vec4 to zero
- *
- * @param {vec4} out the receiving vector
- * @returns {vec4} out
- */
-
-
-function zero(out) {
-  out[0] = 0.0;
-  out[1] = 0.0;
-  out[2] = 0.0;
-  out[3] = 0.0;
-  return out;
-}
-/**
- * Returns a string representation of a vector
- *
- * @param {vec4} a vector to represent as a string
- * @returns {String} string representation of the vector
- */
-
-
-function str(a) {
-  return 'vec4(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
-}
-/**
- * Returns whether or not the vectors have exactly the same elements in the same position (when compared with ===)
- *
- * @param {vec4} a The first vector.
- * @param {vec4} b The second vector.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3];
-}
-/**
- * Returns whether or not the vectors have approximately the same elements in the same position.
- *
- * @param {vec4} a The first vector.
- * @param {vec4} b The second vector.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3));
-}
-/**
- * Alias for {@link vec4.subtract}
- * @function
- */
-
-
-var sub = subtract;
-/**
- * Alias for {@link vec4.multiply}
- * @function
- */
-
-exports.sub = sub;
-var mul = multiply;
-/**
- * Alias for {@link vec4.divide}
- * @function
- */
-
-exports.mul = mul;
-var div = divide;
-/**
- * Alias for {@link vec4.distance}
- * @function
- */
-
-exports.div = div;
-var dist = distance;
-/**
- * Alias for {@link vec4.squaredDistance}
- * @function
- */
-
-exports.dist = dist;
-var sqrDist = squaredDistance;
-/**
- * Alias for {@link vec4.length}
- * @function
- */
-
-exports.sqrDist = sqrDist;
-var len = length;
-/**
- * Alias for {@link vec4.squaredLength}
- * @function
- */
-
-exports.len = len;
-var sqrLen = squaredLength;
-/**
- * Perform some operation over an array of vec4s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec4. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec4s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-
-exports.sqrLen = sqrLen;
-
-var forEach = function () {
-  var vec = create();
-  return function (a, stride, offset, count, fn, arg) {
-    var i, l;
-
-    if (!stride) {
-      stride = 4;
-    }
-
-    if (!offset) {
-      offset = 0;
-    }
-
-    if (count) {
-      l = Math.min(count * stride + offset, a.length);
-    } else {
-      l = a.length;
-    }
-
-    for (i = offset; i < l; i += stride) {
-      vec[0] = a[i];
-      vec[1] = a[i + 1];
-      vec[2] = a[i + 2];
-      vec[3] = a[i + 3];
-      fn(vec, vec, arg);
-      a[i] = vec[0];
-      a[i + 1] = vec[1];
-      a[i + 2] = vec[2];
-      a[i + 3] = vec[3];
-    }
-
-    return a;
-  };
-}();
-
-exports.forEach = forEach;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/quat.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.identity = identity;
-exports.setAxisAngle = setAxisAngle;
-exports.getAxisAngle = getAxisAngle;
-exports.getAngle = getAngle;
-exports.multiply = multiply;
-exports.rotateX = rotateX;
-exports.rotateY = rotateY;
-exports.rotateZ = rotateZ;
-exports.calculateW = calculateW;
-exports.exp = exp;
-exports.ln = ln;
-exports.pow = pow;
-exports.slerp = slerp;
-exports.random = random;
-exports.invert = invert;
-exports.conjugate = conjugate;
-exports.fromMat3 = fromMat3;
-exports.fromEuler = fromEuler;
-exports.str = str;
-exports.setAxes = exports.sqlerp = exports.rotationTo = exports.equals = exports.exactEquals = exports.normalize = exports.sqrLen = exports.squaredLength = exports.len = exports.length = exports.lerp = exports.dot = exports.scale = exports.mul = exports.add = exports.set = exports.copy = exports.fromValues = exports.clone = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-var mat3 = _interopRequireWildcard(require("./mat3.js"));
-
-var vec3 = _interopRequireWildcard(require("./vec3.js"));
-
-var vec4 = _interopRequireWildcard(require("./vec4.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * Quaternion
- * @module quat
- */
-
-/**
- * Creates a new identity quat
- *
- * @returns {quat} a new quaternion
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(4);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-    out[2] = 0;
-  }
-
-  out[3] = 1;
-  return out;
-}
-/**
- * Set a quat to the identity quaternion
- *
- * @param {quat} out the receiving quaternion
- * @returns {quat} out
- */
-
-
-function identity(out) {
-  out[0] = 0;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 1;
-  return out;
-}
-/**
- * Sets a quat from the given angle and rotation axis,
- * then returns it.
- *
- * @param {quat} out the receiving quaternion
- * @param {vec3} axis the axis around which to rotate
- * @param {Number} rad the angle in radians
- * @returns {quat} out
- **/
-
-
-function setAxisAngle(out, axis, rad) {
-  rad = rad * 0.5;
-  var s = Math.sin(rad);
-  out[0] = s * axis[0];
-  out[1] = s * axis[1];
-  out[2] = s * axis[2];
-  out[3] = Math.cos(rad);
-  return out;
-}
-/**
- * Gets the rotation axis and angle for a given
- *  quaternion. If a quaternion is created with
- *  setAxisAngle, this method will return the same
- *  values as providied in the original parameter list
- *  OR functionally equivalent values.
- * Example: The quaternion formed by axis [0, 0, 1] and
- *  angle -90 is the same as the quaternion formed by
- *  [0, 0, 1] and 270. This method favors the latter.
- * @param  {vec3} out_axis  Vector receiving the axis of rotation
- * @param  {quat} q     Quaternion to be decomposed
- * @return {Number}     Angle, in radians, of the rotation
- */
-
-
-function getAxisAngle(out_axis, q) {
-  var rad = Math.acos(q[3]) * 2.0;
-  var s = Math.sin(rad / 2.0);
-
-  if (s > glMatrix.EPSILON) {
-    out_axis[0] = q[0] / s;
-    out_axis[1] = q[1] / s;
-    out_axis[2] = q[2] / s;
-  } else {
-    // If s is zero, return any axis (no rotation - axis does not matter)
-    out_axis[0] = 1;
-    out_axis[1] = 0;
-    out_axis[2] = 0;
-  }
-
-  return rad;
-}
-/**
- * Gets the angular distance between two unit quaternions
- *
- * @param  {quat} a     Origin unit quaternion 
- * @param  {quat} b     Destination unit quaternion
- * @return {Number}     Angle, in radians, between the two quaternions
- */
-
-
-function getAngle(a, b) {
-  var dotproduct = dot(a, b);
-  return Math.acos(2 * dotproduct * dotproduct - 1);
-}
-/**
- * Multiplies two quat's
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @returns {quat} out
- */
-
-
-function multiply(out, a, b) {
-  var ax = a[0],
-      ay = a[1],
-      az = a[2],
-      aw = a[3];
-  var bx = b[0],
-      by = b[1],
-      bz = b[2],
-      bw = b[3];
-  out[0] = ax * bw + aw * bx + ay * bz - az * by;
-  out[1] = ay * bw + aw * by + az * bx - ax * bz;
-  out[2] = az * bw + aw * bz + ax * by - ay * bx;
-  out[3] = aw * bw - ax * bx - ay * by - az * bz;
-  return out;
-}
-/**
- * Rotates a quaternion by the given angle about the X axis
- *
- * @param {quat} out quat receiving operation result
- * @param {quat} a quat to rotate
- * @param {number} rad angle (in radians) to rotate
- * @returns {quat} out
- */
-
-
-function rotateX(out, a, rad) {
-  rad *= 0.5;
-  var ax = a[0],
-      ay = a[1],
-      az = a[2],
-      aw = a[3];
-  var bx = Math.sin(rad),
-      bw = Math.cos(rad);
-  out[0] = ax * bw + aw * bx;
-  out[1] = ay * bw + az * bx;
-  out[2] = az * bw - ay * bx;
-  out[3] = aw * bw - ax * bx;
-  return out;
-}
-/**
- * Rotates a quaternion by the given angle about the Y axis
- *
- * @param {quat} out quat receiving operation result
- * @param {quat} a quat to rotate
- * @param {number} rad angle (in radians) to rotate
- * @returns {quat} out
- */
-
-
-function rotateY(out, a, rad) {
-  rad *= 0.5;
-  var ax = a[0],
-      ay = a[1],
-      az = a[2],
-      aw = a[3];
-  var by = Math.sin(rad),
-      bw = Math.cos(rad);
-  out[0] = ax * bw - az * by;
-  out[1] = ay * bw + aw * by;
-  out[2] = az * bw + ax * by;
-  out[3] = aw * bw - ay * by;
-  return out;
-}
-/**
- * Rotates a quaternion by the given angle about the Z axis
- *
- * @param {quat} out quat receiving operation result
- * @param {quat} a quat to rotate
- * @param {number} rad angle (in radians) to rotate
- * @returns {quat} out
- */
-
-
-function rotateZ(out, a, rad) {
-  rad *= 0.5;
-  var ax = a[0],
-      ay = a[1],
-      az = a[2],
-      aw = a[3];
-  var bz = Math.sin(rad),
-      bw = Math.cos(rad);
-  out[0] = ax * bw + ay * bz;
-  out[1] = ay * bw - ax * bz;
-  out[2] = az * bw + aw * bz;
-  out[3] = aw * bw - az * bz;
-  return out;
-}
-/**
- * Calculates the W component of a quat from the X, Y, and Z components.
- * Assumes that quaternion is 1 unit in length.
- * Any existing W component will be ignored.
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate W component of
- * @returns {quat} out
- */
-
-
-function calculateW(out, a) {
-  var x = a[0],
-      y = a[1],
-      z = a[2];
-  out[0] = x;
-  out[1] = y;
-  out[2] = z;
-  out[3] = Math.sqrt(Math.abs(1.0 - x * x - y * y - z * z));
-  return out;
-}
-/**
- * Calculate the exponential of a unit quaternion.
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate the exponential of
- * @returns {quat} out
- */
-
-
-function exp(out, a) {
-  var x = a[0],
-      y = a[1],
-      z = a[2],
-      w = a[3];
-  var r = Math.sqrt(x * x + y * y + z * z);
-  var et = Math.exp(w);
-  var s = r > 0 ? et * Math.sin(r) / r : 0;
-  out[0] = x * s;
-  out[1] = y * s;
-  out[2] = z * s;
-  out[3] = et * Math.cos(r);
-  return out;
-}
-/**
- * Calculate the natural logarithm of a unit quaternion.
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate the exponential of
- * @returns {quat} out
- */
-
-
-function ln(out, a) {
-  var x = a[0],
-      y = a[1],
-      z = a[2],
-      w = a[3];
-  var r = Math.sqrt(x * x + y * y + z * z);
-  var t = r > 0 ? Math.atan2(r, w) / r : 0;
-  out[0] = x * t;
-  out[1] = y * t;
-  out[2] = z * t;
-  out[3] = 0.5 * Math.log(x * x + y * y + z * z + w * w);
-  return out;
-}
-/**
- * Calculate the scalar power of a unit quaternion.
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate the exponential of
- * @param {Number} b amount to scale the quaternion by
- * @returns {quat} out
- */
-
-
-function pow(out, a, b) {
-  ln(out, a);
-  scale(out, out, b);
-  exp(out, out);
-  return out;
-}
-/**
- * Performs a spherical linear interpolation between two quat
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {quat} out
- */
-
-
-function slerp(out, a, b, t) {
-  // benchmarks:
-  //    http://jsperf.com/quaternion-slerp-implementations
-  var ax = a[0],
-      ay = a[1],
-      az = a[2],
-      aw = a[3];
-  var bx = b[0],
-      by = b[1],
-      bz = b[2],
-      bw = b[3];
-  var omega, cosom, sinom, scale0, scale1; // calc cosine
-
-  cosom = ax * bx + ay * by + az * bz + aw * bw; // adjust signs (if necessary)
-
-  if (cosom < 0.0) {
-    cosom = -cosom;
-    bx = -bx;
-    by = -by;
-    bz = -bz;
-    bw = -bw;
-  } // calculate coefficients
-
-
-  if (1.0 - cosom > glMatrix.EPSILON) {
-    // standard case (slerp)
-    omega = Math.acos(cosom);
-    sinom = Math.sin(omega);
-    scale0 = Math.sin((1.0 - t) * omega) / sinom;
-    scale1 = Math.sin(t * omega) / sinom;
-  } else {
-    // "from" and "to" quaternions are very close
-    //  ... so we can do a linear interpolation
-    scale0 = 1.0 - t;
-    scale1 = t;
-  } // calculate final values
-
-
-  out[0] = scale0 * ax + scale1 * bx;
-  out[1] = scale0 * ay + scale1 * by;
-  out[2] = scale0 * az + scale1 * bz;
-  out[3] = scale0 * aw + scale1 * bw;
-  return out;
-}
-/**
- * Generates a random unit quaternion
- * 
- * @param {quat} out the receiving quaternion
- * @returns {quat} out
- */
-
-
-function random(out) {
-  // Implementation of http://planning.cs.uiuc.edu/node198.html
-  // TODO: Calling random 3 times is probably not the fastest solution
-  var u1 = glMatrix.RANDOM();
-  var u2 = glMatrix.RANDOM();
-  var u3 = glMatrix.RANDOM();
-  var sqrt1MinusU1 = Math.sqrt(1 - u1);
-  var sqrtU1 = Math.sqrt(u1);
-  out[0] = sqrt1MinusU1 * Math.sin(2.0 * Math.PI * u2);
-  out[1] = sqrt1MinusU1 * Math.cos(2.0 * Math.PI * u2);
-  out[2] = sqrtU1 * Math.sin(2.0 * Math.PI * u3);
-  out[3] = sqrtU1 * Math.cos(2.0 * Math.PI * u3);
-  return out;
-}
-/**
- * Calculates the inverse of a quat
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate inverse of
- * @returns {quat} out
- */
-
-
-function invert(out, a) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3];
-  var dot = a0 * a0 + a1 * a1 + a2 * a2 + a3 * a3;
-  var invDot = dot ? 1.0 / dot : 0; // TODO: Would be faster to return [0,0,0,0] immediately if dot == 0
-
-  out[0] = -a0 * invDot;
-  out[1] = -a1 * invDot;
-  out[2] = -a2 * invDot;
-  out[3] = a3 * invDot;
-  return out;
-}
-/**
- * Calculates the conjugate of a quat
- * If the quaternion is normalized, this function is faster than quat.inverse and produces the same result.
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quat to calculate conjugate of
- * @returns {quat} out
- */
-
-
-function conjugate(out, a) {
-  out[0] = -a[0];
-  out[1] = -a[1];
-  out[2] = -a[2];
-  out[3] = a[3];
-  return out;
-}
-/**
- * Creates a quaternion from the given 3x3 rotation matrix.
- *
- * NOTE: The resultant quaternion is not normalized, so you should be sure
- * to renormalize the quaternion yourself where necessary.
- *
- * @param {quat} out the receiving quaternion
- * @param {mat3} m rotation matrix
- * @returns {quat} out
- * @function
- */
-
-
-function fromMat3(out, m) {
-  // Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
-  // article "Quaternion Calculus and Fast Animation".
-  var fTrace = m[0] + m[4] + m[8];
-  var fRoot;
-
-  if (fTrace > 0.0) {
-    // |w| > 1/2, may as well choose w > 1/2
-    fRoot = Math.sqrt(fTrace + 1.0); // 2w
-
-    out[3] = 0.5 * fRoot;
-    fRoot = 0.5 / fRoot; // 1/(4w)
-
-    out[0] = (m[5] - m[7]) * fRoot;
-    out[1] = (m[6] - m[2]) * fRoot;
-    out[2] = (m[1] - m[3]) * fRoot;
-  } else {
-    // |w| <= 1/2
-    var i = 0;
-    if (m[4] > m[0]) i = 1;
-    if (m[8] > m[i * 3 + i]) i = 2;
-    var j = (i + 1) % 3;
-    var k = (i + 2) % 3;
-    fRoot = Math.sqrt(m[i * 3 + i] - m[j * 3 + j] - m[k * 3 + k] + 1.0);
-    out[i] = 0.5 * fRoot;
-    fRoot = 0.5 / fRoot;
-    out[3] = (m[j * 3 + k] - m[k * 3 + j]) * fRoot;
-    out[j] = (m[j * 3 + i] + m[i * 3 + j]) * fRoot;
-    out[k] = (m[k * 3 + i] + m[i * 3 + k]) * fRoot;
-  }
-
-  return out;
-}
-/**
- * Creates a quaternion from the given euler angle x, y, z.
- *
- * @param {quat} out the receiving quaternion
- * @param {x} Angle to rotate around X axis in degrees.
- * @param {y} Angle to rotate around Y axis in degrees.
- * @param {z} Angle to rotate around Z axis in degrees.
- * @returns {quat} out
- * @function
- */
-
-
-function fromEuler(out, x, y, z) {
-  var halfToRad = 0.5 * Math.PI / 180.0;
-  x *= halfToRad;
-  y *= halfToRad;
-  z *= halfToRad;
-  var sx = Math.sin(x);
-  var cx = Math.cos(x);
-  var sy = Math.sin(y);
-  var cy = Math.cos(y);
-  var sz = Math.sin(z);
-  var cz = Math.cos(z);
-  out[0] = sx * cy * cz - cx * sy * sz;
-  out[1] = cx * sy * cz + sx * cy * sz;
-  out[2] = cx * cy * sz - sx * sy * cz;
-  out[3] = cx * cy * cz + sx * sy * sz;
-  return out;
-}
-/**
- * Returns a string representation of a quatenion
- *
- * @param {quat} a vector to represent as a string
- * @returns {String} string representation of the vector
- */
-
-
-function str(a) {
-  return 'quat(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ')';
-}
-/**
- * Creates a new quat initialized with values from an existing quaternion
- *
- * @param {quat} a quaternion to clone
- * @returns {quat} a new quaternion
- * @function
- */
-
-
-var clone = vec4.clone;
-/**
- * Creates a new quat initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {quat} a new quaternion
- * @function
- */
-
-exports.clone = clone;
-var fromValues = vec4.fromValues;
-/**
- * Copy the values from one quat to another
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the source quaternion
- * @returns {quat} out
- * @function
- */
-
-exports.fromValues = fromValues;
-var copy = vec4.copy;
-/**
- * Set the components of a quat to the given values
- *
- * @param {quat} out the receiving quaternion
- * @param {Number} x X component
- * @param {Number} y Y component
- * @param {Number} z Z component
- * @param {Number} w W component
- * @returns {quat} out
- * @function
- */
-
-exports.copy = copy;
-var set = vec4.set;
-/**
- * Adds two quat's
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @returns {quat} out
- * @function
- */
-
-exports.set = set;
-var add = vec4.add;
-/**
- * Alias for {@link quat.multiply}
- * @function
- */
-
-exports.add = add;
-var mul = multiply;
-/**
- * Scales a quat by a scalar number
- *
- * @param {quat} out the receiving vector
- * @param {quat} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {quat} out
- * @function
- */
-
-exports.mul = mul;
-var scale = vec4.scale;
-/**
- * Calculates the dot product of two quat's
- *
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @returns {Number} dot product of a and b
- * @function
- */
-
-exports.scale = scale;
-var dot = vec4.dot;
-/**
- * Performs a linear interpolation between two quat's
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {quat} out
- * @function
- */
-
-exports.dot = dot;
-var lerp = vec4.lerp;
-/**
- * Calculates the length of a quat
- *
- * @param {quat} a vector to calculate length of
- * @returns {Number} length of a
- */
-
-exports.lerp = lerp;
-var length = vec4.length;
-/**
- * Alias for {@link quat.length}
- * @function
- */
-
-exports.length = length;
-var len = length;
-/**
- * Calculates the squared length of a quat
- *
- * @param {quat} a vector to calculate squared length of
- * @returns {Number} squared length of a
- * @function
- */
-
-exports.len = len;
-var squaredLength = vec4.squaredLength;
-/**
- * Alias for {@link quat.squaredLength}
- * @function
- */
-
-exports.squaredLength = squaredLength;
-var sqrLen = squaredLength;
-/**
- * Normalize a quat
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a quaternion to normalize
- * @returns {quat} out
- * @function
- */
-
-exports.sqrLen = sqrLen;
-var normalize = vec4.normalize;
-/**
- * Returns whether or not the quaternions have exactly the same elements in the same position (when compared with ===)
- *
- * @param {quat} a The first quaternion.
- * @param {quat} b The second quaternion.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-exports.normalize = normalize;
-var exactEquals = vec4.exactEquals;
-/**
- * Returns whether or not the quaternions have approximately the same elements in the same position.
- *
- * @param {quat} a The first vector.
- * @param {quat} b The second vector.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-exports.exactEquals = exactEquals;
-var equals = vec4.equals;
-/**
- * Sets a quaternion to represent the shortest rotation from one
- * vector to another.
- *
- * Both vectors are assumed to be unit length.
- *
- * @param {quat} out the receiving quaternion.
- * @param {vec3} a the initial vector
- * @param {vec3} b the destination vector
- * @returns {quat} out
- */
-
-exports.equals = equals;
-
-var rotationTo = function () {
-  var tmpvec3 = vec3.create();
-  var xUnitVec3 = vec3.fromValues(1, 0, 0);
-  var yUnitVec3 = vec3.fromValues(0, 1, 0);
-  return function (out, a, b) {
-    var dot = vec3.dot(a, b);
-
-    if (dot < -0.999999) {
-      vec3.cross(tmpvec3, xUnitVec3, a);
-      if (vec3.len(tmpvec3) < 0.000001) vec3.cross(tmpvec3, yUnitVec3, a);
-      vec3.normalize(tmpvec3, tmpvec3);
-      setAxisAngle(out, tmpvec3, Math.PI);
-      return out;
-    } else if (dot > 0.999999) {
-      out[0] = 0;
-      out[1] = 0;
-      out[2] = 0;
-      out[3] = 1;
-      return out;
-    } else {
-      vec3.cross(tmpvec3, a, b);
-      out[0] = tmpvec3[0];
-      out[1] = tmpvec3[1];
-      out[2] = tmpvec3[2];
-      out[3] = 1 + dot;
-      return normalize(out, out);
-    }
-  };
-}();
-/**
- * Performs a spherical linear interpolation with two control points
- *
- * @param {quat} out the receiving quaternion
- * @param {quat} a the first operand
- * @param {quat} b the second operand
- * @param {quat} c the third operand
- * @param {quat} d the fourth operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {quat} out
- */
-
-
-exports.rotationTo = rotationTo;
-
-var sqlerp = function () {
-  var temp1 = create();
-  var temp2 = create();
-  return function (out, a, b, c, d, t) {
-    slerp(temp1, a, d, t);
-    slerp(temp2, b, c, t);
-    slerp(out, temp1, temp2, 2 * t * (1 - t));
-    return out;
-  };
-}();
-/**
- * Sets the specified quaternion with values corresponding to the given
- * axes. Each axis is a vec3 and is expected to be unit length and
- * perpendicular to all other specified axes.
- *
- * @param {vec3} view  the vector representing the viewing direction
- * @param {vec3} right the vector representing the local "right" direction
- * @param {vec3} up    the vector representing the local "up" direction
- * @returns {quat} out
- */
-
-
-exports.sqlerp = sqlerp;
-
-var setAxes = function () {
-  var matr = mat3.create();
-  return function (out, view, right, up) {
-    matr[0] = right[0];
-    matr[3] = right[1];
-    matr[6] = right[2];
-    matr[1] = up[0];
-    matr[4] = up[1];
-    matr[7] = up[2];
-    matr[2] = -view[0];
-    matr[5] = -view[1];
-    matr[8] = -view[2];
-    return normalize(out, fromMat3(out, matr));
-  };
-}();
-
-exports.setAxes = setAxes;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js","./mat3.js":"node_modules/xgl/node_modules/gl-matrix/esm/mat3.js","./vec3.js":"node_modules/xgl/node_modules/gl-matrix/esm/vec3.js","./vec4.js":"node_modules/xgl/node_modules/gl-matrix/esm/vec4.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/quat2.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.clone = clone;
-exports.fromValues = fromValues;
-exports.fromRotationTranslationValues = fromRotationTranslationValues;
-exports.fromRotationTranslation = fromRotationTranslation;
-exports.fromTranslation = fromTranslation;
-exports.fromRotation = fromRotation;
-exports.fromMat4 = fromMat4;
-exports.copy = copy;
-exports.identity = identity;
-exports.set = set;
-exports.getDual = getDual;
-exports.setDual = setDual;
-exports.getTranslation = getTranslation;
-exports.translate = translate;
-exports.rotateX = rotateX;
-exports.rotateY = rotateY;
-exports.rotateZ = rotateZ;
-exports.rotateByQuatAppend = rotateByQuatAppend;
-exports.rotateByQuatPrepend = rotateByQuatPrepend;
-exports.rotateAroundAxis = rotateAroundAxis;
-exports.add = add;
-exports.multiply = multiply;
-exports.scale = scale;
-exports.lerp = lerp;
-exports.invert = invert;
-exports.conjugate = conjugate;
-exports.normalize = normalize;
-exports.str = str;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.sqrLen = exports.squaredLength = exports.len = exports.length = exports.dot = exports.mul = exports.setReal = exports.getReal = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-var quat = _interopRequireWildcard(require("./quat.js"));
-
-var mat4 = _interopRequireWildcard(require("./mat4.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * Dual Quaternion<br>
- * Format: [real, dual]<br>
- * Quaternion format: XYZW<br>
- * Make sure to have normalized dual quaternions, otherwise the functions may not work as intended.<br>
- * @module quat2
- */
-
-/**
- * Creates a new identity dual quat
- *
- * @returns {quat2} a new dual quaternion [real -> rotation, dual -> translation]
- */
-function create() {
-  var dq = new glMatrix.ARRAY_TYPE(8);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    dq[0] = 0;
-    dq[1] = 0;
-    dq[2] = 0;
-    dq[4] = 0;
-    dq[5] = 0;
-    dq[6] = 0;
-    dq[7] = 0;
-  }
-
-  dq[3] = 1;
-  return dq;
-}
-/**
- * Creates a new quat initialized with values from an existing quaternion
- *
- * @param {quat2} a dual quaternion to clone
- * @returns {quat2} new dual quaternion
- * @function
- */
-
-
-function clone(a) {
-  var dq = new glMatrix.ARRAY_TYPE(8);
-  dq[0] = a[0];
-  dq[1] = a[1];
-  dq[2] = a[2];
-  dq[3] = a[3];
-  dq[4] = a[4];
-  dq[5] = a[5];
-  dq[6] = a[6];
-  dq[7] = a[7];
-  return dq;
-}
-/**
- * Creates a new dual quat initialized with the given values
- *
- * @param {Number} x1 X component
- * @param {Number} y1 Y component
- * @param {Number} z1 Z component
- * @param {Number} w1 W component
- * @param {Number} x2 X component
- * @param {Number} y2 Y component
- * @param {Number} z2 Z component
- * @param {Number} w2 W component
- * @returns {quat2} new dual quaternion
- * @function
- */
-
-
-function fromValues(x1, y1, z1, w1, x2, y2, z2, w2) {
-  var dq = new glMatrix.ARRAY_TYPE(8);
-  dq[0] = x1;
-  dq[1] = y1;
-  dq[2] = z1;
-  dq[3] = w1;
-  dq[4] = x2;
-  dq[5] = y2;
-  dq[6] = z2;
-  dq[7] = w2;
-  return dq;
-}
-/**
- * Creates a new dual quat from the given values (quat and translation)
- *
- * @param {Number} x1 X component
- * @param {Number} y1 Y component
- * @param {Number} z1 Z component
- * @param {Number} w1 W component
- * @param {Number} x2 X component (translation)
- * @param {Number} y2 Y component (translation)
- * @param {Number} z2 Z component (translation)
- * @returns {quat2} new dual quaternion
- * @function
- */
-
-
-function fromRotationTranslationValues(x1, y1, z1, w1, x2, y2, z2) {
-  var dq = new glMatrix.ARRAY_TYPE(8);
-  dq[0] = x1;
-  dq[1] = y1;
-  dq[2] = z1;
-  dq[3] = w1;
-  var ax = x2 * 0.5,
-      ay = y2 * 0.5,
-      az = z2 * 0.5;
-  dq[4] = ax * w1 + ay * z1 - az * y1;
-  dq[5] = ay * w1 + az * x1 - ax * z1;
-  dq[6] = az * w1 + ax * y1 - ay * x1;
-  dq[7] = -ax * x1 - ay * y1 - az * z1;
-  return dq;
-}
-/**
- * Creates a dual quat from a quaternion and a translation
- *
- * @param {quat2} dual quaternion receiving operation result
- * @param {quat} q a normalized quaternion
- * @param {vec3} t tranlation vector
- * @returns {quat2} dual quaternion receiving operation result
- * @function
- */
-
-
-function fromRotationTranslation(out, q, t) {
-  var ax = t[0] * 0.5,
-      ay = t[1] * 0.5,
-      az = t[2] * 0.5,
-      bx = q[0],
-      by = q[1],
-      bz = q[2],
-      bw = q[3];
-  out[0] = bx;
-  out[1] = by;
-  out[2] = bz;
-  out[3] = bw;
-  out[4] = ax * bw + ay * bz - az * by;
-  out[5] = ay * bw + az * bx - ax * bz;
-  out[6] = az * bw + ax * by - ay * bx;
-  out[7] = -ax * bx - ay * by - az * bz;
-  return out;
-}
-/**
- * Creates a dual quat from a translation
- *
- * @param {quat2} dual quaternion receiving operation result
- * @param {vec3} t translation vector
- * @returns {quat2} dual quaternion receiving operation result
- * @function
- */
-
-
-function fromTranslation(out, t) {
-  out[0] = 0;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 1;
-  out[4] = t[0] * 0.5;
-  out[5] = t[1] * 0.5;
-  out[6] = t[2] * 0.5;
-  out[7] = 0;
-  return out;
-}
-/**
- * Creates a dual quat from a quaternion
- *
- * @param {quat2} dual quaternion receiving operation result
- * @param {quat} q the quaternion
- * @returns {quat2} dual quaternion receiving operation result
- * @function
- */
-
-
-function fromRotation(out, q) {
-  out[0] = q[0];
-  out[1] = q[1];
-  out[2] = q[2];
-  out[3] = q[3];
-  out[4] = 0;
-  out[5] = 0;
-  out[6] = 0;
-  out[7] = 0;
-  return out;
-}
-/**
- * Creates a new dual quat from a matrix (4x4)
- *
- * @param {quat2} out the dual quaternion
- * @param {mat4} a the matrix
- * @returns {quat2} dual quat receiving operation result
- * @function
- */
-
-
-function fromMat4(out, a) {
-  //TODO Optimize this
-  var outer = quat.create();
-  mat4.getRotation(outer, a);
-  var t = new glMatrix.ARRAY_TYPE(3);
-  mat4.getTranslation(t, a);
-  fromRotationTranslation(out, outer, t);
-  return out;
-}
-/**
- * Copy the values from one dual quat to another
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the source dual quaternion
- * @returns {quat2} out
- * @function
- */
-
-
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  out[2] = a[2];
-  out[3] = a[3];
-  out[4] = a[4];
-  out[5] = a[5];
-  out[6] = a[6];
-  out[7] = a[7];
-  return out;
-}
-/**
- * Set a dual quat to the identity dual quaternion
- *
- * @param {quat2} out the receiving quaternion
- * @returns {quat2} out
- */
-
-
-function identity(out) {
-  out[0] = 0;
-  out[1] = 0;
-  out[2] = 0;
-  out[3] = 1;
-  out[4] = 0;
-  out[5] = 0;
-  out[6] = 0;
-  out[7] = 0;
-  return out;
-}
-/**
- * Set the components of a dual quat to the given values
- *
- * @param {quat2} out the receiving quaternion
- * @param {Number} x1 X component
- * @param {Number} y1 Y component
- * @param {Number} z1 Z component
- * @param {Number} w1 W component
- * @param {Number} x2 X component
- * @param {Number} y2 Y component
- * @param {Number} z2 Z component
- * @param {Number} w2 W component
- * @returns {quat2} out
- * @function
- */
-
-
-function set(out, x1, y1, z1, w1, x2, y2, z2, w2) {
-  out[0] = x1;
-  out[1] = y1;
-  out[2] = z1;
-  out[3] = w1;
-  out[4] = x2;
-  out[5] = y2;
-  out[6] = z2;
-  out[7] = w2;
-  return out;
-}
-/**
- * Gets the real part of a dual quat
- * @param  {quat} out real part
- * @param  {quat2} a Dual Quaternion
- * @return {quat} real part
- */
-
-
-var getReal = quat.copy;
-/**
- * Gets the dual part of a dual quat
- * @param  {quat} out dual part
- * @param  {quat2} a Dual Quaternion
- * @return {quat} dual part
- */
-
-exports.getReal = getReal;
-
-function getDual(out, a) {
-  out[0] = a[4];
-  out[1] = a[5];
-  out[2] = a[6];
-  out[3] = a[7];
-  return out;
-}
-/**
- * Set the real component of a dual quat to the given quaternion
- *
- * @param {quat2} out the receiving quaternion
- * @param {quat} q a quaternion representing the real part
- * @returns {quat2} out
- * @function
- */
-
-
-var setReal = quat.copy;
-/**
- * Set the dual component of a dual quat to the given quaternion
- *
- * @param {quat2} out the receiving quaternion
- * @param {quat} q a quaternion representing the dual part
- * @returns {quat2} out
- * @function
- */
-
-exports.setReal = setReal;
-
-function setDual(out, q) {
-  out[4] = q[0];
-  out[5] = q[1];
-  out[6] = q[2];
-  out[7] = q[3];
-  return out;
-}
-/**
- * Gets the translation of a normalized dual quat
- * @param  {vec3} out translation
- * @param  {quat2} a Dual Quaternion to be decomposed
- * @return {vec3} translation
- */
-
-
-function getTranslation(out, a) {
-  var ax = a[4],
-      ay = a[5],
-      az = a[6],
-      aw = a[7],
-      bx = -a[0],
-      by = -a[1],
-      bz = -a[2],
-      bw = a[3];
-  out[0] = (ax * bw + aw * bx + ay * bz - az * by) * 2;
-  out[1] = (ay * bw + aw * by + az * bx - ax * bz) * 2;
-  out[2] = (az * bw + aw * bz + ax * by - ay * bx) * 2;
-  return out;
-}
-/**
- * Translates a dual quat by the given vector
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the dual quaternion to translate
- * @param {vec3} v vector to translate by
- * @returns {quat2} out
- */
-
-
-function translate(out, a, v) {
-  var ax1 = a[0],
-      ay1 = a[1],
-      az1 = a[2],
-      aw1 = a[3],
-      bx1 = v[0] * 0.5,
-      by1 = v[1] * 0.5,
-      bz1 = v[2] * 0.5,
-      ax2 = a[4],
-      ay2 = a[5],
-      az2 = a[6],
-      aw2 = a[7];
-  out[0] = ax1;
-  out[1] = ay1;
-  out[2] = az1;
-  out[3] = aw1;
-  out[4] = aw1 * bx1 + ay1 * bz1 - az1 * by1 + ax2;
-  out[5] = aw1 * by1 + az1 * bx1 - ax1 * bz1 + ay2;
-  out[6] = aw1 * bz1 + ax1 * by1 - ay1 * bx1 + az2;
-  out[7] = -ax1 * bx1 - ay1 * by1 - az1 * bz1 + aw2;
-  return out;
-}
-/**
- * Rotates a dual quat around the X axis
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the dual quaternion to rotate
- * @param {number} rad how far should the rotation be
- * @returns {quat2} out
- */
-
-
-function rotateX(out, a, rad) {
-  var bx = -a[0],
-      by = -a[1],
-      bz = -a[2],
-      bw = a[3],
-      ax = a[4],
-      ay = a[5],
-      az = a[6],
-      aw = a[7],
-      ax1 = ax * bw + aw * bx + ay * bz - az * by,
-      ay1 = ay * bw + aw * by + az * bx - ax * bz,
-      az1 = az * bw + aw * bz + ax * by - ay * bx,
-      aw1 = aw * bw - ax * bx - ay * by - az * bz;
-  quat.rotateX(out, a, rad);
-  bx = out[0];
-  by = out[1];
-  bz = out[2];
-  bw = out[3];
-  out[4] = ax1 * bw + aw1 * bx + ay1 * bz - az1 * by;
-  out[5] = ay1 * bw + aw1 * by + az1 * bx - ax1 * bz;
-  out[6] = az1 * bw + aw1 * bz + ax1 * by - ay1 * bx;
-  out[7] = aw1 * bw - ax1 * bx - ay1 * by - az1 * bz;
-  return out;
-}
-/**
- * Rotates a dual quat around the Y axis
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the dual quaternion to rotate
- * @param {number} rad how far should the rotation be
- * @returns {quat2} out
- */
-
-
-function rotateY(out, a, rad) {
-  var bx = -a[0],
-      by = -a[1],
-      bz = -a[2],
-      bw = a[3],
-      ax = a[4],
-      ay = a[5],
-      az = a[6],
-      aw = a[7],
-      ax1 = ax * bw + aw * bx + ay * bz - az * by,
-      ay1 = ay * bw + aw * by + az * bx - ax * bz,
-      az1 = az * bw + aw * bz + ax * by - ay * bx,
-      aw1 = aw * bw - ax * bx - ay * by - az * bz;
-  quat.rotateY(out, a, rad);
-  bx = out[0];
-  by = out[1];
-  bz = out[2];
-  bw = out[3];
-  out[4] = ax1 * bw + aw1 * bx + ay1 * bz - az1 * by;
-  out[5] = ay1 * bw + aw1 * by + az1 * bx - ax1 * bz;
-  out[6] = az1 * bw + aw1 * bz + ax1 * by - ay1 * bx;
-  out[7] = aw1 * bw - ax1 * bx - ay1 * by - az1 * bz;
-  return out;
-}
-/**
- * Rotates a dual quat around the Z axis
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the dual quaternion to rotate
- * @param {number} rad how far should the rotation be
- * @returns {quat2} out
- */
-
-
-function rotateZ(out, a, rad) {
-  var bx = -a[0],
-      by = -a[1],
-      bz = -a[2],
-      bw = a[3],
-      ax = a[4],
-      ay = a[5],
-      az = a[6],
-      aw = a[7],
-      ax1 = ax * bw + aw * bx + ay * bz - az * by,
-      ay1 = ay * bw + aw * by + az * bx - ax * bz,
-      az1 = az * bw + aw * bz + ax * by - ay * bx,
-      aw1 = aw * bw - ax * bx - ay * by - az * bz;
-  quat.rotateZ(out, a, rad);
-  bx = out[0];
-  by = out[1];
-  bz = out[2];
-  bw = out[3];
-  out[4] = ax1 * bw + aw1 * bx + ay1 * bz - az1 * by;
-  out[5] = ay1 * bw + aw1 * by + az1 * bx - ax1 * bz;
-  out[6] = az1 * bw + aw1 * bz + ax1 * by - ay1 * bx;
-  out[7] = aw1 * bw - ax1 * bx - ay1 * by - az1 * bz;
-  return out;
-}
-/**
- * Rotates a dual quat by a given quaternion (a * q)
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the dual quaternion to rotate
- * @param {quat} q quaternion to rotate by
- * @returns {quat2} out
- */
-
-
-function rotateByQuatAppend(out, a, q) {
-  var qx = q[0],
-      qy = q[1],
-      qz = q[2],
-      qw = q[3],
-      ax = a[0],
-      ay = a[1],
-      az = a[2],
-      aw = a[3];
-  out[0] = ax * qw + aw * qx + ay * qz - az * qy;
-  out[1] = ay * qw + aw * qy + az * qx - ax * qz;
-  out[2] = az * qw + aw * qz + ax * qy - ay * qx;
-  out[3] = aw * qw - ax * qx - ay * qy - az * qz;
-  ax = a[4];
-  ay = a[5];
-  az = a[6];
-  aw = a[7];
-  out[4] = ax * qw + aw * qx + ay * qz - az * qy;
-  out[5] = ay * qw + aw * qy + az * qx - ax * qz;
-  out[6] = az * qw + aw * qz + ax * qy - ay * qx;
-  out[7] = aw * qw - ax * qx - ay * qy - az * qz;
-  return out;
-}
-/**
- * Rotates a dual quat by a given quaternion (q * a)
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat} q quaternion to rotate by
- * @param {quat2} a the dual quaternion to rotate
- * @returns {quat2} out
- */
-
-
-function rotateByQuatPrepend(out, q, a) {
-  var qx = q[0],
-      qy = q[1],
-      qz = q[2],
-      qw = q[3],
-      bx = a[0],
-      by = a[1],
-      bz = a[2],
-      bw = a[3];
-  out[0] = qx * bw + qw * bx + qy * bz - qz * by;
-  out[1] = qy * bw + qw * by + qz * bx - qx * bz;
-  out[2] = qz * bw + qw * bz + qx * by - qy * bx;
-  out[3] = qw * bw - qx * bx - qy * by - qz * bz;
-  bx = a[4];
-  by = a[5];
-  bz = a[6];
-  bw = a[7];
-  out[4] = qx * bw + qw * bx + qy * bz - qz * by;
-  out[5] = qy * bw + qw * by + qz * bx - qx * bz;
-  out[6] = qz * bw + qw * bz + qx * by - qy * bx;
-  out[7] = qw * bw - qx * bx - qy * by - qz * bz;
-  return out;
-}
-/**
- * Rotates a dual quat around a given axis. Does the normalisation automatically
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the dual quaternion to rotate
- * @param {vec3} axis the axis to rotate around
- * @param {Number} rad how far the rotation should be
- * @returns {quat2} out
- */
-
-
-function rotateAroundAxis(out, a, axis, rad) {
-  //Special case for rad = 0
-  if (Math.abs(rad) < glMatrix.EPSILON) {
-    return copy(out, a);
-  }
-
-  var axisLength = Math.hypot(axis[0], axis[1], axis[2]);
-  rad = rad * 0.5;
-  var s = Math.sin(rad);
-  var bx = s * axis[0] / axisLength;
-  var by = s * axis[1] / axisLength;
-  var bz = s * axis[2] / axisLength;
-  var bw = Math.cos(rad);
-  var ax1 = a[0],
-      ay1 = a[1],
-      az1 = a[2],
-      aw1 = a[3];
-  out[0] = ax1 * bw + aw1 * bx + ay1 * bz - az1 * by;
-  out[1] = ay1 * bw + aw1 * by + az1 * bx - ax1 * bz;
-  out[2] = az1 * bw + aw1 * bz + ax1 * by - ay1 * bx;
-  out[3] = aw1 * bw - ax1 * bx - ay1 * by - az1 * bz;
-  var ax = a[4],
-      ay = a[5],
-      az = a[6],
-      aw = a[7];
-  out[4] = ax * bw + aw * bx + ay * bz - az * by;
-  out[5] = ay * bw + aw * by + az * bx - ax * bz;
-  out[6] = az * bw + aw * bz + ax * by - ay * bx;
-  out[7] = aw * bw - ax * bx - ay * by - az * bz;
-  return out;
-}
-/**
- * Adds two dual quat's
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the first operand
- * @param {quat2} b the second operand
- * @returns {quat2} out
- * @function
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  out[2] = a[2] + b[2];
-  out[3] = a[3] + b[3];
-  out[4] = a[4] + b[4];
-  out[5] = a[5] + b[5];
-  out[6] = a[6] + b[6];
-  out[7] = a[7] + b[7];
-  return out;
-}
-/**
- * Multiplies two dual quat's
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a the first operand
- * @param {quat2} b the second operand
- * @returns {quat2} out
- */
-
-
-function multiply(out, a, b) {
-  var ax0 = a[0],
-      ay0 = a[1],
-      az0 = a[2],
-      aw0 = a[3],
-      bx1 = b[4],
-      by1 = b[5],
-      bz1 = b[6],
-      bw1 = b[7],
-      ax1 = a[4],
-      ay1 = a[5],
-      az1 = a[6],
-      aw1 = a[7],
-      bx0 = b[0],
-      by0 = b[1],
-      bz0 = b[2],
-      bw0 = b[3];
-  out[0] = ax0 * bw0 + aw0 * bx0 + ay0 * bz0 - az0 * by0;
-  out[1] = ay0 * bw0 + aw0 * by0 + az0 * bx0 - ax0 * bz0;
-  out[2] = az0 * bw0 + aw0 * bz0 + ax0 * by0 - ay0 * bx0;
-  out[3] = aw0 * bw0 - ax0 * bx0 - ay0 * by0 - az0 * bz0;
-  out[4] = ax0 * bw1 + aw0 * bx1 + ay0 * bz1 - az0 * by1 + ax1 * bw0 + aw1 * bx0 + ay1 * bz0 - az1 * by0;
-  out[5] = ay0 * bw1 + aw0 * by1 + az0 * bx1 - ax0 * bz1 + ay1 * bw0 + aw1 * by0 + az1 * bx0 - ax1 * bz0;
-  out[6] = az0 * bw1 + aw0 * bz1 + ax0 * by1 - ay0 * bx1 + az1 * bw0 + aw1 * bz0 + ax1 * by0 - ay1 * bx0;
-  out[7] = aw0 * bw1 - ax0 * bx1 - ay0 * by1 - az0 * bz1 + aw1 * bw0 - ax1 * bx0 - ay1 * by0 - az1 * bz0;
-  return out;
-}
-/**
- * Alias for {@link quat2.multiply}
- * @function
- */
-
-
-var mul = multiply;
-/**
- * Scales a dual quat by a scalar number
- *
- * @param {quat2} out the receiving dual quat
- * @param {quat2} a the dual quat to scale
- * @param {Number} b amount to scale the dual quat by
- * @returns {quat2} out
- * @function
- */
-
-exports.mul = mul;
-
-function scale(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  out[2] = a[2] * b;
-  out[3] = a[3] * b;
-  out[4] = a[4] * b;
-  out[5] = a[5] * b;
-  out[6] = a[6] * b;
-  out[7] = a[7] * b;
-  return out;
-}
-/**
- * Calculates the dot product of two dual quat's (The dot product of the real parts)
- *
- * @param {quat2} a the first operand
- * @param {quat2} b the second operand
- * @returns {Number} dot product of a and b
- * @function
- */
-
-
-var dot = quat.dot;
-/**
- * Performs a linear interpolation between two dual quats's
- * NOTE: The resulting dual quaternions won't always be normalized (The error is most noticeable when t = 0.5)
- *
- * @param {quat2} out the receiving dual quat
- * @param {quat2} a the first operand
- * @param {quat2} b the second operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {quat2} out
- */
-
-exports.dot = dot;
-
-function lerp(out, a, b, t) {
-  var mt = 1 - t;
-  if (dot(a, b) < 0) t = -t;
-  out[0] = a[0] * mt + b[0] * t;
-  out[1] = a[1] * mt + b[1] * t;
-  out[2] = a[2] * mt + b[2] * t;
-  out[3] = a[3] * mt + b[3] * t;
-  out[4] = a[4] * mt + b[4] * t;
-  out[5] = a[5] * mt + b[5] * t;
-  out[6] = a[6] * mt + b[6] * t;
-  out[7] = a[7] * mt + b[7] * t;
-  return out;
-}
-/**
- * Calculates the inverse of a dual quat. If they are normalized, conjugate is cheaper
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a dual quat to calculate inverse of
- * @returns {quat2} out
- */
-
-
-function invert(out, a) {
-  var sqlen = squaredLength(a);
-  out[0] = -a[0] / sqlen;
-  out[1] = -a[1] / sqlen;
-  out[2] = -a[2] / sqlen;
-  out[3] = a[3] / sqlen;
-  out[4] = -a[4] / sqlen;
-  out[5] = -a[5] / sqlen;
-  out[6] = -a[6] / sqlen;
-  out[7] = a[7] / sqlen;
-  return out;
-}
-/**
- * Calculates the conjugate of a dual quat
- * If the dual quaternion is normalized, this function is faster than quat2.inverse and produces the same result.
- *
- * @param {quat2} out the receiving quaternion
- * @param {quat2} a quat to calculate conjugate of
- * @returns {quat2} out
- */
-
-
-function conjugate(out, a) {
-  out[0] = -a[0];
-  out[1] = -a[1];
-  out[2] = -a[2];
-  out[3] = a[3];
-  out[4] = -a[4];
-  out[5] = -a[5];
-  out[6] = -a[6];
-  out[7] = a[7];
-  return out;
-}
-/**
- * Calculates the length of a dual quat
- *
- * @param {quat2} a dual quat to calculate length of
- * @returns {Number} length of a
- * @function
- */
-
-
-var length = quat.length;
-/**
- * Alias for {@link quat2.length}
- * @function
- */
-
-exports.length = length;
-var len = length;
-/**
- * Calculates the squared length of a dual quat
- *
- * @param {quat2} a dual quat to calculate squared length of
- * @returns {Number} squared length of a
- * @function
- */
-
-exports.len = len;
-var squaredLength = quat.squaredLength;
-/**
- * Alias for {@link quat2.squaredLength}
- * @function
- */
-
-exports.squaredLength = squaredLength;
-var sqrLen = squaredLength;
-/**
- * Normalize a dual quat
- *
- * @param {quat2} out the receiving dual quaternion
- * @param {quat2} a dual quaternion to normalize
- * @returns {quat2} out
- * @function
- */
-
-exports.sqrLen = sqrLen;
-
-function normalize(out, a) {
-  var magnitude = squaredLength(a);
-
-  if (magnitude > 0) {
-    magnitude = Math.sqrt(magnitude);
-    var a0 = a[0] / magnitude;
-    var a1 = a[1] / magnitude;
-    var a2 = a[2] / magnitude;
-    var a3 = a[3] / magnitude;
-    var b0 = a[4];
-    var b1 = a[5];
-    var b2 = a[6];
-    var b3 = a[7];
-    var a_dot_b = a0 * b0 + a1 * b1 + a2 * b2 + a3 * b3;
-    out[0] = a0;
-    out[1] = a1;
-    out[2] = a2;
-    out[3] = a3;
-    out[4] = (b0 - a0 * a_dot_b) / magnitude;
-    out[5] = (b1 - a1 * a_dot_b) / magnitude;
-    out[6] = (b2 - a2 * a_dot_b) / magnitude;
-    out[7] = (b3 - a3 * a_dot_b) / magnitude;
-  }
-
-  return out;
-}
-/**
- * Returns a string representation of a dual quatenion
- *
- * @param {quat2} a dual quaternion to represent as a string
- * @returns {String} string representation of the dual quat
- */
-
-
-function str(a) {
-  return 'quat2(' + a[0] + ', ' + a[1] + ', ' + a[2] + ', ' + a[3] + ', ' + a[4] + ', ' + a[5] + ', ' + a[6] + ', ' + a[7] + ')';
-}
-/**
- * Returns whether or not the dual quaternions have exactly the same elements in the same position (when compared with ===)
- *
- * @param {quat2} a the first dual quaternion.
- * @param {quat2} b the second dual quaternion.
- * @returns {Boolean} true if the dual quaternions are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1] && a[2] === b[2] && a[3] === b[3] && a[4] === b[4] && a[5] === b[5] && a[6] === b[6] && a[7] === b[7];
-}
-/**
- * Returns whether or not the dual quaternions have approximately the same elements in the same position.
- *
- * @param {quat2} a the first dual quat.
- * @param {quat2} b the second dual quat.
- * @returns {Boolean} true if the dual quats are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1],
-      a2 = a[2],
-      a3 = a[3],
-      a4 = a[4],
-      a5 = a[5],
-      a6 = a[6],
-      a7 = a[7];
-  var b0 = b[0],
-      b1 = b[1],
-      b2 = b[2],
-      b3 = b[3],
-      b4 = b[4],
-      b5 = b[5],
-      b6 = b[6],
-      b7 = b[7];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a5), Math.abs(b5)) && Math.abs(a6 - b6) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a6), Math.abs(b6)) && Math.abs(a7 - b7) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a7), Math.abs(b7));
-}
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js","./quat.js":"node_modules/xgl/node_modules/gl-matrix/esm/quat.js","./mat4.js":"node_modules/xgl/node_modules/gl-matrix/esm/mat4.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/vec2.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.create = create;
-exports.clone = clone;
-exports.fromValues = fromValues;
-exports.copy = copy;
-exports.set = set;
-exports.add = add;
-exports.subtract = subtract;
-exports.multiply = multiply;
-exports.divide = divide;
-exports.ceil = ceil;
-exports.floor = floor;
-exports.min = min;
-exports.max = max;
-exports.round = round;
-exports.scale = scale;
-exports.scaleAndAdd = scaleAndAdd;
-exports.distance = distance;
-exports.squaredDistance = squaredDistance;
-exports.length = length;
-exports.squaredLength = squaredLength;
-exports.negate = negate;
-exports.inverse = inverse;
-exports.normalize = normalize;
-exports.dot = dot;
-exports.cross = cross;
-exports.lerp = lerp;
-exports.random = random;
-exports.transformMat2 = transformMat2;
-exports.transformMat2d = transformMat2d;
-exports.transformMat3 = transformMat3;
-exports.transformMat4 = transformMat4;
-exports.rotate = rotate;
-exports.angle = angle;
-exports.zero = zero;
-exports.str = str;
-exports.exactEquals = exactEquals;
-exports.equals = equals;
-exports.forEach = exports.sqrLen = exports.sqrDist = exports.dist = exports.div = exports.mul = exports.sub = exports.len = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-/**
- * 2 Dimensional Vector
- * @module vec2
- */
-
-/**
- * Creates a new, empty vec2
- *
- * @returns {vec2} a new 2D vector
- */
-function create() {
-  var out = new glMatrix.ARRAY_TYPE(2);
-
-  if (glMatrix.ARRAY_TYPE != Float32Array) {
-    out[0] = 0;
-    out[1] = 0;
-  }
-
-  return out;
-}
-/**
- * Creates a new vec2 initialized with values from an existing vector
- *
- * @param {vec2} a vector to clone
- * @returns {vec2} a new 2D vector
- */
-
-
-function clone(a) {
-  var out = new glMatrix.ARRAY_TYPE(2);
-  out[0] = a[0];
-  out[1] = a[1];
-  return out;
-}
-/**
- * Creates a new vec2 initialized with the given values
- *
- * @param {Number} x X component
- * @param {Number} y Y component
- * @returns {vec2} a new 2D vector
- */
-
-
-function fromValues(x, y) {
-  var out = new glMatrix.ARRAY_TYPE(2);
-  out[0] = x;
-  out[1] = y;
-  return out;
-}
-/**
- * Copy the values from one vec2 to another
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the source vector
- * @returns {vec2} out
- */
-
-
-function copy(out, a) {
-  out[0] = a[0];
-  out[1] = a[1];
-  return out;
-}
-/**
- * Set the components of a vec2 to the given values
- *
- * @param {vec2} out the receiving vector
- * @param {Number} x X component
- * @param {Number} y Y component
- * @returns {vec2} out
- */
-
-
-function set(out, x, y) {
-  out[0] = x;
-  out[1] = y;
-  return out;
-}
-/**
- * Adds two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-
-
-function add(out, a, b) {
-  out[0] = a[0] + b[0];
-  out[1] = a[1] + b[1];
-  return out;
-}
-/**
- * Subtracts vector b from vector a
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-
-
-function subtract(out, a, b) {
-  out[0] = a[0] - b[0];
-  out[1] = a[1] - b[1];
-  return out;
-}
-/**
- * Multiplies two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-
-
-function multiply(out, a, b) {
-  out[0] = a[0] * b[0];
-  out[1] = a[1] * b[1];
-  return out;
-}
-/**
- * Divides two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-
-
-function divide(out, a, b) {
-  out[0] = a[0] / b[0];
-  out[1] = a[1] / b[1];
-  return out;
-}
-/**
- * Math.ceil the components of a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to ceil
- * @returns {vec2} out
- */
-
-
-function ceil(out, a) {
-  out[0] = Math.ceil(a[0]);
-  out[1] = Math.ceil(a[1]);
-  return out;
-}
-/**
- * Math.floor the components of a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to floor
- * @returns {vec2} out
- */
-
-
-function floor(out, a) {
-  out[0] = Math.floor(a[0]);
-  out[1] = Math.floor(a[1]);
-  return out;
-}
-/**
- * Returns the minimum of two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-
-
-function min(out, a, b) {
-  out[0] = Math.min(a[0], b[0]);
-  out[1] = Math.min(a[1], b[1]);
-  return out;
-}
-/**
- * Returns the maximum of two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec2} out
- */
-
-
-function max(out, a, b) {
-  out[0] = Math.max(a[0], b[0]);
-  out[1] = Math.max(a[1], b[1]);
-  return out;
-}
-/**
- * Math.round the components of a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to round
- * @returns {vec2} out
- */
-
-
-function round(out, a) {
-  out[0] = Math.round(a[0]);
-  out[1] = Math.round(a[1]);
-  return out;
-}
-/**
- * Scales a vec2 by a scalar number
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to scale
- * @param {Number} b amount to scale the vector by
- * @returns {vec2} out
- */
-
-
-function scale(out, a, b) {
-  out[0] = a[0] * b;
-  out[1] = a[1] * b;
-  return out;
-}
-/**
- * Adds two vec2's after scaling the second operand by a scalar value
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @param {Number} scale the amount to scale b by before adding
- * @returns {vec2} out
- */
-
-
-function scaleAndAdd(out, a, b, scale) {
-  out[0] = a[0] + b[0] * scale;
-  out[1] = a[1] + b[1] * scale;
-  return out;
-}
-/**
- * Calculates the euclidian distance between two vec2's
- *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} distance between a and b
- */
-
-
-function distance(a, b) {
-  var x = b[0] - a[0],
-      y = b[1] - a[1];
-  return Math.hypot(x, y);
-}
-/**
- * Calculates the squared euclidian distance between two vec2's
- *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} squared distance between a and b
- */
-
-
-function squaredDistance(a, b) {
-  var x = b[0] - a[0],
-      y = b[1] - a[1];
-  return x * x + y * y;
-}
-/**
- * Calculates the length of a vec2
- *
- * @param {vec2} a vector to calculate length of
- * @returns {Number} length of a
- */
-
-
-function length(a) {
-  var x = a[0],
-      y = a[1];
-  return Math.hypot(x, y);
-}
-/**
- * Calculates the squared length of a vec2
- *
- * @param {vec2} a vector to calculate squared length of
- * @returns {Number} squared length of a
- */
-
-
-function squaredLength(a) {
-  var x = a[0],
-      y = a[1];
-  return x * x + y * y;
-}
-/**
- * Negates the components of a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to negate
- * @returns {vec2} out
- */
-
-
-function negate(out, a) {
-  out[0] = -a[0];
-  out[1] = -a[1];
-  return out;
-}
-/**
- * Returns the inverse of the components of a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to invert
- * @returns {vec2} out
- */
-
-
-function inverse(out, a) {
-  out[0] = 1.0 / a[0];
-  out[1] = 1.0 / a[1];
-  return out;
-}
-/**
- * Normalize a vec2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a vector to normalize
- * @returns {vec2} out
- */
-
-
-function normalize(out, a) {
-  var x = a[0],
-      y = a[1];
-  var len = x * x + y * y;
-
-  if (len > 0) {
-    //TODO: evaluate use of glm_invsqrt here?
-    len = 1 / Math.sqrt(len);
-  }
-
-  out[0] = a[0] * len;
-  out[1] = a[1] * len;
-  return out;
-}
-/**
- * Calculates the dot product of two vec2's
- *
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {Number} dot product of a and b
- */
-
-
-function dot(a, b) {
-  return a[0] * b[0] + a[1] * b[1];
-}
-/**
- * Computes the cross product of two vec2's
- * Note that the cross product must by definition produce a 3D vector
- *
- * @param {vec3} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @returns {vec3} out
- */
-
-
-function cross(out, a, b) {
-  var z = a[0] * b[1] - a[1] * b[0];
-  out[0] = out[1] = 0;
-  out[2] = z;
-  return out;
-}
-/**
- * Performs a linear interpolation between two vec2's
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the first operand
- * @param {vec2} b the second operand
- * @param {Number} t interpolation amount, in the range [0-1], between the two inputs
- * @returns {vec2} out
- */
-
-
-function lerp(out, a, b, t) {
-  var ax = a[0],
-      ay = a[1];
-  out[0] = ax + t * (b[0] - ax);
-  out[1] = ay + t * (b[1] - ay);
-  return out;
-}
-/**
- * Generates a random vector with the given scale
- *
- * @param {vec2} out the receiving vector
- * @param {Number} [scale] Length of the resulting vector. If ommitted, a unit vector will be returned
- * @returns {vec2} out
- */
-
-
-function random(out, scale) {
-  scale = scale || 1.0;
-  var r = glMatrix.RANDOM() * 2.0 * Math.PI;
-  out[0] = Math.cos(r) * scale;
-  out[1] = Math.sin(r) * scale;
-  return out;
-}
-/**
- * Transforms the vec2 with a mat2
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat2} m matrix to transform with
- * @returns {vec2} out
- */
-
-
-function transformMat2(out, a, m) {
-  var x = a[0],
-      y = a[1];
-  out[0] = m[0] * x + m[2] * y;
-  out[1] = m[1] * x + m[3] * y;
-  return out;
-}
-/**
- * Transforms the vec2 with a mat2d
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat2d} m matrix to transform with
- * @returns {vec2} out
- */
-
-
-function transformMat2d(out, a, m) {
-  var x = a[0],
-      y = a[1];
-  out[0] = m[0] * x + m[2] * y + m[4];
-  out[1] = m[1] * x + m[3] * y + m[5];
-  return out;
-}
-/**
- * Transforms the vec2 with a mat3
- * 3rd vector component is implicitly '1'
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat3} m matrix to transform with
- * @returns {vec2} out
- */
-
-
-function transformMat3(out, a, m) {
-  var x = a[0],
-      y = a[1];
-  out[0] = m[0] * x + m[3] * y + m[6];
-  out[1] = m[1] * x + m[4] * y + m[7];
-  return out;
-}
-/**
- * Transforms the vec2 with a mat4
- * 3rd vector component is implicitly '0'
- * 4th vector component is implicitly '1'
- *
- * @param {vec2} out the receiving vector
- * @param {vec2} a the vector to transform
- * @param {mat4} m matrix to transform with
- * @returns {vec2} out
- */
-
-
-function transformMat4(out, a, m) {
-  var x = a[0];
-  var y = a[1];
-  out[0] = m[0] * x + m[4] * y + m[12];
-  out[1] = m[1] * x + m[5] * y + m[13];
-  return out;
-}
-/**
- * Rotate a 2D vector
- * @param {vec2} out The receiving vec2
- * @param {vec2} a The vec2 point to rotate
- * @param {vec2} b The origin of the rotation
- * @param {Number} c The angle of rotation
- * @returns {vec2} out
- */
-
-
-function rotate(out, a, b, c) {
-  //Translate point to the origin
-  var p0 = a[0] - b[0],
-      p1 = a[1] - b[1],
-      sinC = Math.sin(c),
-      cosC = Math.cos(c); //perform rotation and translate to correct position
-
-  out[0] = p0 * cosC - p1 * sinC + b[0];
-  out[1] = p0 * sinC + p1 * cosC + b[1];
-  return out;
-}
-/**
- * Get the angle between two 2D vectors
- * @param {vec2} a The first operand
- * @param {vec2} b The second operand
- * @returns {Number} The angle in radians
- */
-
-
-function angle(a, b) {
-  var x1 = a[0],
-      y1 = a[1],
-      x2 = b[0],
-      y2 = b[1];
-  var len1 = x1 * x1 + y1 * y1;
-
-  if (len1 > 0) {
-    //TODO: evaluate use of glm_invsqrt here?
-    len1 = 1 / Math.sqrt(len1);
-  }
-
-  var len2 = x2 * x2 + y2 * y2;
-
-  if (len2 > 0) {
-    //TODO: evaluate use of glm_invsqrt here?
-    len2 = 1 / Math.sqrt(len2);
-  }
-
-  var cosine = (x1 * x2 + y1 * y2) * len1 * len2;
-
-  if (cosine > 1.0) {
-    return 0;
-  } else if (cosine < -1.0) {
-    return Math.PI;
-  } else {
-    return Math.acos(cosine);
-  }
-}
-/**
- * Set the components of a vec2 to zero
- *
- * @param {vec2} out the receiving vector
- * @returns {vec2} out
- */
-
-
-function zero(out) {
-  out[0] = 0.0;
-  out[1] = 0.0;
-  return out;
-}
-/**
- * Returns a string representation of a vector
- *
- * @param {vec2} a vector to represent as a string
- * @returns {String} string representation of the vector
- */
-
-
-function str(a) {
-  return 'vec2(' + a[0] + ', ' + a[1] + ')';
+  return environmentName;
 }
-/**
- * Returns whether or not the vectors exactly have the same elements in the same position (when compared with ===)
- *
- * @param {vec2} a The first vector.
- * @param {vec2} b The second vector.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-
-function exactEquals(a, b) {
-  return a[0] === b[0] && a[1] === b[1];
-}
-/**
- * Returns whether or not the vectors have approximately the same elements in the same position.
- *
- * @param {vec2} a The first vector.
- * @param {vec2} b The second vector.
- * @returns {Boolean} True if the vectors are equal, false otherwise.
- */
-
-
-function equals(a, b) {
-  var a0 = a[0],
-      a1 = a[1];
-  var b0 = b[0],
-      b1 = b[1];
-  return Math.abs(a0 - b0) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= glMatrix.EPSILON * Math.max(1.0, Math.abs(a1), Math.abs(b1));
-}
-/**
- * Alias for {@link vec2.length}
- * @function
- */
-
-
-var len = length;
-/**
- * Alias for {@link vec2.subtract}
- * @function
- */
-
-exports.len = len;
-var sub = subtract;
-/**
- * Alias for {@link vec2.multiply}
- * @function
- */
-
-exports.sub = sub;
-var mul = multiply;
-/**
- * Alias for {@link vec2.divide}
- * @function
- */
-
-exports.mul = mul;
-var div = divide;
-/**
- * Alias for {@link vec2.distance}
- * @function
- */
-
-exports.div = div;
-var dist = distance;
-/**
- * Alias for {@link vec2.squaredDistance}
- * @function
- */
-
-exports.dist = dist;
-var sqrDist = squaredDistance;
-/**
- * Alias for {@link vec2.squaredLength}
- * @function
- */
-
-exports.sqrDist = sqrDist;
-var sqrLen = squaredLength;
-/**
- * Perform some operation over an array of vec2s.
- *
- * @param {Array} a the array of vectors to iterate over
- * @param {Number} stride Number of elements between the start of each vec2. If 0 assumes tightly packed
- * @param {Number} offset Number of elements to skip at the beginning of the array
- * @param {Number} count Number of vec2s to iterate over. If 0 iterates over entire array
- * @param {Function} fn Function to call for each vector in the array
- * @param {Object} [arg] additional argument to pass to fn
- * @returns {Array} a
- * @function
- */
-
-exports.sqrLen = sqrLen;
-
-var forEach = function () {
-  var vec = create();
-  return function (a, stride, offset, count, fn, arg) {
-    var i, l;
-
-    if (!stride) {
-      stride = 2;
-    }
-
-    if (!offset) {
-      offset = 0;
-    }
-
-    if (count) {
-      l = Math.min(count * stride + offset, a.length);
-    } else {
-      l = a.length;
-    }
-
-    for (i = offset; i < l; i += stride) {
-      vec[0] = a[i];
-      vec[1] = a[i + 1];
-      fn(vec, vec, arg);
-      a[i] = vec[0];
-      a[i + 1] = vec[1];
-    }
-
-    return a;
-  };
-}();
-
-exports.forEach = forEach;
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js"}],"node_modules/xgl/node_modules/gl-matrix/esm/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.vec4 = exports.vec3 = exports.vec2 = exports.quat2 = exports.quat = exports.mat4 = exports.mat3 = exports.mat2d = exports.mat2 = exports.glMatrix = void 0;
-
-var glMatrix = _interopRequireWildcard(require("./common.js"));
-
-exports.glMatrix = glMatrix;
-
-var mat2 = _interopRequireWildcard(require("./mat2.js"));
-
-exports.mat2 = mat2;
-
-var mat2d = _interopRequireWildcard(require("./mat2d.js"));
-
-exports.mat2d = mat2d;
-
-var mat3 = _interopRequireWildcard(require("./mat3.js"));
-
-exports.mat3 = mat3;
-
-var mat4 = _interopRequireWildcard(require("./mat4.js"));
-
-exports.mat4 = mat4;
-
-var quat = _interopRequireWildcard(require("./quat.js"));
-
-exports.quat = quat;
-
-var quat2 = _interopRequireWildcard(require("./quat2.js"));
-
-exports.quat2 = quat2;
-
-var vec2 = _interopRequireWildcard(require("./vec2.js"));
-
-exports.vec2 = vec2;
-
-var vec3 = _interopRequireWildcard(require("./vec3.js"));
-
-exports.vec3 = vec3;
-
-var vec4 = _interopRequireWildcard(require("./vec4.js"));
-
-exports.vec4 = vec4;
-
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-},{"./common.js":"node_modules/xgl/node_modules/gl-matrix/esm/common.js","./mat2.js":"node_modules/xgl/node_modules/gl-matrix/esm/mat2.js","./mat2d.js":"node_modules/xgl/node_modules/gl-matrix/esm/mat2d.js","./mat3.js":"node_modules/xgl/node_modules/gl-matrix/esm/mat3.js","./mat4.js":"node_modules/xgl/node_modules/gl-matrix/esm/mat4.js","./quat.js":"node_modules/xgl/node_modules/gl-matrix/esm/quat.js","./quat2.js":"node_modules/xgl/node_modules/gl-matrix/esm/quat2.js","./vec2.js":"node_modules/xgl/node_modules/gl-matrix/esm/vec2.js","./vec3.js":"node_modules/xgl/node_modules/gl-matrix/esm/vec3.js","./vec4.js":"node_modules/xgl/node_modules/gl-matrix/esm/vec4.js"}],"node_modules/xgl/dist/gl/gl.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GLUtilities = exports.gl = void 0;
-var gl;
-exports.gl = gl;
-
-var GLUtilities =
-/** @class */
-function () {
-  function GLUtilities() {}
-
-  GLUtilities.init = function (elId) {
-    var canvas;
-
-    if (elId !== undefined) {
-      canvas = document.getElementById(elId);
-
-      if (canvas === undefined) {
-        throw new Error("Unable to find DOM element with ID: " + elId);
-      }
-    } else {
-      canvas = document.createElement('canvas');
-      document.body.appendChild(canvas);
-    }
-
-    exports.gl = gl = canvas.getContext('webgl');
-
-    if (gl === undefined || gl === null) {
-      exports.gl = gl = canvas.getContext('experimental-webgl');
-
-      if (gl === undefined || gl === null) {
-        throw new Error('Unable to get the rendering context.');
-      }
-    } // TODO: This should not be here. As it is a game configuration.
-
-
-    gl.clearColor(146 / 255, 206 / 255, 247 / 255, 1); // Allows transparency in sprites
-
-    gl.enable(gl.BLEND);
-    gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    return canvas;
-  };
-
-  GLUtilities.clearFrame = function () {
-    gl.clear(gl.COLOR_BUFFER_BIT);
-  };
-
-  return GLUtilities;
-}();
-
-exports.GLUtilities = GLUtilities;
-},{}],"node_modules/xgl/dist/gl/shader.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Shader = void 0;
-
-var _gl = require("./gl");
-
-/**
- * Shaders are the programs that run in the GPU (Written in Open GL ES Shader language, ES SL)
- */
-var Shader =
-/** @class */
-function () {
-  function Shader(name) {
-    this._attributes = {};
-    this._uniforms = {};
-    this._name = name;
-  }
-  /**
-   * Use the shaders
-   */
-
-
-  Shader.prototype.use = function () {
-    _gl.gl.useProgram(this._program);
-  };
-  /**
-   * Gets the location of an attribute
-   *
-   * @param name The name of the attribute to get the location for
-   */
-
-
-  Shader.prototype.getAttributeLocation = function (name) {
-    if (this._attributes[name] === undefined) {
-      throw new Error("Unable to find attribute " + name + " in shader " + this._name);
-    }
-
-    return this._attributes[name];
-  };
-  /**
-   * Gets the location of a uniform
-   *
-   * @param name The name of the uniform to get the location for
-   */
-
-
-  Shader.prototype.getUniformLocation = function (name) {
-    if (this._uniforms[name] === undefined) {
-      throw new Error("Unable to find uniform " + name + " in shader " + this._name);
-    }
-
-    return this._uniforms[name];
-  };
-  /**
-   *
-   * @param vertexSource
-   * @param fragmentSource
-   */
-
-
-  Shader.prototype.load = function (vertexSource, fragmentSource) {
-    var vertexShader = this.loadShader(vertexSource, _gl.gl.VERTEX_SHADER);
-    var fragmentShader = this.loadShader(fragmentSource, _gl.gl.FRAGMENT_SHADER);
-    this.createProgram(vertexShader, fragmentShader);
-    this.detectAttributes();
-    this.detectUniforms();
-  };
-
-  Shader.prototype.loadShader = function (source, shaderType) {
-    var _a;
-
-    var shader = _gl.gl.createShader(shaderType);
-
-    _gl.gl.shaderSource(shader, source);
-
-    _gl.gl.compileShader(shader);
-
-    var error = (_a = _gl.gl.getShaderInfoLog(shader)) === null || _a === void 0 ? void 0 : _a.trim();
-
-    if (error !== '') {
-      throw new Error("Error compiling shader: " + this._name + " with error: " + error);
-    }
-
-    return shader;
-  };
-
-  Shader.prototype.createProgram = function (vertexShader, fragmentShader) {
-    var _a;
-
-    this._program = _gl.gl.createProgram();
-
-    _gl.gl.attachShader(this._program, vertexShader);
-
-    _gl.gl.attachShader(this._program, fragmentShader);
-
-    _gl.gl.linkProgram(this._program);
-
-    var error = (_a = _gl.gl.getProgramInfoLog(this._program)) === null || _a === void 0 ? void 0 : _a.trim();
-
-    if (error !== '') {
-      throw new Error("Error creating the WebGL program: " + this._program + " with error: " + error);
-    }
-  };
-  /**
-   * Extract attributes from shader source so that we can reference them.
-   */
-
-
-  Shader.prototype.detectAttributes = function () {
-    var attributeCount = _gl.gl.getProgramParameter(this._program, _gl.gl.ACTIVE_ATTRIBUTES);
-
-    for (var i = 0; i < attributeCount; i++) {
-      var info = _gl.gl.getActiveAttrib(this._program, i);
-
-      if (!info) {
-        break;
-      }
-
-      this._attributes[info.name] = _gl.gl.getAttribLocation(this._program, info.name);
-    }
-  };
-  /**
-   * Extract uniforms from shader source so that we can reference them.
-   */
-
-
-  Shader.prototype.detectUniforms = function () {
-    var uniformCount = _gl.gl.getProgramParameter(this._program, _gl.gl.ACTIVE_UNIFORMS);
-
-    for (var i = 0; i < uniformCount; i++) {
-      var info = _gl.gl.getActiveUniform(this._program, i);
-
-      if (!info) {
-        break;
-      }
-
-      this._uniforms[info.name] = _gl.gl.getUniformLocation(this._program, info.name);
-    }
-  };
-
-  return Shader;
-}();
-
-exports.Shader = Shader;
-},{"./gl":"node_modules/xgl/dist/gl/gl.js"}],"node_modules/xgl/dist/gl/shaders/basicShader.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BasicShader = void 0;
-
-var _shader = require("../shader");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var BasicShader =
-/** @class */
-function (_super) {
-  __extends(BasicShader, _super);
-
-  function BasicShader() {
-    var _this = _super.call(this, 'basic') || this;
-
-    _this.load(_this.getVertexSource(), _this.getFragmentSource());
-
-    return _this;
-  }
-
-  BasicShader.prototype.getVertexSource = function () {
-    // Fragment shader does not have access to attributes, thats why we use v_textCoord to
-    // copy a_texCoord over the Fragment Shader from the Vertex Shader
-    return "\n            attribute vec3 a_position;\n            attribute vec2 a_texCoord;\n            \n            uniform mat4 u_projection;\n            uniform mat4 u_model;\n\n            varying vec2 v_textCoord;\n\n            void main() {\n                gl_Position = u_projection * u_model * vec4(a_position, 1.0);\n                v_textCoord = a_texCoord;\n            }\n        ";
-  };
-
-  BasicShader.prototype.getFragmentSource = function () {
-    // sampler to retrieve color out of the texture
-    return "\n            precision mediump float;\n\n            uniform vec4 u_tint;\n            uniform sampler2D u_diffuse;\n\n            varying vec2 v_textCoord;\n\n            void main () {\n                gl_FragColor = u_tint * texture2D(u_diffuse, v_textCoord);\n            }\n        ";
-  };
-
-  return BasicShader;
-}(_shader.Shader);
-
-exports.BasicShader = BasicShader;
-},{"../shader":"node_modules/xgl/dist/gl/shader.js"}],"node_modules/xgl/dist/gl/glBuffer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.GLBuffer = exports.AttributeInfo = void 0;
-
-var _gl = require("./gl");
-
-/**
- * Struct of data needed for GLBuffer attribute
- */
-var AttributeInfo =
-/** @class */
-function () {
-  function AttributeInfo() {}
-
-  return AttributeInfo;
-}();
-
-exports.AttributeInfo = AttributeInfo;
-
-/**
- * A WebGLBuffer wrap
- */
-var GLBuffer =
-/** @class */
-function () {
-  /**
-   * Creates a new GL buffer
-   *
-   * @param dataType : Data type of this buffer. Defaults to gl.FLOAT
-   * @param targetBufferType : The buffer taget type. Defaults to gl.ARRAY_BUFFER
-   * @param mode : The drawing mode of this buffer. Defaults to gl.TRIANGLES
-   */
-  function GLBuffer(dataType, targetBufferType, mode) {
-    if (dataType === void 0) {
-      dataType = _gl.gl.FLOAT;
-    }
-
-    if (targetBufferType === void 0) {
-      targetBufferType = _gl.gl.ARRAY_BUFFER;
-    }
-
-    if (mode === void 0) {
-      mode = _gl.gl.TRIANGLES;
-    }
-
-    this._hasAttributeLocation = false;
-    this._data = [];
-    this._attributes = [];
-    this._elementSize = 0;
-    this._dataType = dataType;
-    this._targetBufferType = targetBufferType;
-    this._mode = mode;
-
-    switch (this._dataType) {
-      case _gl.gl.FLOAT:
-      case _gl.gl.INT:
-      case _gl.gl.UNSIGNED_INT:
-        this._typeSize = 4;
-        break;
-
-      case _gl.gl.SHORT:
-      case _gl.gl.UNSIGNED_SHORT:
-        this._typeSize = 2;
-        break;
-
-      case _gl.gl.BYTE:
-      case _gl.gl.UNSIGNED_BYTE:
-        this._typeSize = 1;
-        break;
-
-      default:
-        throw new Error("Unrecognised datatype " + this._dataType.toString());
-    }
-
-    this._buffer = _gl.gl.createBuffer();
-  }
-  /**
-   * Delete the buffer from memory
-   */
-
-
-  GLBuffer.prototype.destroy = function () {
-    _gl.gl.deleteBuffer(this._buffer);
-  };
-  /**
-   * Binds this buffer
-   *
-   * @param normalised : Indicates whther the data should be normalised
-   */
-
-
-  GLBuffer.prototype.bind = function (normalised) {
-    if (normalised === void 0) {
-      normalised = false;
-    }
-
-    _gl.gl.bindBuffer(this._targetBufferType, this._buffer);
-
-    if (this._hasAttributeLocation) {
-      for (var _i = 0, _a = this._attributes; _i < _a.length; _i++) {
-        var attr = _a[_i];
-
-        _gl.gl.vertexAttribPointer(attr.location, attr.size, this._dataType, normalised, this._stride, attr.offset * this._typeSize);
-
-        _gl.gl.enableVertexAttribArray(attr.location);
-      }
-    }
-  };
-  /**
-   * Unbinds this buffer
-   */
-
-
-  GLBuffer.prototype.unbind = function () {
-    for (var _i = 0, _a = this._attributes; _i < _a.length; _i++) {
-      var attr = _a[_i];
-
-      _gl.gl.disableVertexAttribArray(attr.location);
-    }
-
-    _gl.gl.bindBuffer(this._targetBufferType, undefined);
-  };
-  /**
-   * Adds an attribute with the provided information to this buffer
-   * @param info The information to be added
-   */
-
-
-  GLBuffer.prototype.addAttributeLocation = function (info) {
-    this._hasAttributeLocation = true;
-    info.offset = this._elementSize;
-
-    this._attributes.push(info);
-
-    this._elementSize += info.size;
-    this._stride = this._elementSize * this._typeSize;
-  };
-  /**
-   * Replaces the current data in this budder with the provided data
-   *
-   * @param data : the data to be set to this buffer
-   */
-
-
-  GLBuffer.prototype.setData = function (data) {
-    this.clearData();
-    this.pushBackData(data);
-  };
-  /**
-   * Adds data to this buffer
-   * @param data
-   */
-
-
-  GLBuffer.prototype.pushBackData = function (data) {
-    for (var _i = 0, data_1 = data; _i < data_1.length; _i++) {
-      var d = data_1[_i];
-
-      this._data.push(d);
-    }
-  };
-  /**
-   * Clears out all data in this buffer
-   */
-
-
-  GLBuffer.prototype.clearData = function () {
-    this._data.length = 0;
-  };
-
-  GLBuffer.prototype.upload = function () {
-    _gl.gl.bindBuffer(this._targetBufferType, this._buffer);
-
-    var bufferData;
-
-    switch (this._dataType) {
-      case _gl.gl.FLOAT:
-        bufferData = new Float32Array(this._data);
-        break;
-
-      case _gl.gl.INT:
-        bufferData = new Int32Array(this._data);
-        break;
-
-      case _gl.gl.UNSIGNED_INT:
-        bufferData = new Uint32Array(this._data);
-        break;
-
-      case _gl.gl.SHORT:
-        bufferData = new Int16Array(this._data);
-        break;
-
-      case _gl.gl.UNSIGNED_SHORT:
-        bufferData = new Uint16Array(this._data);
-        break;
-
-      case _gl.gl.BYTE:
-        bufferData = new Int8Array(this._data);
-        break;
-
-      case _gl.gl.UNSIGNED_BYTE:
-        bufferData = new Uint8Array(this._data);
-        break;
-
-      default:
-        throw new Error("Unrecognised datatype " + this._dataType.toString() + " when uploading");
-    }
-
-    _gl.gl.bufferData(this._targetBufferType, bufferData, _gl.gl.STATIC_DRAW);
-  };
-  /**
-   * Draws this buffer
-   */
 
+},{"path":"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/path-browserify/index.js","../../utilities/array":"node_modules/necessary/lib/utilities/array.js","../../utilities/fileSystem":"node_modules/necessary/lib/utilities/fileSystem.js"}],"node_modules/necessary/lib/utilities/miscellaneous/log.js":[function(require,module,exports) {
+'use strict';
 
-  GLBuffer.prototype.draw = function () {
-    if (this._targetBufferType === _gl.gl.ARRAY_BUFFER) {
-      _gl.gl.drawArrays(this._mode, 0, this._data.length / this._elementSize);
-    } else if (this._targetBufferType === _gl.gl.ELEMENT_ARRAY_BUFFER) {
-      _gl.gl.drawElements(this._mode, this._data.length, this._dataType, 0);
-    }
-  };
+var path = require('path');
 
-  return GLBuffer;
-}();
+var pathUtilities = require('../../utilities/path'),
+    arrayUtilities = require('../../utilities/array'),
+    fileSystemUtilities = require('../../utilities/fileSystem');
 
-exports.GLBuffer = GLBuffer;
-},{"./gl":"node_modules/xgl/dist/gl/gl.js"}],"node_modules/xgl/dist/graphics/materialManager.js":[function(require,module,exports) {
-"use strict";
+var second = arrayUtilities.second,
+    concatenatePaths = pathUtilities.concatenatePaths,
+    doesFileExist = fileSystemUtilities.doesFileExist,
+    readFile = fileSystemUtilities.readFile,
+    appendToFile = fileSystemUtilities.appendToFile,
+    renameFile = fileSystemUtilities.renameFile,
+    getStats = fileSystemUtilities.getStats;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MaterialManager = void 0;
 
-var MaterialReferenceNode =
-/** @class */
-function () {
-  function MaterialReferenceNode(material) {
-    this.referenceCount = 1;
-    this.material = material;
-  }
+var TRACE = 'TRACE',
+    DEBUG = 'DEBUG',
+    INFO = 'INFO',
+    WARNING = 'WARNING',
+    ERROR = 'ERROR',
+    FATAL = 'FATAL';
 
-  return MaterialReferenceNode;
-}();
+var logLevel = WARNING,
+    logFileBaseName = 'default',
+    logDirectoryPath = null;
 
-var MaterialManager =
-/** @class */
-function () {
-  function MaterialManager() {}
+function log(message) {
+  var level = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-  MaterialManager.registerMaterial = function (material) {
-    if (MaterialManager._materials[material.name] === undefined) {
-      MaterialManager._materials[material.name] = new MaterialReferenceNode(material);
-    }
-  };
+  var pertinentStackMessageIndex = 2;
 
-  MaterialManager.getMaterial = function (materialName) {
-    if (MaterialManager._materials[materialName] === undefined) {
-      return undefined;
-    }
+  var levels = [TRACE, DEBUG, INFO, WARNING, ERROR, FATAL];
 
-    MaterialManager._materials[materialName].referenceCount++;
-    return MaterialManager._materials[materialName].material;
-  };
+  if (level) {
+    ///
+    var levelIndex = levels.indexOf(level),
+        logLevelIndex = levels.indexOf(logLevel);
 
-  MaterialManager.releaseMaterial = function (materialName) {
-    if (MaterialManager._materials[materialName] === undefined) {
-      console.warn("Cannot release material: " + materialName + " which has not been registered.");
+    if (levelIndex < logLevelIndex) {
       return;
     }
 
-    MaterialManager._materials[materialName].referenceCount--;
+    pertinentStackMessageIndex += 1;
 
-    if (MaterialManager._materials[materialName].referenceCount < 1) {
-      MaterialManager._materials[materialName].material.destroy();
-
-      MaterialManager._materials[materialName].material = undefined;
-      delete MaterialManager._materials[materialName];
-    }
-  };
-
-  MaterialManager._materials = {};
-  return MaterialManager;
-}();
-
-exports.MaterialManager = MaterialManager;
-},{}],"node_modules/xgl/dist/math/vector2.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Vector2 = void 0;
-
-var _vector = require("./vector3");
-
-var Vector2 =
-/** @class */
-function () {
-  function Vector2(x, y) {
-    if (x === void 0) {
-      x = 0;
-    }
-
-    if (y === void 0) {
-      y = 0;
-    }
-
-    this._x = x;
-    this._y = y;
+    level = level + ' '; ///
   }
 
-  Object.defineProperty(Vector2.prototype, "x", {
-    get: function () {
-      return this._x;
-    },
-    set: function (value) {
-      this._x = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Vector2.prototype, "y", {
-    get: function () {
-      return this._y;
-    },
-    set: function (value) {
-      this._y = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Vector2, "zero", {
-    /** Returns a vector2 with all components set to 0. */
-    get: function () {
-      return new Vector2();
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Vector2, "one", {
-    /** Returns a vector2 with all components set to 1. */
-    get: function () {
-      return new Vector2(1, 1);
-    },
-    enumerable: true,
-    configurable: true
-  });
+  var error = new Error(),
+      stack = error.stack,
+      stackMessages = stack.split(/\r\n|\n/),
+      pertinentStackMessage = stackMessages[pertinentStackMessageIndex],
+      currentDateAndTimeString = getCurrentDateAndTimeString(),
+      filePath = filePathFromStackMessage(pertinentStackMessage),
+      lineNumber = lineNumberFromStackMessage(pertinentStackMessage),
+      logMessage = '' + level + currentDateAndTimeString + ' ' + filePath + '(' + lineNumber + ') ' + message;
 
-  Vector2.distance = function (a, b) {
-    var diff = a.clone().subtract(b);
-    return Math.sqrt(diff.x * diff.x + diff.y * diff.y);
-  };
 
-  Vector2.prototype.set = function (x, y) {
-    if (x !== undefined) {
-      this._x = x;
-    }
+  console.log(logMessage);
 
-    if (y !== undefined) {
-      this._y = y;
-    }
-  };
+  if (logDirectoryPath !== null) {
+    rollOverLogFile();
 
-  Vector2.prototype.copyFrom = function (v) {
-    this._x = v._x;
-    this._y = v._y;
-  };
+    var logFilePath = getLogFilePath(),
+        logFileContent = logMessage + '\n';
 
-  Vector2.prototype.toArray = function () {
-    return [this._x, this._y];
-  };
-
-  Vector2.prototype.toFlat32Array = function () {
-    return new Float32Array(this.toArray());
-  };
-
-  Vector2.prototype.toVector3 = function () {
-    return new _vector.Vector3(this._x, this._y, 0);
-  };
-
-  Vector2.prototype.setFromJson = function (json) {
-    if (json.x !== undefined) {
-      this._x = Number(json.x);
-    }
-
-    if (json.y !== undefined) {
-      this._y = Number(json.y);
-    }
-  };
-
-  Vector2.prototype.add = function (v) {
-    this._x += v._x;
-    this._y += v._y;
-    return this;
-  };
-
-  Vector2.prototype.subtract = function (v) {
-    this._x -= v._x;
-    this._y -= v._y;
-    return this;
-  };
-
-  Vector2.prototype.multiply = function (v) {
-    this._x *= v._x;
-    this._y *= v._y;
-    return this;
-  };
-
-  Vector2.prototype.divide = function (v) {
-    this._x /= v._x;
-    this._y /= v._y;
-    return this;
-  };
-
-  Vector2.prototype.scale = function (scale) {
-    this._x *= scale;
-    this._y *= scale;
-    return this;
-  };
-
-  Vector2.prototype.clone = function () {
-    return new Vector2(this._x, this._y);
-  };
-
-  return Vector2;
-}();
-
-exports.Vector2 = Vector2;
-},{"./vector3":"node_modules/xgl/dist/math/vector3.js"}],"node_modules/xgl/dist/math/vector3.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Vector3 = void 0;
-
-var _vector = require("./vector2");
-
-var Vector3 =
-/** @class */
-function () {
-  function Vector3(x, y, z) {
-    if (x === void 0) {
-      x = 0;
-    }
-
-    if (y === void 0) {
-      y = 0;
-    }
-
-    if (z === void 0) {
-      z = 0;
-    }
-
-    this._x = x;
-    this._y = y;
-    this._z = z;
+    appendToFile(logFilePath, logFileContent);
   }
 
-  Object.defineProperty(Vector3.prototype, "x", {
-    get: function () {
-      return this._x;
-    },
-    set: function (value) {
-      this._x = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Vector3.prototype, "y", {
-    get: function () {
-      return this._y;
-    },
-    set: function (value) {
-      this._y = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Vector3.prototype, "z", {
-    get: function () {
-      return this._z;
-    },
-    set: function (value) {
-      this._z = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Vector3, "zero", {
-    /** Returns a vector3 with all components set to 0. */
-    get: function () {
-      return new Vector3();
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Vector3, "one", {
-    /** Returns a vector3 with all components set to 1. */
-    get: function () {
-      return new Vector3(1, 1, 1);
-    },
-    enumerable: true,
-    configurable: true
-  });
+  return logMessage;
+}
 
-  Vector3.distance = function (a, b) {
-    var diff = a.clone().subtract(b);
-    return Math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z);
-  };
+function trace(message) {
+  return log(message, TRACE);
+}
 
-  Vector3.prototype.set = function (x, y, z) {
-    if (x !== undefined) {
-      this._x = x;
-    }
+function debug(message) {
+  return log(message, DEBUG);
+}
 
-    if (y !== undefined) {
-      this._y = y;
-    }
+function info(message) {
+  return log(message, INFO);
+}
 
-    if (z !== undefined) {
-      this._z = z;
-    }
-  };
+function warning(message) {
+  return log(message, WARNING);
+}
 
-  Vector3.prototype.equals = function (v) {
-    return this.x === v.x && this.y === v.y && this.z === v.z;
-  };
-  /**
-   * Copies the contents of the provided vector to this vector.
-   * @param vector The vector to be copied.
-   */
+function error(message) {
+  return log(message, ERROR);
+}
 
+function fatal(message) {
+  return log(message, FATAL);
+}
 
-  Vector3.prototype.copyFrom = function (vector) {
-    this._x = vector._x;
-    this._y = vector._y;
-    this._z = vector._z;
-  };
+function setLogLevel(level) {
+  logLevel = level;
+}
 
-  Vector3.prototype.toArray = function () {
-    return [this._x, this._y, this._z];
-  };
+function setLogFileBaseName(fileBaseName) {
+  logFileBaseName = fileBaseName;
+}
 
-  Vector3.prototype.toFlat32Array = function () {
-    return new Float32Array(this.toArray());
-  };
+function setLogDirectoryPath(directoryPath) {
+  logDirectoryPath = directoryPath;
+}
 
-  Vector3.prototype.setFromJson = function (json) {
-    if (json.x !== undefined) {
-      this._x = Number(json.x);
-    }
+function getLogFileContent() {
+  var logFilePath = getLogFilePath(),
+      logFileContent = readFile(logFilePath);
 
-    if (json.y !== undefined) {
-      this._y = Number(json.y);
-    }
+  return logFileContent;
+}
 
-    if (json.z !== undefined) {
-      this._z = Number(json.z);
-    }
-  };
-
-  Vector3.prototype.add = function (v) {
-    this._x += v._x;
-    this._y += v._y;
-    this._z += v._z;
-    return this;
-  };
-
-  Vector3.prototype.subtract = function (v) {
-    this._x -= v._x;
-    this._y -= v._y;
-    this._z -= v._z;
-    return this;
-  };
-
-  Vector3.prototype.multiply = function (v) {
-    this._x *= v._x;
-    this._y *= v._y;
-    this._z *= v._z;
-    return this;
-  };
-
-  Vector3.prototype.divide = function (v) {
-    this._x /= v._x;
-    this._y /= v._y;
-    this._z /= v._z;
-    return this;
-  };
-
-  Vector3.prototype.clone = function () {
-    return new Vector3(this._x, this._y, this._z);
-  };
-
-  Vector3.prototype.toVector2 = function () {
-    return new _vector.Vector2(this._x, this._y);
-  };
-
-  return Vector3;
-}();
-
-exports.Vector3 = Vector3;
-},{"./vector2":"node_modules/xgl/dist/math/vector2.js"}],"node_modules/xgl/dist/graphics/vertex.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.assign(log, {
+  TRACE: TRACE,
+  DEBUG: DEBUG,
+  INFO: INFO,
+  WARNING: WARNING,
+  ERROR: ERROR,
+  FATAL: FATAL,
+  trace: trace,
+  debug: debug,
+  info: info,
+  warning: warning,
+  error: error,
+  fatal: fatal,
+  setLogLevel: setLogLevel,
+  setLogFileBaseName: setLogFileBaseName,
+  setLogDirectoryPath: setLogDirectoryPath,
+  getLogFileContent: getLogFileContent
 });
-exports.Vertex = void 0;
 
-var _vector = require("../math/vector3");
+module.exports = log;
 
-var _vector2 = require("../math/vector2");
+function getLogFilePath() {
+  var logFileName = logFileBaseName + '.log',
+      logFilePath = concatenatePaths(logDirectoryPath, logFileName);
 
-/**
- * Represents the data for a single vertex
- */
-var Vertex =
-/** @class */
-function () {
-  function Vertex(x, y, z, tu, tv) {
-    if (x === void 0) {
-      x = 0;
-    }
+  return logFilePath;
+}
 
-    if (y === void 0) {
-      y = 0;
-    }
+function getRolledOverLogFilePath() {
+  var currentDateString = getCurrentDateString(),
+      rolledOverLogFileName = logFileBaseName + '.' + currentDateString + '.log',
+      rolledOverLogFilePath = concatenatePaths(logDirectoryPath, rolledOverLogFileName);
 
-    if (z === void 0) {
-      z = 0;
-    }
+  return rolledOverLogFilePath;
+}
 
-    if (tu === void 0) {
-      tu = 0;
-    }
+function getLogFileLastModifiedDate() {
+  var logFilePath = getLogFilePath(),
+      logFileStats = getStats(logFilePath),
+      mtime = logFileStats.mtime,
+      logFileLastModifiedDate = new Date(mtime); ///
 
-    if (tv === void 0) {
-      tv = 0;
-    }
+  return logFileLastModifiedDate;
+}
 
-    this.position = _vector.Vector3.zero;
-    this.textCoords = _vector2.Vector2.zero;
-    this.position.x = x;
-    this.position.y = y;
-    this.position.z = z;
-    this.textCoords.x = tu;
-    this.textCoords.y = tv;
+function rollOverLogFile() {
+  var logFilePath = getLogFilePath(),
+      logFileExists = doesFileExist(logFilePath);
+
+  if (!logFileExists) {
+    return;
   }
 
-  Vertex.prototype.toArray = function () {
-    var array = [];
-    array = array.concat(this.position.toArray());
-    array = array.concat(this.textCoords.toArray());
-    return array;
+  var logFileLastModifiedDate = getLogFileLastModifiedDate(),
+      logFileLastModifiedDateCurrentDate = isDateCurrentDate(logFileLastModifiedDate);
+
+  if (!logFileLastModifiedDateCurrentDate) {
+    var rolledOverLogFilePath = getRolledOverLogFilePath();
+
+    renameFile(logFilePath, rolledOverLogFilePath);
+  }
+}
+
+function isDateCurrentDate(date) {
+  var currentDate = new Date(),
+      dateString = date.toDateString(),
+      currentDateString = currentDate.toDateString(),
+      dateCurrentDate = dateString === currentDateString;
+
+  return dateCurrentDate;
+}
+
+function getCurrentDateString() {
+  var date = new Date(),
+      day = padStartWithZeroes(date.getDate(), 2),
+      ///
+  month = padStartWithZeroes(date.getMonth() + 1, 2),
+      ///
+  year = date.getFullYear(),
+      currentDateAndTimeString = day + '-' + month + '-' + year;
+
+  return currentDateAndTimeString;
+}
+
+function getCurrentDateAndTimeString() {
+  var date = new Date(),
+      day = padStartWithZeroes(date.getDate(), 2),
+      ///
+  month = padStartWithZeroes(date.getMonth() + 1, 2),
+      ///
+  year = date.getFullYear(),
+      hours = padStartWithZeroes(date.getHours(), 2),
+      minutes = padStartWithZeroes(date.getMinutes(), 2),
+      seconds = padStartWithZeroes(date.getSeconds(), 2),
+      milliseconds = padStartWithZeroes(date.getMilliseconds(), 3),
+      currentDateAndTimeString = day + '-' + month + '-' + year + ' ' + hours + ':' + minutes + ':' + seconds + '.' + milliseconds;
+
+  return currentDateAndTimeString;
+}
+
+function filePathFromStackMessage(stackMessage) {
+  var matches = stackMessage.match(/(\/.+)\:\d+\:\d+/),
+      secondMatch = second(matches),
+      absoluteFilePath = secondMatch,
+      ///
+  currentWorkingDirectoryPath = path.resolve('.'),
+      ///
+  currentWorkingDirectoryPathLength = currentWorkingDirectoryPath.length,
+      start = currentWorkingDirectoryPathLength + 1,
+      ///
+  filePath = absoluteFilePath.substr(start);
+
+  return filePath;
+}
+
+function lineNumberFromStackMessage(stackMessage) {
+  var matches = stackMessage.match(/\:(\d+)/),
+      secondMatch = second(matches),
+      lineNumber = secondMatch; ///
+
+  return lineNumber;
+}
+
+function padStartWithZeroes(string, targetLength) {
+  var padString = '0',
+      paddedString = padStart(string, targetLength, padString);
+
+  return paddedString;
+}
+
+function padStart(string, targetLength, padString) {
+  var padding = '';
+
+  for (var index = 0; index < targetLength; index++) {
+    padding += padString;
+  }
+
+  var paddedString = ('' + padding + string).substr(-targetLength);
+
+  return paddedString;
+}
+
+},{"path":"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/path-browserify/index.js","../../utilities/path":"node_modules/necessary/lib/utilities/path.js","../../utilities/array":"node_modules/necessary/lib/utilities/array.js","../../utilities/fileSystem":"node_modules/necessary/lib/utilities/fileSystem.js"}],"node_modules/necessary/lib/utilities/miscellaneous/ajax.js":[function(require,module,exports) {
+'use strict';
+
+var GET_METHOD = 'GET',
+    POST_METHOD = 'POST';
+
+function get(host, uri, parameters, callback) {
+  if (callback === undefined) {
+    callback = parameters; ///
+    parameters = {};
+  }
+
+  var method = GET_METHOD,
+      body = undefined;
+
+  request(host, uri, parameters, method, body, callback);
+}
+
+function post(host, uri, json, parameters, callback) {
+  if (callback === undefined) {
+    callback = parameters; ///
+    parameters = {};
+  }
+
+  var method = POST_METHOD,
+      body = JSON.stringify(json);
+
+  request(host, uri, parameters, method, body, callback);
+}
+
+module.exports = {
+  get: get,
+  post: post
+};
+
+function request(host, uri, parameters, method, body, callback) {
+  var url = urlFromHostURIAndParameters(host, uri, parameters),
+      xmlHttpRequest = new XMLHttpRequest();
+
+  xmlHttpRequest.onreadystatechange = function () {
+    var readyState = xmlHttpRequest.readyState,
+        status = xmlHttpRequest.status,
+        responseText = xmlHttpRequest.responseText;
+
+
+    if (readyState == 4) {
+      if (status == 200) {
+        var jsonString = responseText,
+            ///
+        json = JSON.parse(jsonString);
+
+        callback(json);
+      } else {
+        callback(null);
+      }
+    }
   };
 
-  Vertex.prototype.toFloat32Array = function () {
-    return new Float32Array(this.toArray());
+  xmlHttpRequest.open(method, url, true);
+
+  xmlHttpRequest.send(body);
+}
+
+function urlFromHostURIAndParameters(host, uri, parameters) {
+  var queryString = queryStringFromParameters(parameters),
+      url = queryString === '' ? host + '/' + uri : host + '/' + uri + '?' + queryString;
+
+  return url;
+}
+
+function queryStringFromParameters(parameters) {
+  var names = Object.keys(parameters),
+      namesLength = names.length,
+      lastIndex = namesLength - 1,
+      queryString = names.reduce(function (queryString, name, index) {
+    var value = parameters[name],
+        encodedName = encodeURIComponent(name),
+        encodedValue = encodeURIComponent(value),
+        ampersandOrNothing = index !== lastIndex ? '&' : '';
+
+    queryString += encodedName + '=' + encodedValue + ampersandOrNothing;
+
+    return queryString;
+  }, '');
+
+  return queryString;
+}
+
+},{}],"node_modules/necessary/lib/utilities/miscellaneous/onETX.js":[function(require,module,exports) {
+var process = require("process");
+'use strict';
+
+var ETX_CHARACTER = '\x03';
+
+function onETX(handler) {
+  var _process = process,
+      stdin = _process.stdin,
+      setRawMode = stdin.setRawMode;
+
+
+  if (setRawMode) {
+    var rawMode = true,
+        encoding = 'utf8';
+
+    stdin.setRawMode(rawMode);
+    stdin.setEncoding(encoding);
+
+    stdin.resume();
+
+    stdin.addListener('data', dataHandler);
+
+    return offExt;
+  }
+
+  function offExt() {
+    stdin.removeListener('data', dataHandler);
+  }
+
+  function dataHandler(character) {
+    if (character === ETX_CHARACTER) {
+      handler();
+    }
+  }
+}
+
+module.exports = onETX;
+
+},{"process":"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/necessary/lib/utilities/miscellaneous/prompt.js":[function(require,module,exports) {
+var process = require("process");
+'use strict';
+
+var onETX = require('./onETX'),
+    asynchronousUtilities = require('../../utilities/asynchronous');
+
+var _process = process,
+    stdin = _process.stdin,
+    stdout = _process.stdout,
+    whilst = asynchronousUtilities.whilst,
+    _process2 = process,
+    exit = _process2.exit;
+
+
+var BACKSPACE_CHARACTER = String.fromCharCode(127),
+    LINE_FEED_CHARACTER = '\n',
+    CARRIAGE_RETURN_CHARACTER = '\r';
+
+function prompt(options, callback) {
+  var value = null,
+      _options$attempts = options.attempts,
+      attempts = _options$attempts === undefined ? 3 : _options$attempts,
+      context = {
+    value: value,
+    attempts: attempts,
+    options: options
   };
+
+
+  whilst(attempt, function () {
+    var value = context.value;
+
+
+    callback(value);
+  }, context);
+}
+
+module.exports = prompt;
+
+function attempt(next, done, context) {
+  var attempts = context.attempts;
+
+
+  var terminate = attempts-- === 0;
+
+  if (terminate) {
+    done();
+
+    return;
+  }
+
+  var options = context.options,
+      description = options.description,
+      errorMessage = options.errorMessage,
+      validationPattern = options.validationPattern,
+      validationFunction = options.validationFunction,
+      _options$encoding = options.encoding,
+      encoding = _options$encoding === undefined ? 'utf8' : _options$encoding,
+      _options$hidden = options.hidden,
+      hidden = _options$hidden === undefined ? false : _options$hidden;
+
+
+  hidden ? hiddenInput(description, encoding, callback) : visibleInput(description, encoding, callback);
+
+  function callback(value) {
+    var valid = validationFunction ? ///
+    validationFunction(value) : validationPattern.test(value);
+
+    if (valid) {
+      Object.assign(context, {
+        value: value
+      });
+
+      done();
+    } else {
+      console.log(errorMessage);
+
+      Object.assign(context, {
+        attempts: attempts
+      });
+
+      next();
+    }
+  }
+}
+
+function visibleInput(description, encoding, callback) {
+  var rawMode = false;
+
+  stdout.write(description);
+
+  stdin.setEncoding(encoding);
+
+  stdin.setRawMode(rawMode);
+
+  stdin.resume();
+
+  var value = void 0;
+
+  var listener = function listener(chunk) {
+    value = chunk.trim();
+
+    stdin.removeListener('data', listener);
+
+    stdin.pause();
+
+    callback(value);
+  };
+
+  stdin.on('data', listener);
+}
+
+function hiddenInput(description, encoding, callback) {
+  var rawMode = true,
+      offETX = onETX(function () {
+    console.log('^C');
+
+    exit();
+  });
+
+  stdout.write(description);
+
+  stdin.setEncoding(encoding);
+
+  stdin.setRawMode(rawMode);
+
+  stdin.resume();
+
+  var value = '';
+
+  var listener = function listener(chunk) {
+    var character = chunk.toString(encoding);
+
+    switch (character) {
+      case LINE_FEED_CHARACTER:
+      case CARRIAGE_RETURN_CHARACTER:
+        stdout.write(LINE_FEED_CHARACTER);
+
+        stdin.removeListener('data', listener);
+
+        stdin.pause();
+
+        offETX();
+
+        callback(value);
+        break;
+
+      case BACKSPACE_CHARACTER:
+        value = truncate(value);
+
+        stdout.clearLine();
+
+        stdout.cursorTo(0);
+
+        stdout.write(description);
+        break;
+
+      default:
+        value += character;
+        break;
+    }
+  };
+
+  stdin.on('data', listener);
+}
+
+function truncate(value) {
+  return value.slice(0, value.length - 1);
+}
+
+},{"./onETX":"node_modules/necessary/lib/utilities/miscellaneous/onETX.js","../../utilities/asynchronous":"node_modules/necessary/lib/utilities/asynchronous.js","process":"../../../../../usr/local/lib/node_modules/parcel-bundler/node_modules/process/browser.js"}],"node_modules/necessary/lib/utilities/miscellaneous.js":[function(require,module,exports) {
+'use strict';
+
+var rc = require('./miscellaneous/rc'),
+    log = require('./miscellaneous/log'),
+    ajax = require('./miscellaneous/ajax'),
+    onETX = require('./miscellaneous/onETX'),
+    prompt = require('./miscellaneous/prompt');
+
+var get = ajax.get,
+    post = ajax.post;
+
+
+module.exports = {
+  log: log,
+  rc: rc,
+  get: get,
+  post: post,
+  onETX: onETX,
+  prompt: prompt
+};
+
+},{"./miscellaneous/rc":"node_modules/necessary/lib/utilities/miscellaneous/rc.js","./miscellaneous/log":"node_modules/necessary/lib/utilities/miscellaneous/log.js","./miscellaneous/ajax":"node_modules/necessary/lib/utilities/miscellaneous/ajax.js","./miscellaneous/onETX":"node_modules/necessary/lib/utilities/miscellaneous/onETX.js","./miscellaneous/prompt":"node_modules/necessary/lib/utilities/miscellaneous/prompt.js"}],"node_modules/necessary/index.js":[function(require,module,exports) {
+'use strict';
+
+module.exports = {
+  pathUtilities: require('./lib/utilities/path'),
+  arrayUtilities: require('./lib/utilities/array'),
+  templateUtilities: require('./lib/utilities/template'),
+  fileSystemUtilities: require('./lib/utilities/fileSystem'),
+  asynchronousUtilities: require('./lib/utilities/asynchronous'),
+  miscellaneousUtilities: require('./lib/utilities/miscellaneous')
+};
+
+},{"./lib/utilities/path":"node_modules/necessary/lib/utilities/path.js","./lib/utilities/array":"node_modules/necessary/lib/utilities/array.js","./lib/utilities/template":"node_modules/necessary/lib/utilities/template.js","./lib/utilities/fileSystem":"node_modules/necessary/lib/utilities/fileSystem.js","./lib/utilities/asynchronous":"node_modules/necessary/lib/utilities/asynchronous.js","./lib/utilities/miscellaneous":"node_modules/necessary/lib/utilities/miscellaneous.js"}],"node_modules/xgl/lib/utilities/array.js":[function(require,module,exports) {
+'use strict';
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var necessary = require('necessary');
+
+var arrayUtilities = necessary.arrayUtilities;
+
+function permute(array, places) {
+  var length = array.length,
+      cut = length - places,
+      leadingElements = array.slice(0, cut),
+      trailingElements = array.slice(cut);
+  array = [].concat(_toConsumableArray(trailingElements), _toConsumableArray(leadingElements));
+  return array;
+}
+
+function flatten(arrays) {
+  return arrays.reduce(function (elements, array) {
+    return elements.concat(array);
+  }, []);
+}
+
+function guarantee(arrayOrElement) {
+  arrayOrElement = arrayOrElement || [];
+  return arrayOrElement instanceof Array ? arrayOrElement : [arrayOrElement];
+}
+
+module.exports = Object.assign(arrayUtilities, {
+  permute: permute,
+  flatten: flatten,
+  guarantee: guarantee
+});
+
+},{"necessary":"node_modules/necessary/index.js"}],"node_modules/xgl/lib/maths/vector.js":[function(require,module,exports) {
+'use strict';
+
+function zero2() {
+  return [0, 0];
+}
+
+function zero3() {
+  return [0, 0, 0];
+}
+
+function zero4() {
+  return [0, 0, 0, 0];
+}
+
+function length2(vector) {
+  var x = vector[0],
+      y = vector[1];
+  return Math.sqrt(x * x + y * y);
+}
+
+function length3(vector) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2];
+  return Math.sqrt(x * x + y * y + z * z);
+}
+
+function length4(vector) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2],
+      w = vector[3];
+  return Math.sqrt(x * x + y * y + z * z + w * w);
+}
+
+function dot2(vectorA, vectorB) {
+  return vectorA[0] * vectorB[0] + vectorA[1] * vectorB[1];
+}
+
+function dot3(vectorA, vectorB) {
+  return vectorA[0] * vectorB[0] + vectorA[1] * vectorB[1] + vectorA[2] * vectorB[2];
+}
+
+function dot4(vectorA, vectorB) {
+  return vectorA[0] * vectorB[0] + vectorA[1] * vectorB[1] + vectorA[2] * vectorB[2] + vectorA[3] * vectorB[3];
+}
+
+function cross3(vectorA, vectorB) {
+  var ax = vectorA[0],
+      ay = vectorA[1],
+      az = vectorA[2],
+      bx = vectorB[0],
+      by = vectorB[1],
+      bz = vectorB[2];
+  return [ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx];
+}
+
+function normalise2(vector) {
+  var x = vector[0],
+      y = vector[1],
+      length = Math.sqrt(x * x + y * y);
+
+  if (length > 0) {
+    return [x / length, y / length];
+  }
+}
+
+function normalise3(vector) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2],
+      length = Math.sqrt(x * x + y * y + z * z);
+
+  if (length > 0) {
+    return [x / length, y / length, z / length];
+  }
+}
+
+function normalise4(vector) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2],
+      w = vector[3],
+      length = Math.sqrt(x * x + y * y + z * z + w * w);
+
+  if (length > 0) {
+    return [x / length, y / length, z / length, w / length];
+  }
+}
+
+function reflect2(vector) {
+  return [vector[0] * -1, vector[1] * -1];
+}
+
+function reflect3(vector) {
+  return [vector[0] * -1, vector[1] * -1, vector[2] * -1];
+}
+
+function reflect4(vector) {
+  return [vector[0] * -1, vector[1] * -1, vector[2] * -1, vector[3] * -1];
+}
+
+function scale2(vector, scalar) {
+  return [vector[0] * scalar, vector[1] * scalar];
+}
+
+function scale3(vector, scalar) {
+  return [vector[0] * scalar, vector[1] * scalar, vector[2] * scalar];
+}
+
+function scale4(vector, scalar) {
+  return [vector[0] * scalar, vector[1] * scalar, vector[2] * scalar, vector[3] * scalar];
+}
+
+function add2(vectorA, vectorB) {
+  return [vectorA[0] + vectorB[0], vectorA[1] + vectorB[1]];
+}
+
+function add3(vectorA, vectorB) {
+  return [vectorA[0] + vectorB[0], vectorA[1] + vectorB[1], vectorA[2] + vectorB[2]];
+}
+
+function add4(vectorA, vectorB) {
+  return [vectorA[0] + vectorB[0], vectorA[1] + vectorB[1], vectorA[2] + vectorB[2], vectorA[3] + vectorB[3]];
+}
+
+function subtract2(vectorA, vectorB) {
+  return [vectorA[0] - vectorB[0], vectorA[1] - vectorB[1]];
+}
+
+function subtract3(vectorA, vectorB) {
+  return [vectorA[0] - vectorB[0], vectorA[1] - vectorB[1], vectorA[2] - vectorB[2]];
+}
+
+function subtract4(vectorA, vectorB) {
+  return [vectorA[0] - vectorB[0], vectorA[1] - vectorB[1], vectorA[2] - vectorB[2], vectorA[3] - vectorB[3]];
+}
+
+function multiply2(vectorA, vectorB) {
+  return [vectorA[0] * vectorB[0], vectorA[1] * vectorB[1]];
+}
+
+function multiply3(vectorA, vectorB) {
+  return [vectorA[0] * vectorB[0], vectorA[1] * vectorB[1], vectorA[2] * vectorB[2]];
+}
+
+function multiply4(vectorA, vectorB) {
+  return [vectorA[0] * vectorB[0], vectorA[1] * vectorB[1], vectorA[2] * vectorB[2], vectorA[3] * vectorB[3]];
+}
+
+function transform2(vector, matrix) {
+  var x = vector[0],
+      y = vector[1];
+  return [matrix[0] * x + matrix[2] * y, matrix[1] * x + matrix[3] * y];
+}
+
+function transform3(vector, matrix) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2];
+  return [matrix[0] * x + matrix[3] * y + matrix[6] * z, matrix[1] * x + matrix[4] * y + matrix[7] * z, matrix[2] * x + matrix[5] * y + matrix[8] * z];
+}
+
+function transform4(vector, matrix) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2],
+      w = vector[3];
+  return [matrix[0] * x + matrix[4] * y + matrix[8] * z + matrix[12] * w, matrix[1] * x + matrix[5] * y + matrix[9] * z + matrix[13] * w, matrix[2] * x + matrix[6] * y + matrix[10] * z + matrix[14] * w, matrix[3] * x + matrix[7] * y + matrix[11] * z + matrix[15] * w];
+}
+
+module.exports = {
+  zero2: zero2,
+  zero3: zero3,
+  zero4: zero4,
+  length2: length2,
+  length3: length3,
+  length4: length4,
+  dot2: dot2,
+  dot3: dot3,
+  dot4: dot4,
+  cross3: cross3,
+  normalise2: normalise2,
+  normalise3: normalise3,
+  normalise4: normalise4,
+  reflect2: reflect2,
+  reflect3: reflect3,
+  reflect4: reflect4,
+  scale2: scale2,
+  scale3: scale3,
+  scale4: scale4,
+  add2: add2,
+  add3: add3,
+  add4: add4,
+  subtract2: subtract2,
+  subtract3: subtract3,
+  subtract4: subtract4,
+  multiply2: multiply2,
+  multiply3: multiply3,
+  multiply4: multiply4,
+  transform2: transform2,
+  transform3: transform3,
+  transform4: transform4
+};
+
+},{}],"node_modules/xgl/lib/maths/matrix.js":[function(require,module,exports) {
+'use strict';
+
+function identity2() {
+  return [1, 0, 0, 1];
+}
+
+function identity3() {
+  return [1, 0, 0, 0, 1, 0, 0, 0, 1];
+}
+
+function identity4() {
+  return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+}
+
+function multiply2(matrixA, matrixB) {
+  var a0 = matrixA[0],
+      a1 = matrixA[1],
+      a2 = matrixA[2],
+      a3 = matrixA[3],
+      b0 = matrixB[0],
+      b1 = matrixB[1],
+      b2 = matrixB[2],
+      b3 = matrixB[3];
+  return [a0 * b0 + a2 * b1, a1 * b0 + a3 * b1, a0 * b2 + a2 * b3, a1 * b2 + a3 * b3];
+}
+
+function multiply3(matrixA, matrixB) {
+  var a0 = matrixA[0],
+      a1 = matrixA[1],
+      a2 = matrixA[2],
+      a3 = matrixA[3],
+      a4 = matrixA[4],
+      a5 = matrixA[5],
+      a6 = matrixA[6],
+      a7 = matrixA[7],
+      a8 = matrixA[8],
+      b0 = matrixB[0],
+      b1 = matrixB[1],
+      b2 = matrixB[2],
+      b3 = matrixB[3],
+      b4 = matrixB[4],
+      b5 = matrixB[5],
+      b6 = matrixB[6],
+      b7 = matrixB[7],
+      b8 = matrixB[8];
+  return [a0 * b0 + a3 * b1 + a6 * b2, a1 * b0 + a4 * b1 + a7 * b2, a2 * b0 + a5 * b1 + a8 * b2, a0 * b3 + a3 * b4 + a6 * b5, a1 * b3 + a4 * b4 + a7 * b5, a2 * b3 + a5 * b4 + a8 * b5, a0 * b6 + a3 * b7 + a6 * b8, a1 * b6 + a4 * b7 + a7 * b8, a2 * b6 + a5 * b7 + a8 * b8];
+}
+
+function multiply4(matrixA, matrixB) {
+  var a0 = matrixA[0],
+      a1 = matrixA[1],
+      a2 = matrixA[2],
+      a3 = matrixA[3],
+      a4 = matrixA[4],
+      a5 = matrixA[5],
+      a6 = matrixA[6],
+      a7 = matrixA[7],
+      a8 = matrixA[8],
+      a9 = matrixA[9],
+      a10 = matrixA[10],
+      a11 = matrixA[11],
+      a12 = matrixA[12],
+      a13 = matrixA[13],
+      a14 = matrixA[14],
+      a15 = matrixA[15],
+      b0 = matrixB[0],
+      b1 = matrixB[1],
+      b2 = matrixB[2],
+      b3 = matrixB[3],
+      b4 = matrixB[4],
+      b5 = matrixB[5],
+      b6 = matrixB[6],
+      b7 = matrixB[7],
+      b8 = matrixB[8],
+      b9 = matrixB[9],
+      b10 = matrixB[10],
+      b11 = matrixB[11],
+      b12 = matrixB[12],
+      b13 = matrixB[13],
+      b14 = matrixB[14],
+      b15 = matrixB[15];
+  return [a0 * b0 + a4 * b1 + a8 * b2 + a12 * b3, a1 * b0 + a5 * b1 + a9 * b2 + a13 * b3, a2 * b0 + a6 * b1 + a10 * b2 + a14 * b3, a3 * b0 + a7 * b1 + a11 * b2 + a15 * b3, a0 * b4 + a4 * b5 + a8 * b6 + a12 * b7, a1 * b4 + a5 * b5 + a9 * b6 + a13 * b7, a2 * b4 + a6 * b5 + a10 * b6 + a14 * b7, a3 * b4 + a7 * b5 + a11 * b6 + a15 * b7, a0 * b8 + a4 * b9 + a8 * b10 + a12 * b11, a1 * b8 + a5 * b9 + a9 * b10 + a13 * b11, a2 * b8 + a6 * b9 + a10 * b10 + a14 * b11, a3 * b8 + a7 * b9 + a11 * b10 + a15 * b11, a0 * b12 + a4 * b13 + a8 * b14 + a12 * b15, a1 * b12 + a5 * b13 + a9 * b14 + a13 * b15, a2 * b12 + a6 * b13 + a10 * b14 + a14 * b15, a3 * b12 + a7 * b13 + a11 * b14 + a15 * b15];
+}
+
+function invert2(matrix) {
+  var m0 = matrix[0],
+      m1 = matrix[1],
+      m2 = matrix[2],
+      m3 = matrix[3],
+      determinant = m0 * m3 - m2 * m1;
+
+  if (determinant !== 0) {
+    return [+m3 / determinant, -m1 / determinant, -m2 / determinant, +m0 / determinant];
+  }
+}
+
+function invert3(matrix) {
+  var m00 = matrix[0],
+      m01 = matrix[1],
+      m02 = matrix[2],
+      m10 = matrix[3],
+      m11 = matrix[4],
+      m12 = matrix[5],
+      m20 = matrix[6],
+      m21 = matrix[7],
+      m22 = matrix[8],
+      b01 = m22 * m11 - m12 * m21,
+      b11 = -m22 * m10 + m12 * m20,
+      b21 = m21 * m10 - m11 * m20,
+      determinant = m00 * b01 + m01 * b11 + m02 * b21;
+
+  if (determinant !== 0) {
+    return [b01 / determinant, (-m22 * m01 + m02 * m21) / determinant, (m12 * m01 - m02 * m11) / determinant, b11 / determinant, (m22 * m00 - m02 * m20) / determinant, (-m12 * m00 + m02 * m10) / determinant, b21 / determinant, (-m21 * m00 + m01 * m20) / determinant, (m11 * m00 - m01 * m10) / determinant];
+  }
+}
+
+function invert4(matrix) {
+  var m00 = matrix[0],
+      m01 = matrix[1],
+      m02 = matrix[2],
+      m03 = matrix[3],
+      m10 = matrix[4],
+      m11 = matrix[5],
+      m12 = matrix[6],
+      m13 = matrix[7],
+      m20 = matrix[8],
+      m21 = matrix[9],
+      m22 = matrix[10],
+      m23 = matrix[11],
+      m30 = matrix[12],
+      m31 = matrix[13],
+      m32 = matrix[14],
+      m33 = matrix[15],
+      b00 = m00 * m11 - m01 * m10,
+      b01 = m00 * m12 - m02 * m10,
+      b02 = m00 * m13 - m03 * m10,
+      b03 = m01 * m12 - m02 * m11,
+      b04 = m01 * m13 - m03 * m11,
+      b05 = m02 * m13 - m03 * m12,
+      b06 = m20 * m31 - m21 * m30,
+      b07 = m20 * m32 - m22 * m30,
+      b08 = m20 * m33 - m23 * m30,
+      b09 = m21 * m32 - m22 * m31,
+      b10 = m21 * m33 - m23 * m31,
+      b11 = m22 * m33 - m23 * m32,
+      determinant = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
+
+  if (determinant !== 0) {
+    return [(m11 * b11 - m12 * b10 + m13 * b09) / determinant, (m02 * b10 - m01 * b11 - m03 * b09) / determinant, (m31 * b05 - m32 * b04 + m33 * b03) / determinant, (m22 * b04 - m21 * b05 - m23 * b03) / determinant, (m12 * b08 - m10 * b11 - m13 * b07) / determinant, (m00 * b11 - m02 * b08 + m03 * b07) / determinant, (m32 * b02 - m30 * b05 - m33 * b01) / determinant, (m20 * b05 - m22 * b02 + m23 * b01) / determinant, (m10 * b10 - m11 * b08 + m13 * b06) / determinant, (m01 * b08 - m00 * b10 - m03 * b06) / determinant, (m30 * b04 - m31 * b02 + m33 * b00) / determinant, (m21 * b02 - m20 * b04 - m23 * b00) / determinant, (m11 * b07 - m10 * b09 - m12 * b06) / determinant, (m00 * b09 - m01 * b07 + m02 * b06) / determinant, (m31 * b01 - m30 * b03 - m32 * b00) / determinant, (m20 * b03 - m21 * b01 + m22 * b00) / determinant];
+  }
+}
+
+function transpose2(matrix) {
+  return [matrix[0], matrix[2], matrix[1], matrix[3]];
+}
+
+function transpose3(matrix) {
+  return [matrix[0], matrix[3], matrix[6], matrix[1], matrix[4], matrix[7], matrix[2], matrix[5], matrix[8]];
+}
+
+function transpose4(matrix) {
+  return [matrix[0], matrix[4], matrix[8], matrix[12], matrix[1], matrix[5], matrix[9], matrix[13], matrix[2], matrix[6], matrix[10], matrix[14], matrix[3], matrix[7], matrix[11], matrix[15]];
+}
+
+function scale4(matrix, vector) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2];
+  return [matrix[0] * x, matrix[1] * x, matrix[2] * x, matrix[3] * x, matrix[4] * y, matrix[5] * y, matrix[6] * y, matrix[7] * y, matrix[8] * z, matrix[9] * z, matrix[10] * z, matrix[11] * z, matrix[12] * 1, matrix[13] * 1, matrix[14] * 1, matrix[15] * 1];
+}
+
+function rotate4(matrix, angle, vector) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2];
+  var length = Math.sqrt(x * x + y * y + z * z);
+
+  if (length !== 0) {
+    x /= length;
+    y /= length;
+    z /= length;
+    var s = Math.sin(angle),
+        c = Math.cos(angle),
+        t = 1 - c,
+        m00 = matrix[0],
+        m01 = matrix[1],
+        m02 = matrix[2],
+        m03 = matrix[3],
+        m10 = matrix[4],
+        m11 = matrix[5],
+        m12 = matrix[6],
+        m13 = matrix[7],
+        m20 = matrix[8],
+        m21 = matrix[9],
+        m22 = matrix[10],
+        m23 = matrix[11],
+        b00 = x * x * t + c,
+        b01 = y * x * t + z * s,
+        b02 = z * x * t - y * s,
+        b10 = x * y * t - z * s,
+        b11 = y * y * t + c,
+        b12 = z * y * t + x * s,
+        b20 = x * z * t + y * s,
+        b21 = y * z * t - x * s,
+        b22 = z * z * t + c;
+    return [m00 * b00 + m10 * b01 + m20 * b02, m01 * b00 + m11 * b01 + m21 * b02, m02 * b00 + m12 * b01 + m22 * b02, m03 * b00 + m13 * b01 + m23 * b02, m00 * b10 + m10 * b11 + m20 * b12, m01 * b10 + m11 * b11 + m21 * b12, m02 * b10 + m12 * b11 + m22 * b12, m03 * b10 + m13 * b11 + m23 * b12, m00 * b20 + m10 * b21 + m20 * b22, m01 * b20 + m11 * b21 + m21 * b22, m02 * b20 + m12 * b21 + m22 * b22, m03 * b20 + m13 * b21 + m23 * b22, matrix[12], matrix[13], matrix[14], matrix[15]];
+  }
+}
+
+function translate4(matrix, vector) {
+  var x = vector[0],
+      y = vector[1],
+      z = vector[2],
+      m00 = matrix[0],
+      m01 = matrix[1],
+      m02 = matrix[2],
+      m03 = matrix[3],
+      m10 = matrix[4],
+      m11 = matrix[5],
+      m12 = matrix[6],
+      m13 = matrix[7],
+      m20 = matrix[8],
+      m21 = matrix[9],
+      m22 = matrix[10],
+      m23 = matrix[11];
+  return [m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m00 * x + m10 * y + m20 * z + matrix[12], m01 * x + m11 * y + m21 * z + matrix[13], m02 * x + m12 * y + m22 * z + matrix[14], m03 * x + m13 * y + m23 * z + matrix[15]];
+}
+
+function perspective4(fieldOfView, aspectRatio, zNear, zFar) {
+  var f = 1.0 / Math.tan(fieldOfView / 2),
+      nf = 1 / (zNear - zFar);
+  return [f / aspectRatio, 0, 0, 0, 0, f, 0, 0, 0, 0, (zFar + zNear) * nf, -1, 0, 0, 2 * zFar * zNear * nf, 0];
+}
+
+module.exports = {
+  identity2: identity2,
+  identity3: identity3,
+  identity4: identity4,
+  multiply2: multiply2,
+  multiply3: multiply3,
+  multiply4: multiply4,
+  invert2: invert2,
+  invert3: invert3,
+  invert4: invert4,
+  scale4: scale4,
+  rotate4: rotate4,
+  transpose2: transpose2,
+  transpose3: transpose3,
+  transpose4: transpose4,
+  translate4: translate4,
+  perspective4: perspective4
+};
+
+},{}],"node_modules/xgl/lib/constants.js":[function(require,module,exports) {
+'use strict';
+
+var Z_FAR = 1000,
+    Z_NEAR = 1,
+    MOUSE_UP = 'MOUSE_UP',
+    MOUSE_DOWN = 'MOUSE_DOWN',
+    MOUSE_MOVE = 'MOUSE_MOVE',
+    MOUSE_WHEEL = 'MOUSE_WHEEL',
+    DELTA_SCALAR = 1.25,
+    INVERT_SCALAR = -1,
+    ANGLES_SCALAR = 0.01,
+    OFFSET_SCALAR = 0.25,
+    SHIFT_KEY_CODE = 16,
+    VERTICES_LENGTH = 3,
+    MINIMUM_DISTANCE = 1,
+    DEFAULT_MARGIN_OF_ERROR = 0.0000001,
+    DEGREES_TO_RADIANS_SCALAR = Math.PI / 180,
+    FIELD_OF_VIEW = 45 * DEGREES_TO_RADIANS_SCALAR;
+module.exports = {
+  Z_FAR: Z_FAR,
+  Z_NEAR: Z_NEAR,
+  MOUSE_UP: MOUSE_UP,
+  MOUSE_DOWN: MOUSE_DOWN,
+  MOUSE_MOVE: MOUSE_MOVE,
+  MOUSE_WHEEL: MOUSE_WHEEL,
+  DELTA_SCALAR: DELTA_SCALAR,
+  INVERT_SCALAR: INVERT_SCALAR,
+  ANGLES_SCALAR: ANGLES_SCALAR,
+  OFFSET_SCALAR: OFFSET_SCALAR,
+  SHIFT_KEY_CODE: SHIFT_KEY_CODE,
+  VERTICES_LENGTH: VERTICES_LENGTH,
+  MINIMUM_DISTANCE: MINIMUM_DISTANCE,
+  DEFAULT_MARGIN_OF_ERROR: DEFAULT_MARGIN_OF_ERROR,
+  DEGREES_TO_RADIANS_SCALAR: DEGREES_TO_RADIANS_SCALAR,
+  FIELD_OF_VIEW: FIELD_OF_VIEW
+};
+
+},{}],"node_modules/xgl/lib/utilities/matrix.js":[function(require,module,exports) {
+'use strict';
+
+var constants = require('../constants'),
+    matrixMaths = require('../maths/matrix'),
+    vectorMaths = require('../maths/vector'),
+    arrayUtilities = require('../utilities/array');
+
+var scale3 = vectorMaths.scale3,
+    first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    third = arrayUtilities.third,
+    DEGREES_TO_RADIANS_SCALAR = constants.DEGREES_TO_RADIANS_SCALAR,
+    FIELD_OF_VIEW = constants.FIELD_OF_VIEW,
+    Z_NEAR = constants.Z_NEAR,
+    Z_FAR = constants.Z_FAR,
+    identity4 = matrixMaths.identity4,
+    scale4 = matrixMaths.scale4,
+    invert4 = matrixMaths.invert4,
+    rotate4 = matrixMaths.rotate4,
+    translate4 = matrixMaths.translate4,
+    transpose4 = matrixMaths.transpose4,
+    perspective4 = matrixMaths.perspective4;
+
+function scaleMatrixFromScale(scale) {
+  var scaleMatrix = identity4();
+  scaleMatrix = scale4(scaleMatrix, scale);
+  return scaleMatrix;
+}
+
+function offsetsMatrixFromOffsets(offsets) {
+  var offsetsMatrix = identity4(); ///
+
+  offsetsMatrix = translate4(offsetsMatrix, offsets);
+  return offsetsMatrix;
+}
+
+function positionMatrixFromNothing() {
+  var positionMatrix = identity4(); ///
+
+  return positionMatrix;
+}
+
+function positionMatrixFromDistance(distance) {
+  var positionMatrix = identity4(); ///
+
+  var x = 0,
+      y = 0,
+      z = -distance;
+  positionMatrix = translate4(positionMatrix, [x, y, z]);
+  return positionMatrix;
+}
+
+function positionMatrixFromPosition(position) {
+  var positionMatrix = identity4(); ///
+
+  positionMatrix = translate4(positionMatrix, position);
+  return positionMatrix;
+}
+
+function rotationsMatrixFromAngles(angles) {
+  var reverseOrder = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+  var rotationsMatrix = identity4(); ///
+
+  var firstAngle = first(angles),
+      secondAngle = second(angles),
+      thirdAngle = third(angles),
+      xAngle = firstAngle,
+      yAngle = secondAngle,
+      zAngle = thirdAngle,
+      xAxis = [1, 0, 0],
+      yAxis = [0, 1, 0],
+      zAxis = [0, 0, 1];
+
+  if (reverseOrder) {
+    rotationsMatrix = rotate4(rotationsMatrix, zAngle, zAxis);
+    rotationsMatrix = rotate4(rotationsMatrix, yAngle, yAxis);
+    rotationsMatrix = rotate4(rotationsMatrix, xAngle, xAxis);
+  } else {
+    rotationsMatrix = rotate4(rotationsMatrix, xAngle, xAxis);
+    rotationsMatrix = rotate4(rotationsMatrix, yAngle, yAxis);
+    rotationsMatrix = rotate4(rotationsMatrix, zAngle, zAxis);
+  }
+
+  return rotationsMatrix;
+}
+
+function rotationsMatrixFromRotations(rotations) {
+  var scalar = DEGREES_TO_RADIANS_SCALAR,
+      angles = scale3(rotations, scalar),
+      rotationsMatrix = rotationsMatrixFromAngles(angles);
+  return rotationsMatrix;
+}
+
+function normalsMatrixFromRotationsMatrix(rotationsMatrix) {
+  var normalsMatrix = invert4(rotationsMatrix);
+  normalsMatrix = transpose4(normalsMatrix);
+  return normalsMatrix;
+}
+
+function projectionMatrixFromWidthAndHeight(width, height) {
+  var fieldOfView = FIELD_OF_VIEW,
+      ///
+  aspectRatio = width / height,
+      zNear = Z_NEAR,
+      ///
+  zFar = Z_FAR,
+      ///
+  projectionMatrix = perspective4(fieldOfView, aspectRatio, zNear, zFar);
+  return projectionMatrix;
+}
+
+module.exports = {
+  scaleMatrixFromScale: scaleMatrixFromScale,
+  offsetsMatrixFromOffsets: offsetsMatrixFromOffsets,
+  positionMatrixFromNothing: positionMatrixFromNothing,
+  positionMatrixFromDistance: positionMatrixFromDistance,
+  positionMatrixFromPosition: positionMatrixFromPosition,
+  rotationsMatrixFromAngles: rotationsMatrixFromAngles,
+  rotationsMatrixFromRotations: rotationsMatrixFromRotations,
+  normalsMatrixFromRotationsMatrix: normalsMatrixFromRotationsMatrix,
+  projectionMatrixFromWidthAndHeight: projectionMatrixFromWidthAndHeight
+};
+
+},{"../constants":"node_modules/xgl/lib/constants.js","../maths/matrix":"node_modules/xgl/lib/maths/matrix.js","../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/utilities/transform.js":[function(require,module,exports) {
+'use strict';
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var vectorMaths = require('../maths/vector'),
+    matrixMaths = require('../maths/matrix'),
+    matrixUtilities = require('../utilities/matrix');
+
+var multiply4 = matrixMaths.multiply4,
+    transform4 = vectorMaths.transform4,
+    scaleMatrixFromScale = matrixUtilities.scaleMatrixFromScale,
+    positionMatrixFromPosition = matrixUtilities.positionMatrixFromPosition,
+    rotationsMatrixFromRotations = matrixUtilities.rotationsMatrixFromRotations;
+
+function composeTransform(scale, rotations, position) {
+  var matrix = null;
+
+  if (scale !== null) {
+    var scaleMatrix = scaleMatrixFromScale(scale);
+    matrix = matrix === null ? scaleMatrix : multiply4(scaleMatrix, matrix);
+  }
+
+  if (rotations !== null) {
+    var rotationsMatrix = rotationsMatrixFromRotations(rotations);
+    matrix = matrix === null ? rotationsMatrix : multiply4(rotationsMatrix, matrix);
+  }
+
+  if (position !== null) {
+    var positionMatrix = positionMatrixFromPosition(position);
+    matrix = matrix === null ? positionMatrix : multiply4(positionMatrix, matrix);
+  }
+
+  var transform = matrix === null ? function (vector) {
+    return vector;
+  } : function (vector) {
+    return transform4([].concat(_toConsumableArray(vector), [1]), matrix).slice(0, 3);
+  };
+  return transform;
+}
+
+module.exports = module.exports = {
+  composeTransform: composeTransform
+};
+
+},{"../maths/vector":"node_modules/xgl/lib/maths/vector.js","../maths/matrix":"node_modules/xgl/lib/maths/matrix.js","../utilities/matrix":"node_modules/xgl/lib/utilities/matrix.js"}],"node_modules/xgl/lib/element/canvas.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Element = require('../element'),
+    transformUtilities = require('../utilities/transform');
+
+var composeTransform = transformUtilities.composeTransform;
+
+var CanvasElement = /*#__PURE__*/function (_Element) {
+  _inherits(CanvasElement, _Element);
+
+  function CanvasElement(transform, facets, mask, hidden) {
+    var _this;
+
+    _classCallCheck(this, CanvasElement);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CanvasElement).call(this));
+    _this.transform = transform;
+    _this.facets = facets;
+    _this.mask = mask;
+    _this.hidden = hidden;
+    return _this;
+  }
+
+  _createClass(CanvasElement, [{
+    key: "getTransform",
+    value: function getTransform() {
+      return this.transform;
+    }
+  }, {
+    key: "getFacets",
+    value: function getFacets() {
+      return this.facets;
+    }
+  }, {
+    key: "getMask",
+    value: function getMask() {
+      return this.mask;
+    }
+  }, {
+    key: "setFacets",
+    value: function setFacets(facets) {
+      this.facets = facets;
+    }
+  }, {
+    key: "applyMask",
+    value: function applyMask(mask) {
+      if (mask) {
+        var element = this; ///
+
+        mask.maskElement(element);
+      }
+    }
+  }, {
+    key: "applyTransform",
+    value: function applyTransform(transform) {
+      var childElements = this.getChildElements();
+      this.facets.forEach(function (facet) {
+        return facet.applyTransform(transform);
+      });
+      childElements.forEach(function (childElement) {
+        return childElement.applyTransform(transform);
+      });
+    }
+  }, {
+    key: "createFacets",
+    value: function createFacets(hidden) {
+      var childElements = this.getChildElements();
+      hidden = hidden || this.hidden; ///
+
+      childElements.forEach(function (childElement) {
+        return childElement.createFacets(hidden);
+      });
+      return hidden;
+    }
+  }, {
+    key: "amendFacets",
+    value: function amendFacets() {
+      var childElements = this.getChildElements();
+      childElements.forEach(function (childElement) {
+        return childElement.amendFacets();
+      });
+      this.applyTransform(this.transform);
+      this.applyMask(this.mask);
+    }
+  }, {
+    key: "addFacets",
+    value: function addFacets(colourRenderer, textureRenderer) {
+      var childElements = this.getChildElements();
+      childElements.forEach(function (childElement) {
+        return childElement.addFacets(colourRenderer, textureRenderer);
+      });
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(Class, properties) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        remainingArguments[_key - 2] = arguments[_key];
+      }
+
+      var _properties$scale = properties.scale,
+          scale = _properties$scale === void 0 ? null : _properties$scale,
+          _properties$rotations = properties.rotations,
+          rotations = _properties$rotations === void 0 ? null : _properties$rotations,
+          _properties$position = properties.position,
+          position = _properties$position === void 0 ? null : _properties$position,
+          _properties$mask = properties.mask,
+          mask = _properties$mask === void 0 ? null : _properties$mask,
+          _properties$hidden = properties.hidden,
+          hidden = _properties$hidden === void 0 ? false : _properties$hidden,
+          transform = composeTransform(scale, rotations, position),
+          facets = [],
+          canvasElement = Element.fromProperties.apply(Element, [Class, properties, transform, facets, mask, hidden].concat(remainingArguments));
+      return canvasElement;
+    }
+  }]);
+
+  return CanvasElement;
+}(Element);
+
+module.exports = CanvasElement;
+
+},{"../element":"node_modules/xgl/lib/element.js","../utilities/transform":"node_modules/xgl/lib/utilities/transform.js"}],"node_modules/xgl/lib/element/canvas/function.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var CanvasElement = require('../../element/canvas');
+
+var FunctionCanvasElement = /*#__PURE__*/function (_CanvasElement) {
+  _inherits(FunctionCanvasElement, _CanvasElement);
+
+  function FunctionCanvasElement() {
+    _classCallCheck(this, FunctionCanvasElement);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(FunctionCanvasElement).apply(this, arguments));
+  }
+
+  _createClass(FunctionCanvasElement, null, [{
+    key: "fromProperties",
+    value: function fromProperties(properties) {
+      var functionElement = CanvasElement.fromProperties(FunctionCanvasElement, properties);
+      return functionElement;
+    }
+  }]);
+
+  return FunctionCanvasElement;
+}(CanvasElement);
+
+module.exports = FunctionCanvasElement;
+
+},{"../../element/canvas":"node_modules/xgl/lib/element/canvas.js"}],"node_modules/xgl/lib/react.js":[function(require,module,exports) {
+'use strict';
+
+var Element = require('./element'),
+    arrayUtilities = require('./utilities/array'),
+    FunctionCanvasElement = require('./element/canvas/function');
+
+var flatten = arrayUtilities.flatten,
+    guarantee = arrayUtilities.guarantee;
+
+function createElement(firstArgument, properties) {
+  for (var _len = arguments.length, childElements = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+    childElements[_key - 2] = arguments[_key];
+  }
+
+  properties = properties || {}; ///
+
+  childElements = flatten(childElements); ///
+
+  var element;
+
+  if (isSubclassOf(firstArgument, Element)) {
+    var Class = firstArgument; ///
+
+    Object.assign(properties, {
+      childElements: childElements
+    });
+    element = Class.fromProperties(properties);
+  } else if (typeof firstArgument === 'function') {
+    var func = firstArgument,
+        ///
+    _childElements = guarantee(func(properties));
+
+    Object.assign(properties, {
+      childElements: _childElements
+    });
+    element = FunctionCanvasElement.fromProperties(properties);
+  }
+
+  return element;
+}
+
+var React = {
+  createElement: createElement
+};
+module.exports = React;
+
+function isSubclassOf(argument, Class) {
+  var typeOf = false;
+
+  if (argument.name === Class.name) {
+    ///
+    typeOf = true;
+  } else {
+    argument = Object.getPrototypeOf(argument); ///
+
+    if (argument) {
+      typeOf = isSubclassOf(argument, Class);
+    }
+  }
+
+  return typeOf;
+}
+
+},{"./element":"node_modules/xgl/lib/element.js","./utilities/array":"node_modules/xgl/lib/utilities/array.js","./element/canvas/function":"node_modules/xgl/lib/element/canvas/function.js"}],"node_modules/xgl/lib/xgl.js":[function(require,module,exports) {
+'use strict';
+
+var React = require('./react');
+
+Object.defineProperty(window, 'React', {
+  get: function get() {
+    return React;
+  }
+});
+
+},{"./react":"node_modules/xgl/lib/react.js"}],"node_modules/xgl/lib/mixin/depth.js":[function(require,module,exports) {
+'use strict';
+
+var defaultDepth = 1.0;
+
+function clearDepth() {
+  var depth = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultDepth;
+  this.context.clearDepth(depth);
+}
+
+function clearDepthBuffer() {
+  var DEPTH_BUFFER_BIT = this.context.DEPTH_BUFFER_BIT,
+      mask = DEPTH_BUFFER_BIT;
+  this.context.clear(mask);
+}
+
+function enableDepthTesting() {
+  var _this$context = this.context,
+      DEPTH_TEST = _this$context.DEPTH_TEST,
+      LEQUAL = _this$context.LEQUAL,
+      capacity = DEPTH_TEST,
+      depthComparisonFunction = LEQUAL;
+  this.context.enable(capacity);
+  this.context.depthFunc(depthComparisonFunction);
+}
+
+module.exports = {
+  clearDepth: clearDepth,
+  clearDepthBuffer: clearDepthBuffer,
+  enableDepthTesting: enableDepthTesting
+};
+
+},{}],"node_modules/xgl/lib/mixin/colour.js":[function(require,module,exports) {
+'use strict';
+
+var defaultR = 0.0,
+    defaultG = 0.0,
+    defaultB = 0.0,
+    defaultA = 1.0;
+
+function clearColour() {
+  var r = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultR;
+  var g = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : defaultG;
+  var b = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : defaultB;
+  var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : defaultA;
+  this.context.clearColor(r, g, b, a);
+}
+
+function clearColourBuffer() {
+  var COLOR_BUFFER_BIT = this.context.COLOR_BUFFER_BIT,
+      mask = COLOR_BUFFER_BIT;
+  this.context.clear(mask);
+}
+
+module.exports = {
+  clearColour: clearColour,
+  clearColourBuffer: clearColourBuffer
+};
+
+},{}],"node_modules/xgl/lib/mixin/shader.js":[function(require,module,exports) {
+'use strict';
+
+function createShader(type, shaderSource) {
+  var COMPILE_STATUS = this.context.COMPILE_STATUS,
+      pname = COMPILE_STATUS,
+      shader = this.context.createShader(type);
+  this.context.shaderSource(shader, shaderSource);
+  this.context.compileShader(shader);
+  var compileStatus = this.context.getShaderParameter(shader, pname);
+
+  if (!compileStatus) {
+    throw new Error("Unable to create the shader.");
+  }
+
+  return shader;
+}
+
+function createVertexShader(vertexShaderSource, canvas) {
+  var VERTEX_SHADER = this.context.VERTEX_SHADER,
+      type = VERTEX_SHADER,
+      vertexShader = this.createShader(type, vertexShaderSource);
+  return vertexShader;
+}
+
+function createFragmentShader(fragmentShaderSource, canvas) {
+  var FRAGMENT_SHADER = this.context.FRAGMENT_SHADER,
+      type = FRAGMENT_SHADER,
+      fragmentShader = this.createShader(type, fragmentShaderSource);
+  return fragmentShader;
+}
+
+module.exports = {
+  createShader: createShader,
+  createVertexShader: createVertexShader,
+  createFragmentShader: createFragmentShader
+};
+
+},{}],"node_modules/xgl/lib/mixin/buffer.js":[function(require,module,exports) {
+'use strict';
+
+function createElementBuffer(data) {
+  var _this$context = this.context,
+      ELEMENT_ARRAY_BUFFER = _this$context.ELEMENT_ARRAY_BUFFER,
+      STATIC_DRAW = _this$context.STATIC_DRAW,
+      target = ELEMENT_ARRAY_BUFFER,
+      usage = STATIC_DRAW,
+      uint16Array = new Uint16Array(data),
+      elementBuffer = this.context.createBuffer();
+  this.context.bindBuffer(target, elementBuffer);
+  this.context.bufferData(target, uint16Array, usage);
+  return elementBuffer;
+}
+
+function bindElementBuffer(elementBuffer) {
+  var ELEMENT_ARRAY_BUFFER = this.context.ELEMENT_ARRAY_BUFFER,
+      target = ELEMENT_ARRAY_BUFFER;
+  this.context.bindBuffer(target, elementBuffer);
+}
+
+function createBuffer(data) {
+  var _this$context2 = this.context,
+      ARRAY_BUFFER = _this$context2.ARRAY_BUFFER,
+      STATIC_DRAW = _this$context2.STATIC_DRAW,
+      target = ARRAY_BUFFER,
+      usage = STATIC_DRAW,
+      buffer = this.context.createBuffer(),
+      float32Array = new Float32Array(data);
+  this.context.bindBuffer(target, buffer);
+  this.context.bufferData(target, float32Array, usage);
+  return buffer;
+}
+
+function bindBuffer(buffer, attributeLocation, components) {
+  var _this$context3 = this.context,
+      ARRAY_BUFFER = _this$context3.ARRAY_BUFFER,
+      FLOAT = _this$context3.FLOAT,
+      target = ARRAY_BUFFER,
+      type = FLOAT,
+      normalize = false,
+      stride = 0,
+      offset = 0;
+  this.context.bindBuffer(target, buffer);
+  this.context.vertexAttribPointer(attributeLocation, components, type, normalize, stride, offset);
+  this.context.enableVertexAttribArray(attributeLocation);
+}
+
+module.exports = {
+  createElementBuffer: createElementBuffer,
+  bindElementBuffer: bindElementBuffer,
+  createBuffer: createBuffer,
+  bindBuffer: bindBuffer
+};
+
+},{}],"node_modules/xgl/lib/mixin/matrix.js":[function(require,module,exports) {
+'use strict';
+
+function applyMatrix(uniformLocation, matrix) {
+  var transpose = false; ///
+
+  this.context.uniformMatrix4fv(uniformLocation, transpose, matrix);
+}
+
+module.exports = {
+  applyMatrix: applyMatrix
+};
+
+},{}],"node_modules/xgl/lib/mixin/program.js":[function(require,module,exports) {
+'use strict';
+
+function createProgram(vertexShader, fragmentShader) {
+  var program = this.context.createProgram();
+  this.context.attachShader(program, vertexShader);
+  this.context.attachShader(program, fragmentShader);
+  this.context.linkProgram(program);
+  return program;
+}
+
+function useProgram(program) {
+  this.context.useProgram(program);
+}
+
+module.exports = {
+  createProgram: createProgram,
+  useProgram: useProgram
+};
+
+},{}],"node_modules/xgl/lib/mixin/texture.js":[function(require,module,exports) {
+'use strict';
+
+function createTexture(image, index, repeat) {
+  var _this$context = this.context,
+      RGBA = _this$context.RGBA,
+      LINEAR = _this$context.LINEAR,
+      UNSIGNED_BYTE = _this$context.UNSIGNED_BYTE,
+      TEXTURE0 = _this$context.TEXTURE0,
+      TEXTURE_2D = _this$context.TEXTURE_2D,
+      TEXTURE_WRAP_S = _this$context.TEXTURE_WRAP_S,
+      TEXTURE_WRAP_T = _this$context.TEXTURE_WRAP_T,
+      UNPACK_FLIP_Y_WEBGL = _this$context.UNPACK_FLIP_Y_WEBGL,
+      CLAMP_TO_EDGE = _this$context.CLAMP_TO_EDGE,
+      NEAREST = _this$context.NEAREST,
+      REPEAT = _this$context.REPEAT,
+      TEXTURE_MIN_FILTER = _this$context.TEXTURE_MIN_FILTER,
+      target = TEXTURE0 + index,
+      level = 0,
+      internalFormat = RGBA,
+      format = RGBA,
+      type = UNSIGNED_BYTE,
+      texture = this.context.createTexture();
+  this.context.activeTexture(target);
+  this.context.bindTexture(TEXTURE_2D, texture);
+  this.context.pixelStorei(UNPACK_FLIP_Y_WEBGL, true);
+  this.context.texImage2D(TEXTURE_2D, level, internalFormat, format, type, image);
+
+  if (repeat) {
+    this.context.texParameteri(TEXTURE_2D, TEXTURE_WRAP_S, REPEAT);
+    this.context.texParameteri(TEXTURE_2D, TEXTURE_WRAP_T, REPEAT);
+  } else {
+    this.context.texParameteri(TEXTURE_2D, TEXTURE_WRAP_S, CLAMP_TO_EDGE);
+    this.context.texParameteri(TEXTURE_2D, TEXTURE_WRAP_T, CLAMP_TO_EDGE);
+  }
+
+  this.context.texParameteri(TEXTURE_2D, TEXTURE_MIN_FILTER, LINEAR);
+  return texture;
+}
+
+function enableAnisotropicFiltering() {
+  var extension = this.context.getExtension('EXT_texture_filter_anisotropic') || this.context.getExtension('MOZ_EXT_texture_filter_anisotropic') || this.context.getExtension('WEBKIT_EXT_texture_filter_anisotropic');
+
+  if (extension) {
+    var TEXTURE_2D = this.context.TEXTURE_2D,
+        MAX_TEXTURE_MAX_ANISOTROPY_EXT = extension.MAX_TEXTURE_MAX_ANISOTROPY_EXT,
+        TEXTURE_MAX_ANISOTROPY_EXT = extension.TEXTURE_MAX_ANISOTROPY_EXT,
+        maximum = this.context.getParameter(MAX_TEXTURE_MAX_ANISOTROPY_EXT);
+    this.context.texParameterf(TEXTURE_2D, TEXTURE_MAX_ANISOTROPY_EXT, maximum);
+  }
+}
+
+module.exports = {
+  createTexture: createTexture,
+  enableAnisotropicFiltering: enableAnisotropicFiltering
+};
+
+},{}],"node_modules/xgl/lib/mixin/blending.js":[function(require,module,exports) {
+'use strict';
+
+function enableBlending() {
+  var _this$context = this.context,
+      BLEND = _this$context.BLEND,
+      SRC_ALPHA = _this$context.SRC_ALPHA,
+      ONE = _this$context.ONE,
+      capacity = BLEND,
+      sourceFactor = SRC_ALPHA,
+      destinationFactor = ONE;
+  this.context.enable(capacity);
+  this.context.blendFunc(sourceFactor, destinationFactor);
+}
+
+module.exports = {
+  enableBlending: enableBlending
+};
+
+},{}],"node_modules/xgl/lib/mixin/location.js":[function(require,module,exports) {
+'use strict';
+
+function getUniformLocation(program, name) {
+  return this.context.getUniformLocation(program, name);
+}
+
+function getAttributeLocation(program, name) {
+  return this.context.getAttribLocation(program, name);
+}
+
+function setUniformLocationIntegerValue(uniformLocation, integerValue) {
+  this.context.uniform1i(uniformLocation, integerValue);
+}
+
+module.exports = {
+  getUniformLocation: getUniformLocation,
+  getAttributeLocation: getAttributeLocation,
+  setUniformLocationIntegerValue: setUniformLocationIntegerValue
+};
+
+},{}],"node_modules/xgl/lib/canvas.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var depthMixin = require('./mixin/depth'),
+    colourMixin = require('./mixin/colour'),
+    shaderMixin = require('./mixin/shader'),
+    bufferMixin = require('./mixin/buffer'),
+    matrixMixin = require('./mixin/matrix'),
+    programMixin = require('./mixin/program'),
+    textureMixin = require('./mixin/texture'),
+    blendingMixin = require('./mixin/blending'),
+    locationMixin = require('./mixin/location');
+
+var Canvas = /*#__PURE__*/function () {
+  function Canvas() {
+    var selector = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'canvas';
+
+    _classCallCheck(this, Canvas);
+
+    var domElement = domElementFromSelector(selector),
+        context = contextFromDOMElement(domElement);
+    this.domElement = domElement;
+    this.context = context;
+    this.enableDepthTesting(); ///
+  }
+
+  _createClass(Canvas, [{
+    key: "getDOMElement",
+    value: function getDOMElement() {
+      return this.domElement;
+    }
+  }, {
+    key: "getContext",
+    value: function getContext() {
+      return this.context;
+    }
+  }, {
+    key: "getWidth",
+    value: function getWidth() {
+      return this.domElement.width;
+    }
+  }, {
+    key: "getHeight",
+    value: function getHeight() {
+      return this.domElement.height;
+    }
+  }, {
+    key: "getClientWidth",
+    value: function getClientWidth() {
+      return this.domElement.clientWidth;
+    }
+  }, {
+    key: "getClientHeight",
+    value: function getClientHeight() {
+      return this.domElement.clientHeight;
+    }
+  }, {
+    key: "setWidth",
+    value: function setWidth(width) {
+      this.domElement.setAttribute('width', width);
+    }
+  }, {
+    key: "setHeight",
+    value: function setHeight(height) {
+      this.domElement.setAttribute('height', height);
+    }
+  }, {
+    key: "resize",
+    value: function resize(width, height) {
+      var x = 0,
+          y = 0;
+      this.setWidth(width);
+      this.setHeight(height);
+      this.context.viewport(x, y, width, height);
+    }
+  }, {
+    key: "clear",
+    value: function clear() {
+      this.clearDepth();
+      this.clearColour();
+      this.clearDepthBuffer();
+      this.clearColourBuffer();
+    }
+  }, {
+    key: "render",
+    value: function render(renderer, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix) {
+      var offsetsMatrixUniformLocation = renderer.getOffsetsMatrixUniformLocation(),
+          normalsMatrixUniformLocation = renderer.getNormalsMatrixUniformLocation(),
+          positionMatrixUniformLocation = renderer.getPositionMatrixUniformLocation(),
+          rotationsMatrixUniformLocation = renderer.getRotationsMatrixUniformLocation(),
+          projectionMatrixUniformLocation = renderer.getProjectionMatrixUniformLocation();
+      this.applyMatrix(offsetsMatrixUniformLocation, offsetsMatrix);
+      this.applyMatrix(normalsMatrixUniformLocation, normalsMatrix);
+      this.applyMatrix(positionMatrixUniformLocation, positionMatrix);
+      this.applyMatrix(rotationsMatrixUniformLocation, rotationsMatrix);
+      this.applyMatrix(projectionMatrixUniformLocation, projectionMatrix);
+    }
+  }, {
+    key: "drawElements",
+    value: function drawElements(start, finish) {
+      var _this$context = this.context,
+          TRIANGLES = _this$context.TRIANGLES,
+          UNSIGNED_SHORT = _this$context.UNSIGNED_SHORT,
+          mode = TRIANGLES,
+          type = UNSIGNED_SHORT,
+          count = finish - start,
+          offset = start * 2; ///
+
+      this.context.drawElements(mode, count, type, offset);
+    }
+  }]);
+
+  return Canvas;
+}();
+
+Object.assign(Canvas.prototype, depthMixin);
+Object.assign(Canvas.prototype, colourMixin);
+Object.assign(Canvas.prototype, shaderMixin);
+Object.assign(Canvas.prototype, bufferMixin);
+Object.assign(Canvas.prototype, matrixMixin);
+Object.assign(Canvas.prototype, programMixin);
+Object.assign(Canvas.prototype, textureMixin);
+Object.assign(Canvas.prototype, blendingMixin);
+Object.assign(Canvas.prototype, locationMixin);
+module.exports = Canvas;
+
+function domElementFromSelector(selector) {
+  var domElement = typeof selector === 'string' ? document.querySelectorAll(selector)[0] : ///
+  selector; ///
+
+  return domElement;
+}
+
+function contextFromDOMElement(domElement) {
+  var context = domElement.getContext('webgl');
+
+  if (!context) {
+    throw new Error("Unable to get the WebGL context.");
+  }
+
+  return context;
+}
+
+},{"./mixin/depth":"node_modules/xgl/lib/mixin/depth.js","./mixin/colour":"node_modules/xgl/lib/mixin/colour.js","./mixin/shader":"node_modules/xgl/lib/mixin/shader.js","./mixin/buffer":"node_modules/xgl/lib/mixin/buffer.js","./mixin/matrix":"node_modules/xgl/lib/mixin/matrix.js","./mixin/program":"node_modules/xgl/lib/mixin/program.js","./mixin/texture":"node_modules/xgl/lib/mixin/texture.js","./mixin/blending":"node_modules/xgl/lib/mixin/blending.js","./mixin/location":"node_modules/xgl/lib/mixin/location.js"}],"node_modules/xgl/lib/primitive/edge.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var vectorMaths = require('../maths/vector');
+
+var subtract3 = vectorMaths.subtract3;
+
+var Edge = /*#__PURE__*/function () {
+  function Edge(position, extent) {
+    _classCallCheck(this, Edge);
+
+    this.position = position;
+    this.extent = extent;
+  }
+
+  _createClass(Edge, [{
+    key: "getPosition",
+    value: function getPosition() {
+      return this.position;
+    }
+  }, {
+    key: "getExtent",
+    value: function getExtent() {
+      return this.extent;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      var position = this.position.slice(),
+          extent = this.extent.slice(),
+          edge = new Edge(position, extent);
+      return edge;
+    }
+  }], [{
+    key: "fromStartVertexAndEndVertex",
+    value: function fromStartVertexAndEndVertex(Class, startVertex, endVertex) {
+      if (endVertex === undefined) {
+        endVertex = startVertex;
+        startVertex = Class;
+        Class = Edge;
+      }
+
+      var startPosition = startVertex.getPosition(),
+          endPosition = endVertex.getPosition(),
+          position = startPosition.slice(),
+          ///
+      extent = subtract3(endPosition, startPosition),
+          edge = new Class(position, extent);
+      return edge;
+    }
+  }]);
+
+  return Edge;
+}();
+
+module.exports = Edge;
+
+},{"../maths/vector":"node_modules/xgl/lib/maths/vector.js"}],"node_modules/xgl/lib/utilities/midPoint.js":[function(require,module,exports) {
+'use strict';
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var vectorMaths = require('../maths/vector');
+
+var add3 = vectorMaths.add3,
+    scale3 = vectorMaths.scale3;
+
+function calculateMidPointPosition(vertices) {
+  var midPointPosition = vertices.reduce(function (midPointPosition, vertex) {
+    var vertexPosition = vertex.getPosition(),
+        scaledVertexPosition = scale3(vertexPosition, 1 / 3);
+    midPointPosition = add3(midPointPosition, scaledVertexPosition);
+    return midPointPosition;
+  }, [0, 0, 0]);
+  return midPointPosition;
+}
+
+function projectMidPointPositionOntoXYPlane(midPointPosition) {
+  midPointPosition = [].concat(_toConsumableArray(midPointPosition.slice(0, 2)), [0]); ///
+
+  return midPointPosition;
+}
+
+function isMidPointPositionToOneSideOfMaskingEdges(midPointPosition, maskingEdges) {
+  var midPointPositionToTheLeftOfMaskingEdges = isMidPointPositionToTheLeftOfMaskingEdges(midPointPosition, maskingEdges),
+      midPointPositionToTheRightOfMaskingEdges = isMidPointPositionToTheRightOfMaskingEdges(midPointPosition, maskingEdges),
+      midPointPositionToOneSideOfMaskingEdges = midPointPositionToTheLeftOfMaskingEdges || midPointPositionToTheRightOfMaskingEdges; ///
+
+  return midPointPositionToOneSideOfMaskingEdges;
+}
+
+module.exports = module.exports = {
+  calculateMidPointPosition: calculateMidPointPosition,
+  projectMidPointPositionOntoXYPlane: projectMidPointPositionOntoXYPlane,
+  isMidPointPositionToOneSideOfMaskingEdges: isMidPointPositionToOneSideOfMaskingEdges
+};
+
+function isMidPointPositionToTheLeftOfMaskingEdges(midPointPosition, maskingEdges) {
+  var midPointPositionToTheLeftOfMaskingEdges = maskingEdges.reduce(function (midPointPositionToTheLeftOfMaskingEdges, maskingEdge) {
+    if (midPointPositionToTheLeftOfMaskingEdges) {
+      var midPointPositionToTheLeftOfMaskingEdge = maskingEdge.isMidPointPositionToTheLeft(midPointPosition);
+      midPointPositionToTheLeftOfMaskingEdges = midPointPositionToTheLeftOfMaskingEdge;
+    }
+
+    return midPointPositionToTheLeftOfMaskingEdges;
+  }, true);
+  return midPointPositionToTheLeftOfMaskingEdges;
+}
+
+function isMidPointPositionToTheRightOfMaskingEdges(midPointPosition, maskingEdges) {
+  var midPointPositionToTheRightOfMaskingEdges = maskingEdges.reduce(function (midPointPositionToTheRightOfMaskingEdges, maskingEdge) {
+    if (midPointPositionToTheRightOfMaskingEdges) {
+      var midPointPositionToTheRightOfMaskingEdge = maskingEdge.isMidPointPositionToTheRight(midPointPosition);
+      midPointPositionToTheRightOfMaskingEdges = midPointPositionToTheRightOfMaskingEdge;
+    }
+
+    return midPointPositionToTheRightOfMaskingEdges;
+  }, true);
+  return midPointPositionToTheRightOfMaskingEdges;
+}
+
+},{"../maths/vector":"node_modules/xgl/lib/maths/vector.js"}],"node_modules/xgl/lib/primitive/edge/masking.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Edge = require('../edge'),
+    vectorMaths = require('../../maths/vector'),
+    arrayUtilities = require('../../utilities/array'),
+    midPointUtilities = require('../../utilities/midPoint');
+
+var third = arrayUtilities.third,
+    subtract3 = vectorMaths.subtract3,
+    cross3 = vectorMaths.cross3,
+    projectMidPointPositionOntoXYPlane = midPointUtilities.projectMidPointPositionOntoXYPlane;
+
+var MaskingEdge = /*#__PURE__*/function (_Edge) {
+  _inherits(MaskingEdge, _Edge);
+
+  function MaskingEdge() {
+    _classCallCheck(this, MaskingEdge);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(MaskingEdge).apply(this, arguments));
+  }
+
+  _createClass(MaskingEdge, [{
+    key: "isMidPointPositionToTheLeft",
+    value: function isMidPointPositionToTheLeft(midPointPosition) {
+      midPointPosition = projectMidPointPositionOntoXYPlane(midPointPosition); ///
+
+      var extent = this.getExtent(),
+          position = this.getPosition(),
+          midPointRelativePosition = subtract3(midPointPosition, position),
+          crossProductComponents = cross3(extent, midPointRelativePosition),
+          ///
+      thirdCrossProductComponent = third(crossProductComponents),
+          midPointPositionToTheLeft = thirdCrossProductComponent > 0;
+      return midPointPositionToTheLeft;
+    }
+  }, {
+    key: "isMidPointPositionToTheRight",
+    value: function isMidPointPositionToTheRight(midPointPosition) {
+      var midPointPositionToTheLeft = this.isMidPointPositionToTheLeft(midPointPosition),
+          midPointPositionToTheRight = !midPointPositionToTheLeft;
+      return midPointPositionToTheRight;
+    }
+  }], [{
+    key: "fromStartVertexAndEndVertex",
+    value: function fromStartVertexAndEndVertex(startVertex, endVertex) {
+      return Edge.fromStartVertexAndEndVertex(MaskingEdge, startVertex, endVertex);
+    }
+  }]);
+
+  return MaskingEdge;
+}(Edge);
+
+module.exports = MaskingEdge;
+
+},{"../edge":"node_modules/xgl/lib/primitive/edge.js","../../maths/vector":"node_modules/xgl/lib/maths/vector.js","../../utilities/array":"node_modules/xgl/lib/utilities/array.js","../../utilities/midPoint":"node_modules/xgl/lib/utilities/midPoint.js"}],"node_modules/xgl/lib/utilities/angle.js":[function(require,module,exports) {
+'use strict';
+
+function calculateHalfAngleSine(angleCosine) {
+  return Math.sqrt((1 - angleCosine) / 2);
+}
+
+function calculateHalfAngleCosine(angleCosine) {
+  return Math.sqrt((1 + angleCosine) / 2);
+}
+
+module.exports = {
+  calculateHalfAngleSine: calculateHalfAngleSine,
+  calculateHalfAngleCosine: calculateHalfAngleCosine
+};
+
+},{}],"node_modules/xgl/lib/utilities/approximate.js":[function(require,module,exports) {
+'use strict';
+
+var constants = require('../constants');
+
+var DEFAULT_MARGIN_OF_ERROR = constants.DEFAULT_MARGIN_OF_ERROR;
+
+function isApproximatelyEqualToOne(value) {
+  var marginOfError = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_MARGIN_OF_ERROR;
+  return isApproximatelyEqualTo(value, 1, marginOfError);
+}
+
+function isApproximatelyEqualToZero(value) {
+  var marginOfError = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_MARGIN_OF_ERROR;
+  return isApproximatelyEqualTo(value, 0, marginOfError);
+}
+
+module.exports = {
+  isApproximatelyEqualToOne: isApproximatelyEqualToOne,
+  isApproximatelyEqualToZero: isApproximatelyEqualToZero
+};
+
+function isApproximatelyEqualTo(valueA, valueB) {
+  var marginOfError = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : DEFAULT_MARGIN_OF_ERROR;
+  var difference = valueA - valueB,
+      absoluteDifference = Math.abs(difference),
+      approximatelyEqual = absoluteDifference < marginOfError;
+  return approximatelyEqual;
+}
+
+},{"../constants":"node_modules/xgl/lib/constants.js"}],"node_modules/xgl/lib/utilities/quaternion.js":[function(require,module,exports) {
+'use strict';
+
+var vectorMaths = require('../maths/vector'),
+    arrayUtilities = require('../utilities/array'),
+    angleUtilities = require('../utilities/angle'),
+    approximateUtilities = require('../utilities/approximate');
+
+var dot3 = vectorMaths.dot3,
+    cross3 = vectorMaths.cross3,
+    normalise3 = vectorMaths.normalise3,
+    isApproximatelyEqualToOne = approximateUtilities.isApproximatelyEqualToOne,
+    first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    third = arrayUtilities.third,
+    fourth = arrayUtilities.fourth,
+    calculateHalfAngleCosine = angleUtilities.calculateHalfAngleCosine,
+    calculateHalfAngleSine = angleUtilities.calculateHalfAngleSine;
+
+function rotateImaginaryQuaternion(imaginaryQuaternion, rotationQuaternion, inverseRotationQuaternion) {
+  return hamiltonProduct(hamiltonProduct(rotationQuaternion, imaginaryQuaternion), inverseRotationQuaternion);
+}
+
+function calculateInverseRotationQuaternion(rotationQuaternion) {
+  var rotationQuaternionComponents = rotationQuaternion,
+      ///
+  firstRotationQuaternionComponent = first(rotationQuaternionComponents),
+      secondRotationQuaternionComponent = second(rotationQuaternionComponents),
+      thirdRotationQuaternionComponent = third(rotationQuaternionComponents),
+      fourthRotationQuaternionComponent = fourth(rotationQuaternionComponents),
+      inverseRotationQuaternion = [firstRotationQuaternionComponent, -secondRotationQuaternionComponent, -thirdRotationQuaternionComponent, -fourthRotationQuaternionComponent];
+  return inverseRotationQuaternion;
+}
+
+function calculateForwardsRotationQuaternion(rotationQuaternion) {
+  var forwardsRotationQuaternion = rotationQuaternion; ///
+
+  return forwardsRotationQuaternion;
+}
+
+function calculateBackwardsRotationQuaternion(rotationQuaternion) {
+  var inverseRotationQuaternion = calculateInverseRotationQuaternion(rotationQuaternion),
+      backwardsRotationQuaternion = inverseRotationQuaternion; ///
+
+  return backwardsRotationQuaternion;
+}
+
+function calculateArbitraryRotationQuaternion(normal) {
+  var extent = normal.getExtent(),
+      unitNormal = extent,
+      ///
+  zAxis = [0, 0, 1],
+      dotProductOfUnitNormalAndZAxis = dot3(unitNormal, zAxis),
+      crossProductOfUnitNormalAndZAxis = cross3(unitNormal, zAxis),
+      angleOfRotationCosine = dotProductOfUnitNormalAndZAxis,
+      ///
+  angleOfRotationCosineAbsoluteValue = Math.abs(angleOfRotationCosine),
+      angleOfRotationCosineAbsoluteValueApproximatelyEqualToOne = isApproximatelyEqualToOne(angleOfRotationCosineAbsoluteValue),
+      axisOfRotation = angleOfRotationCosineAbsoluteValueApproximatelyEqualToOne ? [1, 0, 0] : ///
+  crossProductOfUnitNormalAndZAxis,
+      unitAxisOfRotation = normalise3(axisOfRotation),
+      halfAngleOfRotationCosine = calculateHalfAngleCosine(angleOfRotationCosine),
+      halfAngleOfRotationSine = calculateHalfAngleSine(angleOfRotationCosine),
+      unitAxisOfRotationComponents = unitAxisOfRotation,
+      ///
+  firstAxisOfRotationComponent = first(unitAxisOfRotationComponents),
+      secondAxisOfRotationComponent = second(unitAxisOfRotationComponents),
+      thirdAxisOfRotationComponent = third(unitAxisOfRotationComponents),
+      arbitraryRotationQuaternion = [halfAngleOfRotationCosine, firstAxisOfRotationComponent * halfAngleOfRotationSine, secondAxisOfRotationComponent * halfAngleOfRotationSine, thirdAxisOfRotationComponent * halfAngleOfRotationSine];
+  return arbitraryRotationQuaternion;
+}
+
+function calculateRotationAboutZAxisQuaternion(maskingEdge) {
+  var maskingEdgeExtent = maskingEdge.getExtent(),
+      unitMaskingEdgeExtent = normalise3(maskingEdgeExtent),
+      unitMaskingEdgeExtentComponents = unitMaskingEdgeExtent,
+      ///
+  firstUnitMaskingEdgeExtentComponent = first(unitMaskingEdgeExtentComponents),
+      secondUnitMaskingEdgeExtentComponent = second(unitMaskingEdgeExtentComponents),
+      angleOfRotationSine = firstUnitMaskingEdgeExtentComponent,
+      ///
+  angleOfRotationCosine = secondUnitMaskingEdgeExtentComponent,
+      ///
+  halfAngleOfRotationCosine = calculateHalfAngleCosine(angleOfRotationCosine),
+      halfAngleOfRotationSine = angleOfRotationSine > 0 ? +calculateHalfAngleSine(angleOfRotationCosine) : -calculateHalfAngleSine(angleOfRotationCosine),
+      rotationAboutZAxisQuaternion = [halfAngleOfRotationCosine, 0, 0, halfAngleOfRotationSine];
+  return rotationAboutZAxisQuaternion;
+}
+
+module.exports = {
+  rotateImaginaryQuaternion: rotateImaginaryQuaternion,
+  calculateInverseRotationQuaternion: calculateInverseRotationQuaternion,
+  calculateForwardsRotationQuaternion: calculateForwardsRotationQuaternion,
+  calculateBackwardsRotationQuaternion: calculateBackwardsRotationQuaternion,
+  calculateArbitraryRotationQuaternion: calculateArbitraryRotationQuaternion,
+  calculateRotationAboutZAxisQuaternion: calculateRotationAboutZAxisQuaternion
+};
+
+function hamiltonProduct(quaternionA, quaternionB) {
+  var a1 = quaternionA[0],
+      b1 = quaternionA[1],
+      c1 = quaternionA[2],
+      d1 = quaternionA[3],
+      a2 = quaternionB[0],
+      b2 = quaternionB[1],
+      c2 = quaternionB[2],
+      d2 = quaternionB[3],
+      a = a1 * a2 - b1 * b2 - c1 * c2 - d1 * d2,
+      b = a1 * b2 + b1 * a2 + c1 * d2 - d1 * c2,
+      c = a1 * c2 - b1 * d2 + c1 * a2 + d1 * b2,
+      d = a1 * d2 + b1 * c2 - c1 * b2 + d1 * a2,
+      quaternion = [a, b, c, d];
+  return quaternion;
+}
+
+},{"../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js","../utilities/angle":"node_modules/xgl/lib/utilities/angle.js","../utilities/approximate":"node_modules/xgl/lib/utilities/approximate.js"}],"node_modules/xgl/lib/utilities/rotation.js":[function(require,module,exports) {
+'use strict';
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+var quaternionUtilities = require('../utilities/quaternion');
+
+var rotateImaginaryQuaternion = quaternionUtilities.rotateImaginaryQuaternion,
+    calculateInverseRotationQuaternion = quaternionUtilities.calculateInverseRotationQuaternion;
+
+function rotatePosition(position, rotationQuaternion) {
+  var imaginaryQuaternion = imaginaryQuaternionFromPosition(position),
+      inverseRotationQuaternion = calculateInverseRotationQuaternion(rotationQuaternion),
+      rotatedImaginaryQuaternion = rotateImaginaryQuaternion(imaginaryQuaternion, rotationQuaternion, inverseRotationQuaternion);
+  position = positionFromImaginaryQuaternion(rotatedImaginaryQuaternion);
+  return position;
+}
+
+module.exports = {
+  rotatePosition: rotatePosition
+};
+
+function imaginaryQuaternionFromPosition(position) {
+  return [0].concat(_toConsumableArray(position));
+} ///
+
+
+function positionFromImaginaryQuaternion(imaginaryQuaternion) {
+  return imaginaryQuaternion.slice(1);
+} ///
+
+},{"../utilities/quaternion":"node_modules/xgl/lib/utilities/quaternion.js"}],"node_modules/xgl/lib/utilities/intersection.js":[function(require,module,exports) {
+'use strict';
+
+var vectorMaths = require('../maths/vector'),
+    arrayUtilities = require('../utilities/array'),
+    approximateUtilities = require('../utilities/approximate');
+
+var add3 = vectorMaths.add3,
+    subtract3 = vectorMaths.subtract3,
+    scale3 = vectorMaths.scale3,
+    first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    isApproximatelyEqualToZero = approximateUtilities.isApproximatelyEqualToZero;
+
+function calculateIntersection(edge, firstPositionComponent) {
+  var intersection = null;
+  var edgeNonParallel = isEdgeNonParallel(edge);
+
+  if (edgeNonParallel) {
+    var edgeIntersection = calculateEdgeIntersection(edge, firstPositionComponent),
+        edgeIntersectionNonTrivial = edgeIntersection > 0 && edgeIntersection < 1;
+
+    if (edgeIntersectionNonTrivial) {
+      intersection = edgeIntersection; ///
+    }
+  }
+
+  return intersection;
+}
+
+function calculateNonNullIntersections(intersections) {
+  var nonNullIntersections = intersections.reduce(function (nonNullIntersections, intersection) {
+    if (intersection !== null) {
+      var nonNullIntersection = intersection; ///
+
+      nonNullIntersections.push(nonNullIntersection);
+    }
+
+    return nonNullIntersections;
+  }, []);
+  return nonNullIntersections;
+}
+
+function calculateNullIntersectionIndex(intersections) {
+  var nullIntersectionIndex = intersections.reduce(function (nullIntersectionIndex, intersection, index) {
+    if (nullIntersectionIndex === null) {
+      if (intersection === null) {
+        nullIntersectionIndex = index;
+      }
+    }
+
+    return nullIntersectionIndex;
+  }, null);
+  return nullIntersectionIndex;
+}
+
+function calculateNonNullIntersectionIndex(intersections) {
+  var nullIntersectionIndex = intersections.reduce(function (nullIntersectionIndex, intersection, index) {
+    if (nullIntersectionIndex === null) {
+      if (intersection !== null) {
+        nullIntersectionIndex = index;
+      }
+    }
+
+    return nullIntersectionIndex;
+  }, null);
+  return nullIntersectionIndex;
+}
+
+function calculateIntermediateVertexPosition(startVertexPosition, endVertexPosition, intersection) {
+  var extent = subtract3(endVertexPosition, startVertexPosition),
+      offset = scale3(extent, intersection),
+      intermediateVertexPosition = add3(startVertexPosition, offset);
+  return intermediateVertexPosition;
+}
+
+module.exports = module.exports = {
+  calculateIntersection: calculateIntersection,
+  calculateNonNullIntersections: calculateNonNullIntersections,
+  calculateNullIntersectionIndex: calculateNullIntersectionIndex,
+  calculateNonNullIntersectionIndex: calculateNonNullIntersectionIndex,
+  calculateIntermediateVertexPosition: calculateIntermediateVertexPosition
+};
+
+function isEdgeNonParallel(edge) {
+  var edgeExtent = edge.getExtent(),
+      edgeExtentComponents = edgeExtent,
+      ///
+  firstEdgeExtentComponent = first(edgeExtentComponents),
+      secondEdgeExtentComponent = second(edgeExtentComponents),
+      edgeAngleTangent = firstEdgeExtentComponent / secondEdgeExtentComponent,
+      edgeAngleTangentApproximatelyEqualToZero = isApproximatelyEqualToZero(edgeAngleTangent),
+      edgeParallel = edgeAngleTangentApproximatelyEqualToZero,
+      ///
+  edgeNonParallel = !edgeParallel;
+  return edgeNonParallel;
+}
+
+function calculateEdgeIntersection(edge, firstPositionComponent) {
+  var edgeExtent = edge.getExtent(),
+      edgePosition = edge.getPosition(),
+      edgeExtentComponents = edgeExtent,
+      ///
+  edgePositionComponents = edgePosition,
+      ///
+  firstEdgeExtentComponent = first(edgeExtentComponents),
+      firstEdgePositionComponent = first(edgePositionComponents),
+      edgeIntersection = (firstPositionComponent - firstEdgePositionComponent) / firstEdgeExtentComponent;
+  return edgeIntersection;
+}
+
+},{"../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js","../utilities/approximate":"node_modules/xgl/lib/utilities/approximate.js"}],"node_modules/xgl/lib/primitive/verticalLine.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var arrayUtilities = require('../utilities/array'),
+    rotationUtilities = require('../utilities/rotation'),
+    quaternionUtilities = require('../utilities/quaternion'),
+    intersectionUtilities = require('../utilities/intersection');
+
+var first = arrayUtilities.first,
+    rotatePosition = rotationUtilities.rotatePosition,
+    calculateIntersection = intersectionUtilities.calculateIntersection,
+    calculateRotationAboutZAxisQuaternion = quaternionUtilities.calculateRotationAboutZAxisQuaternion,
+    calculateForwardsRotationQuaternion = quaternionUtilities.calculateForwardsRotationQuaternion,
+    calculateBackwardsRotationQuaternion = quaternionUtilities.calculateBackwardsRotationQuaternion;
+
+var VerticalLine = /*#__PURE__*/function () {
+  function VerticalLine(firstPositionComponent, forwardsRotationQuaternion, backwardsRotationQuaternion) {
+    _classCallCheck(this, VerticalLine);
+
+    this.firstPositionComponent = firstPositionComponent;
+    this.forwardsRotationQuaternion = forwardsRotationQuaternion;
+    this.backwardsRotationQuaternion = backwardsRotationQuaternion;
+  }
+
+  _createClass(VerticalLine, [{
+    key: "getFirstPositionComponent",
+    value: function getFirstPositionComponent() {
+      return this.firstPositionComponent;
+    }
+  }, {
+    key: "getForwardsRotationQuaternion",
+    value: function getForwardsRotationQuaternion() {
+      return this.forwardsRotationQuaternion;
+    }
+  }, {
+    key: "getBackwardsRotationQuaternion",
+    value: function getBackwardsRotationQuaternion() {
+      return this.backwardsRotationQuaternion;
+    }
+  }, {
+    key: "splitFacet",
+    value: function splitFacet(facet, smallerFacets) {
+      var _this = this;
+
+      var edges = facet.getEdges(),
+          intersections = edges.map(function (edge) {
+        var intersection = calculateIntersection(edge, _this.firstPositionComponent);
+        return intersection;
+      });
+      facet.splitWithIntersections(intersections, smallerFacets);
+    }
+  }, {
+    key: "splitFacets",
+    value: function splitFacets(facets) {
+      var _this2 = this;
+
+      var smallerFacets = [];
+      facets.forEach(function (facet) {
+        facet.rotate(_this2.forwardsRotationQuaternion);
+
+        _this2.splitFacet(facet, smallerFacets);
+      });
+      smallerFacets.forEach(function (smallerFacet) {
+        return smallerFacet.rotate(_this2.backwardsRotationQuaternion);
+      });
+      return smallerFacets;
+    }
+  }], [{
+    key: "fromMaskingEdge",
+    value: function fromMaskingEdge(maskingEdge) {
+      var maskingEdgePosition = maskingEdge.getPosition(),
+          rotationAboutZAxisQuaternion = calculateRotationAboutZAxisQuaternion(maskingEdge),
+          rotationQuaternion = rotationAboutZAxisQuaternion,
+          ///
+      forwardsRotationQuaternion = calculateForwardsRotationQuaternion(rotationQuaternion),
+          backwardsRotationQuaternion = calculateBackwardsRotationQuaternion(rotationQuaternion),
+          position = rotatePosition(maskingEdgePosition, rotationQuaternion),
+          positionComponents = position,
+          ///
+      firstPositionComponent = first(positionComponents),
+          verticalLine = new VerticalLine(firstPositionComponent, forwardsRotationQuaternion, backwardsRotationQuaternion);
+      return verticalLine;
+    }
+  }]);
+
+  return VerticalLine;
+}();
+
+module.exports = VerticalLine;
+
+},{"../utilities/array":"node_modules/xgl/lib/utilities/array.js","../utilities/rotation":"node_modules/xgl/lib/utilities/rotation.js","../utilities/quaternion":"node_modules/xgl/lib/utilities/quaternion.js","../utilities/intersection":"node_modules/xgl/lib/utilities/intersection.js"}],"node_modules/xgl/lib/utilities/vertices.js":[function(require,module,exports) {
+'use strict';
+
+function rotateVertices(vertices, rotationQuaternion) {
+  var rotatedVertices = vertices.map(function (vertex) {
+    var rotatedVertex = vertex.clone(); ///
+
+    rotatedVertex.rotate(rotationQuaternion);
+    return rotatedVertex;
+  });
+  return rotatedVertices;
+}
+
+function verticesFromCoordinateTuplesAndIndexTuple(coordinateTuples, indexTuple, Vertex) {
+  ///
+  var indexes = indexTuple,
+      ///
+  vertices = indexes.map(function (index) {
+    var coordinateTuple = coordinateTuples[index],
+        vertex = Vertex.fromCoordinateTuple(coordinateTuple);
+    return vertex;
+  });
+  return vertices;
+}
+
+module.exports = {
+  rotateVertices: rotateVertices,
+  verticesFromCoordinateTuplesAndIndexTuple: verticesFromCoordinateTuplesAndIndexTuple
+};
+
+},{}],"node_modules/xgl/lib/primitive/maskingFacet.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var constants = require('../constants'),
+    MaskingEdge = require('./edge/masking'),
+    VerticalLine = require('./verticalLine'),
+    arrayUtilities = require('../utilities/array'),
+    verticesUtilities = require('../utilities/vertices'),
+    quaternionUtilities = require('../utilities/quaternion');
+
+var VERTICES_LENGTH = constants.VERTICES_LENGTH,
+    push = arrayUtilities.push,
+    separate = arrayUtilities.separate,
+    rotateVertices = verticesUtilities.rotateVertices,
+    calculateArbitraryRotationQuaternion = quaternionUtilities.calculateArbitraryRotationQuaternion,
+    calculateForwardsRotationQuaternion = quaternionUtilities.calculateForwardsRotationQuaternion,
+    calculateBackwardsRotationQuaternion = quaternionUtilities.calculateBackwardsRotationQuaternion;
+
+var MaskingFacet = /*#__PURE__*/function () {
+  function MaskingFacet(maskingEdges, verticalLines, forwardsRotationQuaternion, backwardsRotationQuaternion) {
+    _classCallCheck(this, MaskingFacet);
+
+    this.maskingEdges = maskingEdges;
+    this.verticalLines = verticalLines;
+    this.forwardsRotationQuaternion = forwardsRotationQuaternion;
+    this.backwardsRotationQuaternion = backwardsRotationQuaternion;
+  }
+
+  _createClass(MaskingFacet, [{
+    key: "getMaskingEdges",
+    value: function getMaskingEdges() {
+      return this.maskingEdges;
+    }
+  }, {
+    key: "getVerticalLines",
+    value: function getVerticalLines() {
+      return this.verticalLines;
+    }
+  }, {
+    key: "getForwardsRotationQuaternion",
+    value: function getForwardsRotationQuaternion() {
+      return this.forwardsRotationQuaternion;
+    }
+  }, {
+    key: "getBackwardsRotationQuaternion",
+    value: function getBackwardsRotationQuaternion() {
+      return this.backwardsRotationQuaternion;
+    }
+  }, {
+    key: "maskFacet",
+    value: function maskFacet(facet, unmaskedFacets) {
+      var _this = this;
+
+      var unmaskedFacet = facet.clone(); ///
+
+      facet.rotate(this.forwardsRotationQuaternion);
+      var maskingFacet = this,
+          ///
+      smallerFacets = this.splitFacet(facet),
+          maskedSmallerFacets = [],
+          unmaskedSmallerFacets = [];
+      separate(smallerFacets, maskedSmallerFacets, unmaskedSmallerFacets, function (smallerFacet) {
+        var smallerFacetMasked = smallerFacet.isMasked(maskingFacet);
+        return smallerFacetMasked;
+      });
+      var maskedSmallerFacetsLength = maskedSmallerFacets.length;
+
+      if (maskedSmallerFacetsLength === 0) {
+        unmaskedFacets.push(unmaskedFacet);
+      } else {
+        unmaskedSmallerFacets.forEach(function (unmaskedSmallerFacet) {
+          unmaskedSmallerFacet.rotate(_this.backwardsRotationQuaternion);
+        });
+        push(unmaskedFacets, unmaskedSmallerFacets);
+      }
+    }
+  }, {
+    key: "splitFacet",
+    value: function splitFacet(facet) {
+      var facets = [facet],
+          smallerFacets = facets; ///
+
+      this.verticalLines.forEach(function (verticalLine) {
+        smallerFacets = verticalLine.splitFacets(facets);
+        facets = smallerFacets; ///
+      });
+      return smallerFacets;
+    }
+  }], [{
+    key: "fromFacet",
+    value: function fromFacet(facet) {
+      var facetNormal = facet.getNormal(),
+          facetVertices = facet.getVertices(),
+          normal = facetNormal,
+          ///
+      arbitraryRotationQuaternion = calculateArbitraryRotationQuaternion(normal),
+          rotationQuaternion = arbitraryRotationQuaternion,
+          ///
+      vertices = rotateVertices(facetVertices, rotationQuaternion),
+          maskingEdges = calculateMaskingEdges(vertices),
+          verticalLines = maskingEdges.map(function (maskingEdge) {
+        var verticalLine = VerticalLine.fromMaskingEdge(maskingEdge);
+        return verticalLine;
+      }),
+          forwardsRotationQuaternion = calculateForwardsRotationQuaternion(rotationQuaternion),
+          backwardsRotationQuaternion = calculateBackwardsRotationQuaternion(rotationQuaternion),
+          maskingFacet = new MaskingFacet(maskingEdges, verticalLines, forwardsRotationQuaternion, backwardsRotationQuaternion);
+      return maskingFacet;
+    }
+  }]);
+
+  return MaskingFacet;
+}();
+
+module.exports = MaskingFacet;
+
+function calculateMaskingEdges(vertices) {
+  var maskingEdges = vertices.map(function (vertex, index) {
+    var startIndex = index,
+        endIndex = (startIndex + 1) % VERTICES_LENGTH,
+        startVertex = vertices[startIndex],
+        endVertex = vertices[endIndex],
+        maskingEdge = MaskingEdge.fromStartVertexAndEndVertex(startVertex, endVertex);
+    return maskingEdge;
+  });
+  return maskingEdges;
+}
+
+},{"../constants":"node_modules/xgl/lib/constants.js","./edge/masking":"node_modules/xgl/lib/primitive/edge/masking.js","./verticalLine":"node_modules/xgl/lib/primitive/verticalLine.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js","../utilities/vertices":"node_modules/xgl/lib/utilities/vertices.js","../utilities/quaternion":"node_modules/xgl/lib/utilities/quaternion.js"}],"node_modules/xgl/lib/element/mask.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Element = require('../element'),
+    MaskingFacet = require('../primitive/maskingFacet'),
+    arrayUtilities = require('../utilities/array');
+
+var push = arrayUtilities.push;
+
+var Mask = /*#__PURE__*/function (_Element) {
+  _inherits(Mask, _Element);
+
+  function Mask(hidden) {
+    var _this;
+
+    _classCallCheck(this, Mask);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Mask).call(this));
+    _this.hidden = hidden;
+    return _this;
+  }
+
+  _createClass(Mask, [{
+    key: "retrieveMaskingFacets",
+    value: function retrieveMaskingFacets() {
+      var childElements = this.getChildElements(),
+          facets = retrieveFacets(childElements),
+          maskingFacets = facets.map(function (facet) {
+        var maskingFacet = MaskingFacet.fromFacet(facet);
+        return maskingFacet;
+      });
+      return maskingFacets;
+    }
+  }, {
+    key: "maskElement",
+    value: function maskElement(element) {
+      var maskingFacets = this.retrieveMaskingFacets(),
+          childElements = element.getChildElements();
+
+      _maskElement(element, maskingFacets);
+
+      childElements.forEach(function (childElement) {
+        return _maskElement(childElement, maskingFacets);
+      });
+    }
+  }, {
+    key: "initialise",
+    value: function initialise() {
+      var _this2 = this;
+
+      var childElements = this.getChildElements();
+      childElements.forEach(function (childElement) {
+        return childElement.createFacets(_this2.hidden);
+      });
+      childElements.forEach(function (childElement) {
+        return childElement.amendFacets();
+      });
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(properties) {
+      var _properties$hidden = properties.hidden,
+          hidden = _properties$hidden === void 0 ? false : _properties$hidden,
+          mask = Element.fromProperties(Mask, properties, hidden);
+      mask.initialise();
+      return mask;
+    }
+  }]);
+
+  return Mask;
+}(Element);
+
+module.exports = Mask;
+
+function retrieveFacets(childElements) {
+  var facets = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  childElements.forEach(function (childElement) {
+    var element = childElement,
+        ///
+    elementFacets = element.getFacets(),
+        childElements = element.getChildElements();
+    push(facets, elementFacets);
+    retrieveFacets(childElements, facets);
+  });
+  return facets;
+}
+
+function _maskElement(element, maskingFacets) {
+  var facets = element.getFacets();
+  maskingFacets.forEach(function (maskingFacet) {
+    var unmaskedFacets = [];
+    facets.forEach(function (facet) {
+      return maskingFacet.maskFacet(facet, unmaskedFacets);
+    });
+    facets = unmaskedFacets; ///
+  });
+  element.setFacets(facets);
+  var childElements = element.getChildElements();
+  childElements.forEach(function (childElement) {
+    var element = childElement; ///
+
+    _maskElement(element, maskingFacets);
+  });
+}
+
+},{"../element":"node_modules/xgl/lib/element.js","../primitive/maskingFacet":"node_modules/xgl/lib/primitive/maskingFacet.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/renderer.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var arrayUtilities = require('./utilities/array');
+
+var push = arrayUtilities.push;
+var add = push; ///
+
+var Renderer = /*#__PURE__*/function () {
+  function Renderer(facets, program, rendererData, rendererBuffers, uniformLocations, attributeLocations) {
+    _classCallCheck(this, Renderer);
+
+    this.facets = facets;
+    this.program = program;
+    this.rendererData = rendererData;
+    this.rendererBuffers = rendererBuffers;
+    this.uniformLocations = uniformLocations;
+    this.attributeLocations = attributeLocations;
+  }
+
+  _createClass(Renderer, [{
+    key: "getFacets",
+    value: function getFacets() {
+      return this.facets;
+    }
+  }, {
+    key: "getProgram",
+    value: function getProgram() {
+      return this.program;
+    }
+  }, {
+    key: "getRendererData",
+    value: function getRendererData() {
+      return this.rendererData;
+    }
+  }, {
+    key: "getRendererBuffers",
+    value: function getRendererBuffers() {
+      return this.rendererBuffers;
+    }
+  }, {
+    key: "getUniformLocations",
+    value: function getUniformLocations() {
+      return this.uniformLocations;
+    }
+  }, {
+    key: "getAttributeLocations",
+    value: function getAttributeLocations() {
+      return this.attributeLocations;
+    }
+  }, {
+    key: "getCount",
+    value: function getCount() {
+      return this.rendererData.getCount();
+    }
+  }, {
+    key: "getOffsetsMatrixUniformLocation",
+    value: function getOffsetsMatrixUniformLocation() {
+      return this.uniformLocations.getOffsetsMatrixUniformLocation();
+    }
+  }, {
+    key: "getNormalsMatrixUniformLocation",
+    value: function getNormalsMatrixUniformLocation() {
+      return this.uniformLocations.getNormalsMatrixUniformLocation();
+    }
+  }, {
+    key: "getPositionMatrixUniformLocation",
+    value: function getPositionMatrixUniformLocation() {
+      return this.uniformLocations.getPositionMatrixUniformLocation();
+    }
+  }, {
+    key: "getRotationsMatrixUniformLocation",
+    value: function getRotationsMatrixUniformLocation() {
+      return this.uniformLocations.getRotationsMatrixUniformLocation();
+    }
+  }, {
+    key: "getProjectionMatrixUniformLocation",
+    value: function getProjectionMatrixUniformLocation() {
+      return this.uniformLocations.getProjectionMatrixUniformLocation();
+    }
+  }, {
+    key: "getVertexPositionAttributeLocation",
+    value: function getVertexPositionAttributeLocation() {
+      return this.attributeLocations.getVertexPositionAttributeLocation();
+    }
+  }, {
+    key: "getVertexNormalAttributeLocation",
+    value: function getVertexNormalAttributeLocation() {
+      return this.attributeLocations.getVertexNormalAttributeLocation();
+    }
+  }, {
+    key: "addFacets",
+    value: function addFacets(facets) {
+      add(this.facets, facets);
+    }
+  }]);
+
+  return Renderer;
+}();
+
+function createProgram(vertexShaderSource, fragmentShaderSource, canvas) {
+  var vertexShader = canvas.createVertexShader(vertexShaderSource),
+      fragmentShader = canvas.createFragmentShader(fragmentShaderSource),
+      program = canvas.createProgram(vertexShader, fragmentShader);
+  return program;
+}
+
+Object.assign(Renderer, {
+  createProgram: createProgram
+});
+module.exports = Renderer;
+
+},{"./utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/renderer/data.js":[function(require,module,exports) {
+'use strict';
+
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var arrayUtilities = require('../utilities/array');
+
+var flatten = arrayUtilities.flatten,
+    merge = arrayUtilities.merge,
+    add = merge; ///
+
+var RendererData = /*#__PURE__*/function () {
+  function RendererData(vertexPositionsData, vertexNormalsData, vertexIndexesData) {
+    _classCallCheck(this, RendererData);
+
+    this.vertexPositionsData = vertexPositionsData;
+    this.vertexNormalsData = vertexNormalsData;
+    this.vertexIndexesData = vertexIndexesData;
+  }
+
+  _createClass(RendererData, [{
+    key: "getCount",
+    value: function getCount() {
+      var vertexIndexesDataLength = this.vertexIndexesData.length,
+          count = vertexIndexesDataLength; ///
+
+      return count;
+    }
+  }, {
+    key: "getVertexPositionsData",
+    value: function getVertexPositionsData() {
+      return this.vertexPositionsData;
+    }
+  }, {
+    key: "getVertexNormalsData",
+    value: function getVertexNormalsData() {
+      return this.vertexNormalsData;
+    }
+  }, {
+    key: "getVertexIndexesData",
+    value: function getVertexIndexesData() {
+      return this.vertexIndexesData;
+    }
+  }, {
+    key: "addVertexPositions",
+    value: function addVertexPositions(vertexPositions) {
+      var vertexPositionsData = flatten(vertexPositions);
+      add(this.vertexPositionsData, vertexPositionsData);
+    }
+  }, {
+    key: "addVertexNormals",
+    value: function addVertexNormals(vertexNormals) {
+      var vertexNormalsData = flatten(vertexNormals);
+      add(this.vertexNormalsData, vertexNormalsData);
+    }
+  }, {
+    key: "addVertexIndexes",
+    value: function addVertexIndexes(vertexIndexes) {
+      var vertexIndexesData = vertexIndexes; ///
+
+      add(this.vertexIndexesData, vertexIndexesData);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing(Class) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        remainingArguments[_key - 1] = arguments[_key];
+      }
+
+      var vertexPositionsData = [],
+          vertexNormalsData = [],
+          vertexIndexesData = [],
+          rendererData = _construct(Class, [vertexPositionsData, vertexNormalsData, vertexIndexesData].concat(remainingArguments));
+
+      return rendererData;
+    }
+  }]);
+
+  return RendererData;
+}();
+
+module.exports = RendererData;
+
+},{"../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/renderer/data/colour.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var RendererData = require('../../renderer/data'),
+    arrayUtilities = require('../../utilities/array');
+
+var merge = arrayUtilities.merge,
+    flatten = arrayUtilities.flatten;
+var add = merge; ///
+
+var ColourRendererData = /*#__PURE__*/function (_RendererData) {
+  _inherits(ColourRendererData, _RendererData);
+
+  function ColourRendererData(vertexPositionsData, vertexNormalsData, vertexIndexesData, vertexColoursData) {
+    var _this;
+
+    _classCallCheck(this, ColourRendererData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ColourRendererData).call(this, vertexPositionsData, vertexNormalsData, vertexIndexesData));
+    _this.vertexColoursData = vertexColoursData;
+    return _this;
+  }
+
+  _createClass(ColourRendererData, [{
+    key: "getVertexColoursData",
+    value: function getVertexColoursData() {
+      return this.vertexColoursData;
+    }
+  }, {
+    key: "addVertexColours",
+    value: function addVertexColours(vertexColours) {
+      var vertexColoursData = flatten(vertexColours);
+      add(this.vertexColoursData, vertexColoursData);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing() {
+      var vertexColoursData = [],
+          colourRendererData = RendererData.fromNothing(ColourRendererData, vertexColoursData);
+      return colourRendererData;
+    }
+  }]);
+
+  return ColourRendererData;
+}(RendererData);
+
+module.exports = ColourRendererData;
+
+},{"../../renderer/data":"node_modules/xgl/lib/renderer/data.js","../../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/renderer/source/lighting.js":[function(require,module,exports) {
+'use strict';
+
+var normalsMatrixName = 'uNormalsMatrix',
+    vertexNormalAttributeName = 'aVertexNormal';
+var lightingSource = new String("\n  \n        uniform mat4 ".concat(normalsMatrixName, ";\n\n        attribute vec3 ").concat(vertexNormalAttributeName, ";\n\n        vec3 directionalLightColour = vec3(1, 1, 1),\n             directionalVector = normalize(vec3(1.0, 1.0, 1.0));\n          \n        vec3 calculateLighting() {\n          vec4 transformedNormal = ").concat(normalsMatrixName, " * vec4(").concat(vertexNormalAttributeName, ", 1.0);            \n\n          float directional = (dot(transformedNormal.xyz, directionalVector) + 1.0) / 2.0;\n          \n          vec3 lighting = (directionalLightColour * directional);\n          \n          return lighting;\n        }\n\n      "));
+Object.assign(lightingSource, {
+  normalsMatrixName: normalsMatrixName,
+  vertexNormalAttributeName: vertexNormalAttributeName
+});
+module.exports = lightingSource;
+
+},{}],"node_modules/xgl/lib/renderer/source/position.js":[function(require,module,exports) {
+'use strict';
+
+var offsetsMatrixName = 'uOffsetsMatrix',
+    positionMatrixName = 'uPositionMatrix',
+    rotationsMatrixName = 'uRotationsMatrix',
+    projectionMatrixName = 'uPerspectiveMatrix',
+    vertexPositionAttributeName = 'aVertexPosition';
+var positionSource = new String("\n  \n        uniform mat4 ".concat(offsetsMatrixName, ",\n                     ").concat(rotationsMatrixName, ",\n                     ").concat(positionMatrixName, ",\n                     ").concat(projectionMatrixName, ";\n        \n        attribute vec4 ").concat(vertexPositionAttributeName, ";\n\n        vec4 calculatePosition() {\n          vec4 position = ").concat(projectionMatrixName, " * ").concat(positionMatrixName, " * ").concat(rotationsMatrixName, " * ").concat(offsetsMatrixName, " * ").concat(vertexPositionAttributeName, ";\n          \n          return position;\n        }\n        \n      "));
+Object.assign(positionSource, {
+  offsetsMatrixName: offsetsMatrixName,
+  positionMatrixName: positionMatrixName,
+  rotationsMatrixName: rotationsMatrixName,
+  projectionMatrixName: projectionMatrixName,
+  vertexPositionAttributeName: vertexPositionAttributeName
+});
+module.exports = positionSource;
+
+},{}],"node_modules/xgl/lib/renderer/source/colour/vertexShader.js":[function(require,module,exports) {
+'use strict';
+
+var lightingSource = require('../../source/lighting'),
+    positionSource = require('../../source/position');
+
+var vertexColourAttributeName = 'aVertexColour',
+    vertexShaderSource = new String("\n    \n        attribute vec4 ".concat(vertexColourAttributeName, ";\n\n        ").concat(lightingSource, "\n      \n        ").concat(positionSource, "\n    \n        varying highp vec3 vLighting;\n        \n        varying lowp vec4 vColour;\n        \n        void main() {\n          vLighting = calculateLighting();\n\n          gl_Position = calculatePosition();\n\n          vColour = ").concat(vertexColourAttributeName, ";                    \n        }\n        \n      "));
+Object.assign(vertexShaderSource, {
+  vertexColourAttributeName: vertexColourAttributeName
+});
+module.exports = vertexShaderSource;
+
+},{"../../source/lighting":"node_modules/xgl/lib/renderer/source/lighting.js","../../source/position":"node_modules/xgl/lib/renderer/source/position.js"}],"node_modules/xgl/lib/renderer/source/colour/fragmentShader.js":[function(require,module,exports) {
+'use strict';
+
+var fragmentShaderSource = new String("\n        \n        varying lowp vec4 vColour;\n              \n        varying highp vec3 vLighting;\n\n        void main() {\n          gl_FragColor = vec4(vColour.rgb * vLighting, vColour.a);\n        }\n        \n      ");
+module.exports = fragmentShaderSource;
+
+},{}],"node_modules/xgl/lib/renderer/buffers.js":[function(require,module,exports) {
+'use strict';
+
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var vertexNormalComponents = 3,
+    vertexPositionComponents = 3;
+
+var RendererBuffers = /*#__PURE__*/function () {
+  function RendererBuffers(vertexPositionsBuffer, vertexNormalsBuffer, vertexIndexesElementBuffer) {
+    _classCallCheck(this, RendererBuffers);
+
+    this.vertexPositionsBuffer = vertexPositionsBuffer;
+    this.vertexNormalsBuffer = vertexNormalsBuffer;
+    this.vertexIndexesElementBuffer = vertexIndexesElementBuffer;
+  }
+
+  _createClass(RendererBuffers, [{
+    key: "createVertexPositionsBuffer",
+    value: function createVertexPositionsBuffer(vertexPositionsData, canvas) {
+      this.vertexPositionsBuffer = canvas.createBuffer(vertexPositionsData);
+    }
+  }, {
+    key: "createVertexNormalsBuffer",
+    value: function createVertexNormalsBuffer(vertexNormalsData, canvas) {
+      this.vertexNormalsBuffer = canvas.createBuffer(vertexNormalsData);
+    }
+  }, {
+    key: "createVertexIndexesElementBuffer",
+    value: function createVertexIndexesElementBuffer(vertexIndexesData, canvas) {
+      this.vertexIndexesElementBuffer = canvas.createElementBuffer(vertexIndexesData);
+    }
+  }, {
+    key: "bindVertexNormalsBuffer",
+    value: function bindVertexNormalsBuffer(vertexNormalAttributeLocation, canvas) {
+      canvas.bindBuffer(this.vertexNormalsBuffer, vertexNormalAttributeLocation, vertexNormalComponents);
+    }
+  }, {
+    key: "bindVertexPositionsBuffer",
+    value: function bindVertexPositionsBuffer(vertexPositionAttributeLocation, canvas) {
+      canvas.bindBuffer(this.vertexPositionsBuffer, vertexPositionAttributeLocation, vertexPositionComponents);
+    }
+  }, {
+    key: "bindVertexIndexesElementBuffer",
+    value: function bindVertexIndexesElementBuffer(canvas) {
+      canvas.bindElementBuffer(this.vertexIndexesElementBuffer);
+    }
+  }, {
+    key: "createBuffers",
+    value: function createBuffers(vertexPositionsData, vertexNormalsData, vertexIndexesData, canvas) {
+      this.createVertexPositionsBuffer(vertexPositionsData, canvas);
+      this.createVertexNormalsBuffer(vertexNormalsData, canvas);
+      this.createVertexIndexesElementBuffer(vertexIndexesData, canvas);
+    }
+  }, {
+    key: "bindBuffers",
+    value: function bindBuffers(vertexNormalAttributeLocation, vertexPositionAttributeLocation, canvas) {
+      this.bindVertexNormalsBuffer(vertexNormalAttributeLocation, canvas);
+      this.bindVertexPositionsBuffer(vertexPositionAttributeLocation, canvas);
+      this.bindVertexIndexesElementBuffer(canvas);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing(Class) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+        remainingArguments[_key - 1] = arguments[_key];
+      }
+
+      var vertexPositionsBuffer = null,
+          ///
+      vertexNormalsBuffer = null,
+          ///
+      vertexIndexesElementBuffer = null,
+          ///
+      rendererBuffers = _construct(Class, [vertexPositionsBuffer, vertexNormalsBuffer, vertexIndexesElementBuffer].concat(remainingArguments));
+
+      return rendererBuffers;
+    }
+  }]);
+
+  return RendererBuffers;
+}();
+
+module.exports = RendererBuffers;
+
+},{}],"node_modules/xgl/lib/renderer/buffers/colour.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var RendererBuffers = require('../../renderer/buffers');
+
+var vertexColourComponents = 4;
+
+var ColourRendererBuffers = /*#__PURE__*/function (_RendererBuffers) {
+  _inherits(ColourRendererBuffers, _RendererBuffers);
+
+  function ColourRendererBuffers(vertexPositionsBuffer, vertexNormalsBuffer, vertexIndexesElementBuffer, vertexColoursBuffer) {
+    var _this;
+
+    _classCallCheck(this, ColourRendererBuffers);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ColourRendererBuffers).call(this, vertexPositionsBuffer, vertexNormalsBuffer, vertexIndexesElementBuffer));
+    _this.vertexColoursBuffer = vertexColoursBuffer;
+    return _this;
+  }
+
+  _createClass(ColourRendererBuffers, [{
+    key: "createVertexColoursBuffer",
+    value: function createVertexColoursBuffer(vertexColoursData, canvas) {
+      this.vertexColoursBuffer = canvas.createBuffer(vertexColoursData);
+    }
+  }, {
+    key: "bindVertexColoursBuffer",
+    value: function bindVertexColoursBuffer(vertexColourAttributeLocation, canvas) {
+      canvas.bindBuffer(this.vertexColoursBuffer, vertexColourAttributeLocation, vertexColourComponents);
+    }
+  }, {
+    key: "createBuffers",
+    value: function createBuffers(vertexPositionsData, vertexNormalsData, vertexIndexesData, vertexColoursData, canvas) {
+      _get(_getPrototypeOf(ColourRendererBuffers.prototype), "createBuffers", this).call(this, vertexPositionsData, vertexNormalsData, vertexIndexesData, canvas);
+
+      this.createVertexColoursBuffer(vertexColoursData, canvas);
+    }
+  }, {
+    key: "bindBuffers",
+    value: function bindBuffers(vertexNormalAttributeLocation, vertexPositionAttributeLocation, vertexColourAttributeLocation, canvas) {
+      _get(_getPrototypeOf(ColourRendererBuffers.prototype), "bindBuffers", this).call(this, vertexNormalAttributeLocation, vertexPositionAttributeLocation, canvas);
+
+      this.bindVertexColoursBuffer(vertexColourAttributeLocation, canvas);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing() {
+      var vertexColoursBuffer = null,
+          ///
+      colourRendererBuffers = RendererBuffers.fromNothing(ColourRendererBuffers, vertexColoursBuffer);
+      return colourRendererBuffers;
+    }
+  }]);
+
+  return ColourRendererBuffers;
+}(RendererBuffers);
+
+module.exports = ColourRendererBuffers;
+
+},{"../../renderer/buffers":"node_modules/xgl/lib/renderer/buffers.js"}],"node_modules/xgl/lib/renderer/locations/uniform.js":[function(require,module,exports) {
+'use strict';
+
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var lightingSource = require('../source/lighting'),
+    positionSource = require('../source/position');
+
+var normalsMatrixName = lightingSource.normalsMatrixName,
+    offsetsMatrixName = positionSource.offsetsMatrixName,
+    rotationsMatrixName = positionSource.rotationsMatrixName,
+    positionMatrixName = positionSource.positionMatrixName,
+    projectionMatrixName = positionSource.projectionMatrixName;
+
+var UniformLocations = /*#__PURE__*/function () {
+  function UniformLocations(offsetsMatrixUniformLocation, normalsMatrixUniformLocation, positionMatrixUniformLocation, rotationsMatrixUniformLocation, projectionMatrixUniformLocation) {
+    _classCallCheck(this, UniformLocations);
+
+    this.offsetsMatrixUniformLocation = offsetsMatrixUniformLocation;
+    this.normalsMatrixUniformLocation = normalsMatrixUniformLocation;
+    this.positionMatrixUniformLocation = positionMatrixUniformLocation;
+    this.rotationsMatrixUniformLocation = rotationsMatrixUniformLocation;
+    this.projectionMatrixUniformLocation = projectionMatrixUniformLocation;
+  }
+
+  _createClass(UniformLocations, [{
+    key: "getOffsetsMatrixUniformLocation",
+    value: function getOffsetsMatrixUniformLocation() {
+      return this.offsetsMatrixUniformLocation;
+    }
+  }, {
+    key: "getNormalsMatrixUniformLocation",
+    value: function getNormalsMatrixUniformLocation() {
+      return this.normalsMatrixUniformLocation;
+    }
+  }, {
+    key: "getPositionMatrixUniformLocation",
+    value: function getPositionMatrixUniformLocation() {
+      return this.positionMatrixUniformLocation;
+    }
+  }, {
+    key: "getRotationsMatrixUniformLocation",
+    value: function getRotationsMatrixUniformLocation() {
+      return this.rotationsMatrixUniformLocation;
+    }
+  }, {
+    key: "getProjectionMatrixUniformLocation",
+    value: function getProjectionMatrixUniformLocation() {
+      return this.projectionMatrixUniformLocation;
+    }
+  }], [{
+    key: "fromProgram",
+    value: function fromProgram(Class, program, canvas) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+        remainingArguments[_key - 3] = arguments[_key];
+      }
+
+      var offsetsMatrixUniformLocation = canvas.getUniformLocation(program, offsetsMatrixName),
+          normalsMatrixUniformLocation = canvas.getUniformLocation(program, normalsMatrixName),
+          positionMatrixUniformLocation = canvas.getUniformLocation(program, positionMatrixName),
+          rotationsMatrixUniformLocation = canvas.getUniformLocation(program, rotationsMatrixName),
+          projectionMatrixUniformLocation = canvas.getUniformLocation(program, projectionMatrixName),
+          uniformLocations = _construct(Class, [offsetsMatrixUniformLocation, normalsMatrixUniformLocation, positionMatrixUniformLocation, rotationsMatrixUniformLocation, projectionMatrixUniformLocation].concat(remainingArguments));
+
+      return uniformLocations;
+    }
+  }]);
+
+  return UniformLocations;
+}();
+
+module.exports = UniformLocations;
+
+},{"../source/lighting":"node_modules/xgl/lib/renderer/source/lighting.js","../source/position":"node_modules/xgl/lib/renderer/source/position.js"}],"node_modules/xgl/lib/renderer/locations/colour/uniform.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var UniformLocations = require('../../locations/uniform');
+
+var ColourUniformLocations = /*#__PURE__*/function (_UniformLocations) {
+  _inherits(ColourUniformLocations, _UniformLocations);
+
+  function ColourUniformLocations() {
+    _classCallCheck(this, ColourUniformLocations);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ColourUniformLocations).apply(this, arguments));
+  }
+
+  _createClass(ColourUniformLocations, null, [{
+    key: "fromProgram",
+    value: function fromProgram(program, canvas) {
+      return UniformLocations.fromProgram(ColourUniformLocations, program, canvas);
+    }
+  }]);
+
+  return ColourUniformLocations;
+}(UniformLocations);
+
+module.exports = ColourUniformLocations;
+
+},{"../../locations/uniform":"node_modules/xgl/lib/renderer/locations/uniform.js"}],"node_modules/xgl/lib/renderer/locations/attribute.js":[function(require,module,exports) {
+'use strict';
+
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var lightingSource = require('../source/lighting'),
+    positionSource = require('../source/position');
+
+var vertexNormalAttributeName = lightingSource.vertexNormalAttributeName,
+    vertexPositionAttributeName = positionSource.vertexPositionAttributeName;
+
+var AttributeLocations = /*#__PURE__*/function () {
+  function AttributeLocations(vertexPositionAttributeLocation, vertexNormalAttributeLocation) {
+    _classCallCheck(this, AttributeLocations);
+
+    this.vertexPositionAttributeLocation = vertexPositionAttributeLocation;
+    this.vertexNormalAttributeLocation = vertexNormalAttributeLocation;
+  }
+
+  _createClass(AttributeLocations, [{
+    key: "getVertexPositionAttributeLocation",
+    value: function getVertexPositionAttributeLocation() {
+      return this.vertexPositionAttributeLocation;
+    }
+  }, {
+    key: "getVertexNormalAttributeLocation",
+    value: function getVertexNormalAttributeLocation() {
+      return this.vertexNormalAttributeLocation;
+    }
+  }], [{
+    key: "fromProgram",
+    value: function fromProgram(Class, program, canvas) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 3 ? _len - 3 : 0), _key = 3; _key < _len; _key++) {
+        remainingArguments[_key - 3] = arguments[_key];
+      }
+
+      var vertexPositionAttributeLocation = canvas.getAttributeLocation(program, vertexPositionAttributeName),
+          vertexNormalAttributeLocation = canvas.getAttributeLocation(program, vertexNormalAttributeName),
+          attributeLocations = _construct(Class, [vertexPositionAttributeLocation, vertexNormalAttributeLocation].concat(remainingArguments));
+
+      return attributeLocations;
+    }
+  }]);
+
+  return AttributeLocations;
+}();
+
+module.exports = AttributeLocations;
+
+},{"../source/lighting":"node_modules/xgl/lib/renderer/source/lighting.js","../source/position":"node_modules/xgl/lib/renderer/source/position.js"}],"node_modules/xgl/lib/renderer/locations/colour/attribute.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var AttributeLocations = require('../../locations/attribute'),
+    vertexShaderSource = require('../../source/colour/vertexShader');
+
+var vertexColourAttributeName = vertexShaderSource.vertexColourAttributeName;
+
+var ColourAttributeLocations = /*#__PURE__*/function (_AttributeLocations) {
+  _inherits(ColourAttributeLocations, _AttributeLocations);
+
+  function ColourAttributeLocations(vertexPositionAttributeLocation, vertexNormalAttributeLocation, vertexColourAttributeLocation) {
+    var _this;
+
+    _classCallCheck(this, ColourAttributeLocations);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ColourAttributeLocations).call(this, vertexPositionAttributeLocation, vertexNormalAttributeLocation));
+    _this.vertexColourAttributeLocation = vertexColourAttributeLocation;
+    return _this;
+  }
+
+  _createClass(ColourAttributeLocations, [{
+    key: "getVertexColourAttributeLocation",
+    value: function getVertexColourAttributeLocation() {
+      return this.vertexColourAttributeLocation;
+    }
+  }], [{
+    key: "fromProgram",
+    value: function fromProgram(program, canvas) {
+      var vertexColourAttributeLocation = canvas.getAttributeLocation(program, vertexColourAttributeName),
+          colourAttributeLocations = AttributeLocations.fromProgram(ColourAttributeLocations, program, canvas, vertexColourAttributeLocation);
+      return colourAttributeLocations;
+    }
+  }]);
+
+  return ColourAttributeLocations;
+}(AttributeLocations);
+
+module.exports = ColourAttributeLocations;
+
+},{"../../locations/attribute":"node_modules/xgl/lib/renderer/locations/attribute.js","../../source/colour/vertexShader":"node_modules/xgl/lib/renderer/source/colour/vertexShader.js"}],"node_modules/xgl/lib/renderer/colour.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Renderer = require('../renderer'),
+    arrayUtilities = require('../utilities/array'),
+    ColourRendererData = require('../renderer/data/colour'),
+    vertexShaderSource = require('./source/colour/vertexShader'),
+    fragmentShaderSource = require('./source/colour/fragmentShader'),
+    ColourRendererBuffers = require('../renderer/buffers/colour'),
+    ColourUniformLocations = require('./locations/colour/uniform'),
+    ColourAttributeLocations = require('./locations/colour/attribute');
+
+var push = arrayUtilities.push,
+    createProgram = Renderer.createProgram;
+var add = push; ///
+
+var ColourRenderer = /*#__PURE__*/function (_Renderer) {
+  _inherits(ColourRenderer, _Renderer);
+
+  function ColourRenderer() {
+    _classCallCheck(this, ColourRenderer);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ColourRenderer).apply(this, arguments));
+  }
+
+  _createClass(ColourRenderer, [{
+    key: "getVertexColourAttributeLocation",
+    value: function getVertexColourAttributeLocation() {
+      var attributeLocations = this.getAttributeLocations(),
+          vertexColourAttributeLocation = attributeLocations.getVertexColourAttributeLocation();
+      return vertexColourAttributeLocation;
+    }
+  }, {
+    key: "createBuffers",
+    value: function createBuffers(canvas) {
+      var facets = this.getFacets(),
+          vertexIndexes = [],
+          vertexNormals = [],
+          vertexPositions = [],
+          vertexColours = [];
+      facets.forEach(function (facet, index) {
+        var colouredFacet = facet,
+            ///
+        facetVertexIndexes = facet.getVertexIndexes(index),
+            facetVertexNormals = facet.getVertexNormals(),
+            facetVertexPositions = facet.getVertexPositions(),
+            colouredFacetVertexColours = colouredFacet.getVertexColours();
+        add(vertexIndexes, facetVertexIndexes);
+        add(vertexNormals, facetVertexNormals);
+        add(vertexPositions, facetVertexPositions);
+        add(vertexColours, colouredFacetVertexColours);
+      });
+      var rendererData = this.getRendererData();
+      rendererData.addVertexIndexes(vertexIndexes);
+      rendererData.addVertexNormals(vertexNormals);
+      rendererData.addVertexColours(vertexColours);
+      rendererData.addVertexPositions(vertexPositions);
+      var rendererBuffers = this.getRendererBuffers(),
+          vertexPositionsData = rendererData.getVertexPositionsData(),
+          vertexNormalsData = rendererData.getVertexNormalsData(),
+          vertexIndexesData = rendererData.getVertexIndexesData(),
+          vertexColoursData = rendererData.getVertexColoursData();
+      rendererBuffers.createBuffers(vertexPositionsData, vertexNormalsData, vertexIndexesData, vertexColoursData, canvas);
+    }
+  }, {
+    key: "bindBuffers",
+    value: function bindBuffers(canvas) {
+      var rendererBuffers = this.getRendererBuffers(),
+          vertexNormalAttributeLocation = this.getVertexNormalAttributeLocation(),
+          vertexPositionAttributeLocation = this.getVertexPositionAttributeLocation(),
+          vertexColourAttributeLocation = this.getVertexColourAttributeLocation();
+      rendererBuffers.bindBuffers(vertexNormalAttributeLocation, vertexPositionAttributeLocation, vertexColourAttributeLocation, canvas);
+    }
+  }, {
+    key: "render",
+    value: function render(canvas, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix) {
+      var program = this.getProgram();
+      canvas.useProgram(program);
+      this.bindBuffers(canvas);
+      var renderer = this; ///
+
+      canvas.render(renderer, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix);
+      var count = this.getCount(),
+          start = 0,
+          finish = count; ///
+
+      canvas.drawElements(start, finish);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing(canvas) {
+      var facets = [],
+          program = createProgram(vertexShaderSource, fragmentShaderSource, canvas),
+          colourRendererData = ColourRendererData.fromNothing(),
+          colourRendererBuffers = ColourRendererBuffers.fromNothing(),
+          colourUniformLocations = ColourUniformLocations.fromProgram(program, canvas),
+          colourAttributeLocations = ColourAttributeLocations.fromProgram(program, canvas),
+          rendererData = colourRendererData,
+          ///
+      rendererBuffers = colourRendererBuffers,
+          ///
+      uniformLocations = colourUniformLocations,
+          ///
+      attributeLocations = colourAttributeLocations,
+          ///
+      colourRenderer = new ColourRenderer(facets, program, rendererData, rendererBuffers, uniformLocations, attributeLocations);
+      return colourRenderer;
+    }
+  }]);
+
+  return ColourRenderer;
+}(Renderer);
+
+module.exports = ColourRenderer;
+
+},{"../renderer":"node_modules/xgl/lib/renderer.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js","../renderer/data/colour":"node_modules/xgl/lib/renderer/data/colour.js","./source/colour/vertexShader":"node_modules/xgl/lib/renderer/source/colour/vertexShader.js","./source/colour/fragmentShader":"node_modules/xgl/lib/renderer/source/colour/fragmentShader.js","../renderer/buffers/colour":"node_modules/xgl/lib/renderer/buffers/colour.js","./locations/colour/uniform":"node_modules/xgl/lib/renderer/locations/colour/uniform.js","./locations/colour/attribute":"node_modules/xgl/lib/renderer/locations/colour/attribute.js"}],"node_modules/xgl/lib/renderer/source/texture/vertexShader.js":[function(require,module,exports) {
+'use strict';
+
+var lightingSource = require('../../source/lighting'),
+    positionSource = require('../../source/position');
+
+var textureCoordinateAttributeName = 'aTextureCoordinate',
+    vertexShaderSource = new String("\n        \n        attribute vec2 ".concat(textureCoordinateAttributeName, ";\n        \n        ").concat(lightingSource, "\n      \n        ").concat(positionSource, "\n\n        varying highp vec3 vLighting;\n        \n        varying highp vec2 vTextureCoordinate;\n        \n        void main() {\n          vLighting = calculateLighting();\n\n          gl_Position = calculatePosition();\n                    \n          vTextureCoordinate = ").concat(textureCoordinateAttributeName, ";\n        }\n        \n      "));
+Object.assign(vertexShaderSource, {
+  textureCoordinateAttributeName: textureCoordinateAttributeName
+});
+module.exports = vertexShaderSource;
+
+},{"../../source/lighting":"node_modules/xgl/lib/renderer/source/lighting.js","../../source/position":"node_modules/xgl/lib/renderer/source/position.js"}],"node_modules/xgl/lib/renderer/data/texture.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var RendererData = require('../../renderer/data'),
+    arrayUtilities = require('../../utilities/array');
+
+var merge = arrayUtilities.merge,
+    flatten = arrayUtilities.flatten;
+var add = merge; ///
+
+var TextureRendererData = /*#__PURE__*/function (_RendererData) {
+  _inherits(TextureRendererData, _RendererData);
+
+  function TextureRendererData(vertexPositionsData, vertexNormalsData, vertexIndexesData, vertexTextureCoordinatesData) {
+    var _this;
+
+    _classCallCheck(this, TextureRendererData);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TextureRendererData).call(this, vertexPositionsData, vertexNormalsData, vertexIndexesData));
+    _this.vertexTextureCoordinatesData = vertexTextureCoordinatesData;
+    return _this;
+  }
+
+  _createClass(TextureRendererData, [{
+    key: "getVertexTextureCoordinatesData",
+    value: function getVertexTextureCoordinatesData() {
+      return this.vertexTextureCoordinatesData;
+    }
+  }, {
+    key: "addVertexTextureCoordinateTuples",
+    value: function addVertexTextureCoordinateTuples(vertexTextureCoordinateTuples) {
+      var vertexTextureCoordinatesData = flatten(vertexTextureCoordinateTuples);
+      add(this.vertexTextureCoordinatesData, vertexTextureCoordinatesData);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing() {
+      var vertexTextureCoordinatesData = [],
+          textureRendererData = RendererData.fromNothing(TextureRendererData, vertexTextureCoordinatesData);
+      return textureRendererData;
+    }
+  }]);
+
+  return TextureRendererData;
+}(RendererData);
+
+module.exports = TextureRendererData;
+
+},{"../../renderer/data":"node_modules/xgl/lib/renderer/data.js","../../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/renderer/source/texture/fragmentShader.js":[function(require,module,exports) {
+'use strict';
+
+var samplerName = 'uSampler',
+    fragmentShaderSource = new String("\n        \n        uniform sampler2D ".concat(samplerName, ";\n\n        varying highp vec3 vLighting;\n                   \n        varying highp vec2 vTextureCoordinate;\n        \n        void main() {\n          highp vec4 texelColour = texture2D(").concat(samplerName, ", vTextureCoordinate);\n          \n          gl_FragColor = vec4(texelColour.rgb * vLighting, texelColour.a);  \n        }\n        \n      "));
+Object.assign(fragmentShaderSource, {
+  samplerName: samplerName
+});
+module.exports = fragmentShaderSource;
+
+},{}],"node_modules/xgl/lib/renderer/buffers/texture.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var RendererBuffers = require('../../renderer/buffers');
+
+var textureCoordinateComponents = 2;
+
+var TextureRendererBuffers = /*#__PURE__*/function (_RendererBuffers) {
+  _inherits(TextureRendererBuffers, _RendererBuffers);
+
+  function TextureRendererBuffers(vertexPositionsBuffer, vertexNormalsBuffer, vertexIndexesElementBuffer, textureCoordinatesBuffer) {
+    var _this;
+
+    _classCallCheck(this, TextureRendererBuffers);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TextureRendererBuffers).call(this, vertexPositionsBuffer, vertexNormalsBuffer, vertexIndexesElementBuffer));
+    _this.textureCoordinatesBuffer = textureCoordinatesBuffer;
+    return _this;
+  }
+
+  _createClass(TextureRendererBuffers, [{
+    key: "createTextureCoordinatesBuffer",
+    value: function createTextureCoordinatesBuffer(textureCoordinatesData, canvas) {
+      this.textureCoordinatesBuffer = canvas.createBuffer(textureCoordinatesData);
+    }
+  }, {
+    key: "bindTextureCoordinatesBuffer",
+    value: function bindTextureCoordinatesBuffer(textureCoordinateAttributeLocation, canvas) {
+      canvas.bindBuffer(this.textureCoordinatesBuffer, textureCoordinateAttributeLocation, textureCoordinateComponents);
+    }
+  }, {
+    key: "createBuffers",
+    value: function createBuffers(vertexPositionsData, vertexNormalsData, vertexIndexesData, textureCoordinatesData, canvas) {
+      _get(_getPrototypeOf(TextureRendererBuffers.prototype), "createBuffers", this).call(this, vertexPositionsData, vertexNormalsData, vertexIndexesData, canvas);
+
+      this.createTextureCoordinatesBuffer(textureCoordinatesData, canvas);
+    }
+  }, {
+    key: "bindBuffers",
+    value: function bindBuffers(vertexNormalAttributeLocation, vertexPositionAttributeLocation, textureCoordinateAttributeLocation, canvas) {
+      _get(_getPrototypeOf(TextureRendererBuffers.prototype), "bindBuffers", this).call(this, vertexNormalAttributeLocation, vertexPositionAttributeLocation, canvas);
+
+      this.bindTextureCoordinatesBuffer(textureCoordinateAttributeLocation, canvas);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing() {
+      var textureCoordinatesBuffer = null,
+          ///
+      textureRendererBuffers = RendererBuffers.fromNothing(TextureRendererBuffers, textureCoordinatesBuffer);
+      return textureRendererBuffers;
+    }
+  }]);
+
+  return TextureRendererBuffers;
+}(RendererBuffers);
+
+module.exports = TextureRendererBuffers;
+
+},{"../../renderer/buffers":"node_modules/xgl/lib/renderer/buffers.js"}],"node_modules/xgl/lib/renderer/locations/texture/uniform.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var UniformLocations = require('../../locations/uniform'),
+    fragmentShaderSource = require('../../source/texture/fragmentShader');
+
+var samplerName = fragmentShaderSource.samplerName;
+
+var TextureUniformLocations = /*#__PURE__*/function (_UniformLocations) {
+  _inherits(TextureUniformLocations, _UniformLocations);
+
+  function TextureUniformLocations(offsetsMatrixUniformLocation, normalsMatrixUniformLocation, positionMatrixUniformLocation, rotationsMatrixUniformLocation, projectionMatrixUniformLocation, samplerUniformLocation) {
+    var _this;
+
+    _classCallCheck(this, TextureUniformLocations);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TextureUniformLocations).call(this, offsetsMatrixUniformLocation, normalsMatrixUniformLocation, positionMatrixUniformLocation, rotationsMatrixUniformLocation, projectionMatrixUniformLocation));
+    _this.samplerUniformLocation = samplerUniformLocation;
+    return _this;
+  }
+
+  _createClass(TextureUniformLocations, [{
+    key: "getSamplerUniformLocation",
+    value: function getSamplerUniformLocation() {
+      return this.samplerUniformLocation;
+    }
+  }], [{
+    key: "fromProgram",
+    value: function fromProgram(program, canvas) {
+      var samplerUniformLocation = canvas.getUniformLocation(program, samplerName),
+          textureUniformLocations = UniformLocations.fromProgram(TextureUniformLocations, program, canvas, samplerUniformLocation);
+      return textureUniformLocations;
+    }
+  }]);
+
+  return TextureUniformLocations;
+}(UniformLocations);
+
+module.exports = TextureUniformLocations;
+
+},{"../../locations/uniform":"node_modules/xgl/lib/renderer/locations/uniform.js","../../source/texture/fragmentShader":"node_modules/xgl/lib/renderer/source/texture/fragmentShader.js"}],"node_modules/xgl/lib/renderer/locations/texture/attribute.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var AttributeLocations = require('../../locations/attribute'),
+    vertexShaderSource = require('../../source/texture/vertexShader');
+
+var textureCoordinateAttributeName = vertexShaderSource.textureCoordinateAttributeName;
+
+var TextureAttributeLocations = /*#__PURE__*/function (_AttributeLocations) {
+  _inherits(TextureAttributeLocations, _AttributeLocations);
+
+  function TextureAttributeLocations(vertexPositionAttributeLocation, vertexNormalAttributeLocation, textureCoordinateAttributeLocation) {
+    var _this;
+
+    _classCallCheck(this, TextureAttributeLocations);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TextureAttributeLocations).call(this, vertexPositionAttributeLocation, vertexNormalAttributeLocation));
+    _this.textureCoordinateAttributeLocation = textureCoordinateAttributeLocation;
+    return _this;
+  }
+
+  _createClass(TextureAttributeLocations, [{
+    key: "getTextureCoordinateAttributeLocation",
+    value: function getTextureCoordinateAttributeLocation() {
+      return this.textureCoordinateAttributeLocation;
+    }
+  }], [{
+    key: "fromProgram",
+    value: function fromProgram(program, canvas) {
+      var textureCoordinateAttributeLocation = canvas.getAttributeLocation(program, textureCoordinateAttributeName),
+          textureAttributeLocations = AttributeLocations.fromProgram(TextureAttributeLocations, program, canvas, textureCoordinateAttributeLocation);
+      return textureAttributeLocations;
+    }
+  }]);
+
+  return TextureAttributeLocations;
+}(AttributeLocations);
+
+module.exports = TextureAttributeLocations;
+
+},{"../../locations/attribute":"node_modules/xgl/lib/renderer/locations/attribute.js","../../source/texture/vertexShader":"node_modules/xgl/lib/renderer/source/texture/vertexShader.js"}],"node_modules/xgl/lib/renderer/texture.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _construct(Parent, args, Class) { if (isNativeReflectConstruct()) { _construct = Reflect.construct; } else { _construct = function _construct(Parent, args, Class) { var a = [null]; a.push.apply(a, args); var Constructor = Function.bind.apply(Parent, a); var instance = new Constructor(); if (Class) _setPrototypeOf(instance, Class.prototype); return instance; }; } return _construct.apply(null, arguments); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Renderer = require('../renderer'),
+    vertexShaderSource = require('./source/texture/vertexShader'),
+    TextureRendererData = require('../renderer/data/texture'),
+    fragmentShaderSource = require('./source/texture/fragmentShader'),
+    TextureRendererBuffers = require('../renderer/buffers/texture'),
+    TextureUniformLocations = require('./locations/texture/uniform'),
+    TextureAttributeLocations = require('./locations/texture/attribute');
+
+var createProgram = Renderer.createProgram;
+
+var TextureRenderer = /*#__PURE__*/function (_Renderer) {
+  _inherits(TextureRenderer, _Renderer);
+
+  function TextureRenderer() {
+    _classCallCheck(this, TextureRenderer);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(TextureRenderer).apply(this, arguments));
+  }
+
+  _createClass(TextureRenderer, [{
+    key: "getTextureCoordinateAttributeLocation",
+    value: function getTextureCoordinateAttributeLocation() {
+      var attributeLocations = this.getAttributeLocations(),
+          textureCoordinateAttributeLocation = attributeLocations.getTextureCoordinateAttributeLocation();
+      return textureCoordinateAttributeLocation;
+    }
+  }, {
+    key: "createBuffers",
+    value: function createBuffers(canvas) {
+      var rendererData = this.getRendererData(),
+          rendererBuffers = this.getRendererBuffers(),
+          vertexPositionsData = rendererData.getVertexPositionsData(),
+          vertexNormalsData = rendererData.getVertexNormalsData(),
+          vertexIndexesData = rendererData.getVertexIndexesData(),
+          vertexTextureCoordinatesData = rendererData.getVertexTextureCoordinatesData();
+      rendererBuffers.createBuffers(vertexPositionsData, vertexNormalsData, vertexIndexesData, vertexTextureCoordinatesData, canvas);
+    }
+  }, {
+    key: "bindBuffers",
+    value: function bindBuffers(canvas) {
+      var rendererBuffers = this.getRendererBuffers(),
+          vertexNormalAttributeLocation = this.getVertexNormalAttributeLocation(),
+          vertexPositionAttributeLocation = this.getVertexPositionAttributeLocation(),
+          textureCoordinateAttributeLocation = this.getTextureCoordinateAttributeLocation();
+      rendererBuffers.bindBuffers(vertexNormalAttributeLocation, vertexPositionAttributeLocation, textureCoordinateAttributeLocation, canvas);
+    }
+  }, {
+    key: "useTexture",
+    value: function useTexture(index, canvas) {
+      var uniformLocations = this.getUniformLocations(),
+          samplerUniformLocation = uniformLocations.getSamplerUniformLocation(),
+          samplerUniformLocationIntegerValue = index; ///
+
+      canvas.setUniformLocationIntegerValue(samplerUniformLocation, samplerUniformLocationIntegerValue);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing(Class, canvas) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        remainingArguments[_key - 2] = arguments[_key];
+      }
+
+      var facets = [],
+          program = createProgram(vertexShaderSource, fragmentShaderSource, canvas),
+          textureRendererData = TextureRendererData.fromNothing(),
+          textureRendererBuffers = TextureRendererBuffers.fromNothing(),
+          textureUniformLocations = TextureUniformLocations.fromProgram(program, canvas),
+          textureAttributeLocations = TextureAttributeLocations.fromProgram(program, canvas),
+          rendererData = textureRendererData,
+          ///
+      rendererBuffers = textureRendererBuffers,
+          ///
+      uniformLocations = textureUniformLocations,
+          ///
+      attributeLocations = textureAttributeLocations,
+          ///
+      textureRenderer = _construct(Class, [facets, program, rendererData, rendererBuffers, uniformLocations, attributeLocations].concat(remainingArguments));
+
+      canvas.enableAnisotropicFiltering(); ///
+
+      return textureRenderer;
+    }
+  }]);
+
+  return TextureRenderer;
+}(Renderer);
+
+module.exports = TextureRenderer;
+
+},{"../renderer":"node_modules/xgl/lib/renderer.js","./source/texture/vertexShader":"node_modules/xgl/lib/renderer/source/texture/vertexShader.js","../renderer/data/texture":"node_modules/xgl/lib/renderer/data/texture.js","./source/texture/fragmentShader":"node_modules/xgl/lib/renderer/source/texture/fragmentShader.js","../renderer/buffers/texture":"node_modules/xgl/lib/renderer/buffers/texture.js","./locations/texture/uniform":"node_modules/xgl/lib/renderer/locations/texture/uniform.js","./locations/texture/attribute":"node_modules/xgl/lib/renderer/locations/texture/attribute.js"}],"node_modules/xgl/lib/renderer/texture/images.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var arrayUtilities = require('../../utilities/array'),
+    TextureRenderer = require('../../renderer/texture');
+
+var push = arrayUtilities.push,
+    first = arrayUtilities.first;
+var add = push; ///
+
+var ImagesTextureRenderer = /*#__PURE__*/function (_TextureRenderer) {
+  _inherits(ImagesTextureRenderer, _TextureRenderer);
+
+  function ImagesTextureRenderer(facets, program, rendererData, rendererBuffers, uniformLocations, attributeLocations, imageNames, facetsMap, offsets) {
+    var _this;
+
+    _classCallCheck(this, ImagesTextureRenderer);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ImagesTextureRenderer).call(this, facets, program, rendererData, rendererBuffers, uniformLocations, attributeLocations));
+    _this.imageNames = imageNames;
+    _this.facetsMap = facetsMap;
+    _this.offsets = offsets;
+    return _this;
+  }
+
+  _createClass(ImagesTextureRenderer, [{
+    key: "addFacets",
+    value: function addFacets(facets) {
+      var texturedFacets = facets,
+          ///
+      texturedFacetsLength = texturedFacets.length;
+
+      if (texturedFacetsLength > 0) {
+        var firstTexturedFacet = first(texturedFacets),
+            texturedFacet = firstTexturedFacet,
+            ///
+        imageName = texturedFacet.getImageName(),
+            _facets = this.facetsMap[imageName];
+        add(_facets, texturedFacets);
+      }
+    }
+  }, {
+    key: "createBuffers",
+    value: function createBuffers(canvas) {
+      var _this2 = this;
+
+      var vertexIndexes = [],
+          vertexNormals = [],
+          vertexPositions = [],
+          vertexTextureCoordinateTuples = [];
+      var index = 0;
+      this.imageNames.forEach(function (imageName) {
+        var facets = _this2.facetsMap[imageName];
+        facets.forEach(function (facet) {
+          var texturedFacet = facet,
+              ///
+          facetVertexIndexes = facet.getVertexIndexes(index),
+              facetVertexNormals = facet.getVertexNormals(),
+              facetVertexPositions = facet.getVertexPositions(),
+              texturedFacetTextureCoordinateTuples = texturedFacet.getTextureCoordinateTuples(),
+              texturedFacetVertexTextureCoordinateTuples = texturedFacetTextureCoordinateTuples; ///
+
+          add(vertexIndexes, facetVertexIndexes);
+          add(vertexNormals, facetVertexNormals);
+          add(vertexPositions, facetVertexPositions);
+          add(vertexTextureCoordinateTuples, texturedFacetVertexTextureCoordinateTuples);
+          index++;
+        });
+        var offset = index * 3; ///
+
+        _this2.offsets.push(offset);
+      });
+      var rendererData = this.getRendererData();
+      rendererData.addVertexIndexes(vertexIndexes);
+      rendererData.addVertexNormals(vertexNormals);
+      rendererData.addVertexPositions(vertexPositions);
+      rendererData.addVertexTextureCoordinateTuples(vertexTextureCoordinateTuples);
+
+      _get(_getPrototypeOf(ImagesTextureRenderer.prototype), "createBuffers", this).call(this, canvas);
+    }
+  }, {
+    key: "render",
+    value: function render(canvas, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix) {
+      var _this3 = this;
+
+      var program = this.getProgram();
+      canvas.useProgram(program);
+      this.bindBuffers(canvas);
+      var renderer = this; ///
+
+      canvas.render(renderer, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix);
+      var start,
+          finish = 0; ///
+
+      this.offsets.forEach(function (offset, index) {
+        start = finish; ///
+
+        finish = offset; ///
+
+        _this3.useTexture(index, canvas);
+
+        canvas.drawElements(start, finish);
+      });
+    }
+  }], [{
+    key: "fromImagesImageNamesAndImageTiling",
+    value: function fromImagesImageNamesAndImageTiling(images, imageNames, imageTiling, canvas) {
+      var offsets = [],
+          facetsMap = {};
+      images.forEach(function (image, index) {
+        var facets = [],
+            repeat = imageTiling,
+            ///
+        imageName = imageNames[index];
+        facetsMap[imageName] = facets;
+        canvas.createTexture(image, index, repeat);
+      });
+      var imagesTextureRenderer = TextureRenderer.fromNothing(ImagesTextureRenderer, canvas, imageNames, facetsMap, offsets);
+      return imagesTextureRenderer;
+    }
+  }]);
+
+  return ImagesTextureRenderer;
+}(TextureRenderer);
+
+module.exports = ImagesTextureRenderer;
+
+},{"../../utilities/array":"node_modules/xgl/lib/utilities/array.js","../../renderer/texture":"node_modules/xgl/lib/renderer/texture.js"}],"node_modules/xgl/lib/renderer/texture/imageMap.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var arrayUtilities = require('../../utilities/array'),
+    TextureRenderer = require('../../renderer/texture');
+
+var push = arrayUtilities.push;
+var add = push; ///
+
+var ImageMapTextureRenderer = /*#__PURE__*/function (_TextureRenderer) {
+  _inherits(ImageMapTextureRenderer, _TextureRenderer);
+
+  function ImageMapTextureRenderer(facets, program, rendererData, rendererBuffers, uniformLocations, attributeLocations, imageMapJSON) {
+    var _this;
+
+    _classCallCheck(this, ImageMapTextureRenderer);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ImageMapTextureRenderer).call(this, facets, program, rendererData, rendererBuffers, uniformLocations, attributeLocations));
+    _this.imageMapJSON = imageMapJSON;
+    return _this;
+  }
+
+  _createClass(ImageMapTextureRenderer, [{
+    key: "createBuffers",
+    value: function createBuffers(canvas) {
+      var _this2 = this;
+
+      var facets = this.getFacets(),
+          vertexIndexes = [],
+          vertexNormals = [],
+          vertexPositions = [],
+          vertexTextureCoordinateTuples = [];
+      facets.forEach(function (facet, index) {
+        var texturedFacet = facet,
+            ///
+        facetVertexIndexes = facet.getVertexIndexes(index),
+            facetVertexNormals = facet.getVertexNormals(),
+            facetVertexPositions = facet.getVertexPositions(),
+            mappedTextureCoordinateTuples = texturedFacet.getMappedTextureCoordinateTuples(_this2.imageMapJSON),
+            texturedFacetVertexTextureCoordinateTuples = mappedTextureCoordinateTuples; ///
+
+        add(vertexIndexes, facetVertexIndexes);
+        add(vertexNormals, facetVertexNormals);
+        add(vertexPositions, facetVertexPositions);
+        add(vertexTextureCoordinateTuples, texturedFacetVertexTextureCoordinateTuples);
+      });
+      var rendererData = this.getRendererData();
+      rendererData.addVertexIndexes(vertexIndexes);
+      rendererData.addVertexNormals(vertexNormals);
+      rendererData.addVertexPositions(vertexPositions);
+      rendererData.addVertexTextureCoordinateTuples(vertexTextureCoordinateTuples);
+
+      _get(_getPrototypeOf(ImageMapTextureRenderer.prototype), "createBuffers", this).call(this, canvas);
+    }
+  }, {
+    key: "bindBuffers",
+    value: function bindBuffers(canvas) {
+      var rendererBuffers = this.getRendererBuffers(),
+          vertexNormalAttributeLocation = this.getVertexNormalAttributeLocation(),
+          vertexPositionAttributeLocation = this.getVertexPositionAttributeLocation(),
+          textureCoordinateAttributeLocation = this.getTextureCoordinateAttributeLocation();
+      rendererBuffers.bindBuffers(vertexNormalAttributeLocation, vertexPositionAttributeLocation, textureCoordinateAttributeLocation, canvas);
+    }
+  }, {
+    key: "useTexture",
+    value: function useTexture(index, canvas) {
+      var uniformLocations = this.getUniformLocations(),
+          samplerUniformLocation = uniformLocations.getSamplerUniformLocation(),
+          samplerUniformLocationIntegerValue = index; ///
+
+      canvas.setUniformLocationIntegerValue(samplerUniformLocation, samplerUniformLocationIntegerValue);
+    }
+  }, {
+    key: "render",
+    value: function render(canvas, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix) {
+      var program = this.getProgram();
+      canvas.useProgram(program);
+      this.bindBuffers(canvas);
+      var renderer = this; ///
+
+      canvas.render(renderer, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix);
+      var rendererData = this.getRendererData(),
+          count = rendererData.getCount(),
+          index = 0,
+          start = 0,
+          finish = count; ///
+
+      this.useTexture(index, canvas);
+      canvas.drawElements(start, finish);
+    }
+  }], [{
+    key: "fromImageMapAndImageMapJSON",
+    value: function fromImageMapAndImageMapJSON(imageMap, imageMapJSON, canvas) {
+      var image = imageMap,
+          ///
+      index = 0,
+          repeat = false;
+      canvas.createTexture(image, index, repeat);
+      var imageMapTextureRenderer = TextureRenderer.fromNothing(ImageMapTextureRenderer, canvas, imageMapJSON);
+      return imageMapTextureRenderer;
+    }
+  }]);
+
+  return ImageMapTextureRenderer;
+}(TextureRenderer);
+
+module.exports = ImageMapTextureRenderer;
+
+},{"../../utilities/array":"node_modules/xgl/lib/utilities/array.js","../../renderer/texture":"node_modules/xgl/lib/renderer/texture.js"}],"node_modules/xgl/lib/element/part.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Element = require('../element'),
+    ColourRenderer = require('../renderer/colour'),
+    ImagesTextureRenderer = require('../renderer/texture/images'),
+    ImageMapTextureRenderer = require('../renderer/texture/imageMap');
+
+var Part = /*#__PURE__*/function (_Element) {
+  _inherits(Part, _Element);
+
+  function Part(images, imageMap, imageNames, imageTiling, imageMapJSON, colourRenderer, textureRenderer, hidden) {
+    var _this;
+
+    _classCallCheck(this, Part);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Part).call(this));
+    _this.images = images;
+    _this.imageMap = imageMap;
+    _this.imageNames = imageNames;
+    _this.imageTiling = imageTiling;
+    _this.imageMapJSON = imageMapJSON;
+    _this.colourRenderer = colourRenderer;
+    _this.textureRenderer = textureRenderer;
+    _this.hidden = hidden;
+    return _this;
+  }
+
+  _createClass(Part, [{
+    key: "render",
+    value: function render(canvas, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix) {
+      this.colourRenderer && this.colourRenderer.render(canvas, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix); ///
+
+      this.textureRenderer && this.textureRenderer.render(canvas, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix); ///
+    }
+  }, {
+    key: "initialise",
+    value: function initialise(canvas) {
+      var _this2 = this;
+
+      var textureRenderer = null;
+      var colourRenderer = ColourRenderer.fromNothing(canvas);
+
+      if (this.images) {
+        var imagesTextureRenderer = ImagesTextureRenderer.fromImagesImageNamesAndImageTiling(this.images, this.imageNames, this.imageTiling, canvas);
+        textureRenderer = imagesTextureRenderer; ///
+      }
+
+      if (this.imageMap) {
+        var imageMapTextureRenderer = ImageMapTextureRenderer.fromImageMapAndImageMapJSON(this.imageMap, this.imageMapJSON, canvas);
+        textureRenderer = imageMapTextureRenderer; ///
+      }
+
+      var childElements = this.getChildElements();
+      childElements.forEach(function (childElement) {
+        return childElement.createFacets(_this2.hidden);
+      });
+      childElements.forEach(function (childElement) {
+        return childElement.amendFacets();
+      });
+      childElements.forEach(function (childElement) {
+        return childElement.addFacets(colourRenderer, textureRenderer);
+      });
+      colourRenderer && colourRenderer.createBuffers(canvas); ///
+
+      textureRenderer && textureRenderer.createBuffers(canvas); ///
+
+      this.colourRenderer = colourRenderer;
+      this.textureRenderer = textureRenderer;
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(properties) {
+      var _properties$images = properties.images,
+          images = _properties$images === void 0 ? null : _properties$images,
+          _properties$imageMap = properties.imageMap,
+          imageMap = _properties$imageMap === void 0 ? null : _properties$imageMap,
+          _properties$imageName = properties.imageNames,
+          imageNames = _properties$imageName === void 0 ? null : _properties$imageName,
+          _properties$imageTili = properties.imageTiling,
+          imageTiling = _properties$imageTili === void 0 ? false : _properties$imageTili,
+          _properties$imageMapJ = properties.imageMapJSON,
+          imageMapJSON = _properties$imageMapJ === void 0 ? null : _properties$imageMapJ,
+          _properties$hidden = properties.hidden,
+          hidden = _properties$hidden === void 0 ? false : _properties$hidden,
+          colourRenderer = null,
+          textureRenderer = null,
+          part = Element.fromProperties(Part, properties, images, imageMap, imageNames, imageTiling, imageMapJSON, colourRenderer, textureRenderer, hidden);
+      return part;
+    }
+  }]);
+
+  return Part;
+}(Element);
+
+module.exports = Part;
+
+},{"../element":"node_modules/xgl/lib/element.js","../renderer/colour":"node_modules/xgl/lib/renderer/colour.js","../renderer/texture/images":"node_modules/xgl/lib/renderer/texture/images.js","../renderer/texture/imageMap":"node_modules/xgl/lib/renderer/texture/imageMap.js"}],"node_modules/xgl/lib/element/camera.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Element = require('../element');
+
+var Camera = /*#__PURE__*/function (_Element) {
+  _inherits(Camera, _Element);
+
+  function Camera(pan, tilt) {
+    var _this;
+
+    _classCallCheck(this, Camera);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Camera).call(this));
+    _this.pan = pan;
+    _this.tilt = tilt;
+    return _this;
+  }
+
+  _createClass(Camera, [{
+    key: "getPan",
+    value: function getPan() {
+      return this.pan;
+    }
+  }, {
+    key: "getTilt",
+    value: function getTilt() {
+      return this.tilt;
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(Class, properties) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        remainingArguments[_key - 2] = arguments[_key];
+      }
+
+      return Element.fromProperties.apply(Element, [Class, properties].concat(remainingArguments));
+    }
+  }]);
+
+  return Camera;
+}(Element);
+
+module.exports = Camera;
+
+},{"../element":"node_modules/xgl/lib/element.js"}],"node_modules/xgl/lib/miscellaneous/keyEvents.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var constants = require('../constants');
+
+var SHIFT_KEY_CODE = constants.SHIFT_KEY_CODE;
+
+var KeyEvents = /*#__PURE__*/function () {
+  function KeyEvents(handlers, shiftKeyDown) {
+    _classCallCheck(this, KeyEvents);
+
+    this.handlers = handlers;
+    this.shiftKeyDown = shiftKeyDown;
+  }
+
+  _createClass(KeyEvents, [{
+    key: "isShiftKeyDown",
+    value: function isShiftKeyDown() {
+      return this.shiftKeyDown;
+    }
+  }, {
+    key: "keyUpEventListener",
+    value: function keyUpEventListener(event) {
+      var _this = this;
+
+      var keyCode = event.keyCode;
+
+      if (keyCode === SHIFT_KEY_CODE) {
+        this.shiftKeyDown = false;
+        this.handlers.forEach(function (handler) {
+          return handler(_this.shiftKeyDown);
+        });
+      }
+    }
+  }, {
+    key: "keyDownEventListener",
+    value: function keyDownEventListener(event) {
+      var _this2 = this;
+
+      var keyCode = event.keyCode;
+
+      if (keyCode === SHIFT_KEY_CODE) {
+        this.shiftKeyDown = true;
+        this.handlers.forEach(function (handler) {
+          return handler(_this2.shiftKeyDown);
+        });
+      }
+    }
+  }, {
+    key: "addShiftKeyHandler",
+    value: function addShiftKeyHandler(shiftKeyHandler) {
+      var handler = shiftKeyHandler; ///
+
+      this.handlers.push(handler);
+    }
+  }, {
+    key: "initialise",
+    value: function initialise(canvas) {
+      var documentDOMElement = document.documentElement,
+          ///
+      keyUpEventListener = this.keyUpEventListener.bind(this),
+          keyDownEventListener = this.keyDownEventListener.bind(this);
+      documentDOMElement.addEventListener('keyup', keyUpEventListener);
+      documentDOMElement.addEventListener('keydown', keyDownEventListener);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing() {
+      var handlers = [],
+          shiftKeyDown = false,
+          ///
+      keyEvents = new KeyEvents(handlers, shiftKeyDown);
+      return keyEvents;
+    }
+  }]);
+
+  return KeyEvents;
+}();
+
+module.exports = KeyEvents;
+
+},{"../constants":"node_modules/xgl/lib/constants.js"}],"node_modules/xgl/lib/miscellaneous/mouseEvents.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var constants = require('../constants');
+
+var MOUSE_UP = constants.MOUSE_UP,
+    MOUSE_DOWN = constants.MOUSE_DOWN,
+    MOUSE_MOVE = constants.MOUSE_MOVE,
+    MOUSE_WHEEL = constants.MOUSE_WHEEL;
+
+var MouseEvents = /*#__PURE__*/function () {
+  function MouseEvents(handlersMap, mouseDown) {
+    _classCallCheck(this, MouseEvents);
+
+    this.handlersMap = handlersMap;
+    this.mouseDown = mouseDown;
+  }
+
+  _createClass(MouseEvents, [{
+    key: "mouseEventListener",
+    value: function mouseEventListener(event, eventType) {
+      var _this = this;
+
+      var handlers = this.handlersMap[eventType],
+          mouseCoordinates = mouseCoordinatesFromEvent(event);
+      handlers.forEach(function (handler) {
+        return handler(mouseCoordinates, _this.mouseDown);
+      });
+      event.preventDefault();
+    }
+  }, {
+    key: "mouseUpEventListener",
+    value: function mouseUpEventListener(event) {
+      this.mouseDown = false;
+      this.mouseEventListener(event, MOUSE_UP);
+    }
+  }, {
+    key: "mouseDownEventListener",
+    value: function mouseDownEventListener(event) {
+      this.mouseDown = true;
+      this.mouseEventListener(event, MOUSE_DOWN);
+    }
+  }, {
+    key: "mouseMoveEventListener",
+    value: function mouseMoveEventListener(event) {
+      this.mouseEventListener(event, MOUSE_MOVE);
+    }
+  }, {
+    key: "mouseWheelEventListener",
+    value: function mouseWheelEventListener(event) {
+      var handlers = this.handlersMap[MOUSE_WHEEL],
+          mouseWheelDelta = mouseWheelDeltaFromEvent(event);
+      handlers.forEach(function (handler) {
+        return handler(mouseWheelDelta);
+      });
+      event.preventDefault();
+    }
+  }, {
+    key: "addMouseUpHandler",
+    value: function addMouseUpHandler(mouseUpHandler) {
+      var mouseUpHandlers = this.handlersMap[MOUSE_UP];
+      mouseUpHandlers.push(mouseUpHandler);
+    }
+  }, {
+    key: "addMouseDownHandler",
+    value: function addMouseDownHandler(mouseDownHandler) {
+      var mouseDownHandlers = this.handlersMap[MOUSE_DOWN];
+      mouseDownHandlers.push(mouseDownHandler);
+    }
+  }, {
+    key: "addMouseMoveHandler",
+    value: function addMouseMoveHandler(mouseMoveHandler) {
+      var mouseMoveHandlers = this.handlersMap[MOUSE_MOVE];
+      mouseMoveHandlers.push(mouseMoveHandler);
+    }
+  }, {
+    key: "addMouseWheelHandler",
+    value: function addMouseWheelHandler(mouseWheelHandler) {
+      var mouseWheelHandlers = this.handlersMap[MOUSE_WHEEL];
+      mouseWheelHandlers.push(mouseWheelHandler);
+    }
+  }, {
+    key: "initialise",
+    value: function initialise(canvas) {
+      var canvasDOMElement = canvas.getDOMElement(),
+          mouseUpEventListener = this.mouseUpEventListener.bind(this),
+          mouseDownEventListener = this.mouseDownEventListener.bind(this),
+          mouseMoveEventListener = this.mouseMoveEventListener.bind(this),
+          mouseWheelEventListener = this.mouseWheelEventListener.bind(this);
+      this.handlersMap[MOUSE_UP] = [];
+      this.handlersMap[MOUSE_DOWN] = [];
+      this.handlersMap[MOUSE_MOVE] = [];
+      this.handlersMap[MOUSE_WHEEL] = [];
+      canvasDOMElement.addEventListener('mouseup', mouseUpEventListener);
+      canvasDOMElement.addEventListener('mousedown', mouseDownEventListener);
+      canvasDOMElement.addEventListener('mousemove', mouseMoveEventListener);
+      canvasDOMElement.addEventListener('mousewheel', mouseWheelEventListener);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing() {
+      var handlersMap = {},
+          mouseDown = false,
+          ///
+      mouseEvents = new MouseEvents(handlersMap, mouseDown);
+      return mouseEvents;
+    }
+  }]);
+
+  return MouseEvents;
+}();
+
+module.exports = MouseEvents;
+
+function mouseWheelDeltaFromEvent(event) {
+  var mouseWheelDelta = Math.max(-1, Math.min(1, event.wheelDelta)); ///
+
+  return mouseWheelDelta;
+}
+
+function mouseCoordinatesFromEvent(event) {
+  var target = event.target,
+      clientX = event.clientX,
+      clientY = event.clientY,
+      canvasDOMElement = target,
+      boundingClientRect = canvasDOMElement.getBoundingClientRect(),
+      top = boundingClientRect.top,
+      left = boundingClientRect.left,
+      mouseCoordinates = [clientX - left, top - clientY];
+  return mouseCoordinates;
+}
+
+},{"../constants":"node_modules/xgl/lib/constants.js"}],"node_modules/xgl/lib/miscellaneous/userInput.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var KeyEvents = require('./keyEvents'),
+    MouseEvents = require('./mouseEvents'),
+    vectorMaths = require('../maths/vector');
+
+var zero2 = vectorMaths.zero2,
+    subtract2 = vectorMaths.subtract2;
+
+var UserInput = /*#__PURE__*/function () {
+  function UserInput(handlers, keyEvents, mouseEvents, mouseCoordinates, previousMouseCoordinates) {
+    _classCallCheck(this, UserInput);
+
+    this.handlers = handlers;
+    this.keyEvents = keyEvents;
+    this.mouseEvents = mouseEvents;
+    this.mouseCoordinates = mouseCoordinates;
+    this.previousMouseCoordinates = previousMouseCoordinates;
+  }
+
+  _createClass(UserInput, [{
+    key: "mouseMoveHandler",
+    value: function mouseMoveHandler(mouseCoordinates, mouseDown, canvas) {
+      this.previousMouseCoordinates = this.mouseCoordinates; ///
+
+      this.mouseCoordinates = mouseCoordinates;
+
+      if (this.previousMouseCoordinates === null) {
+        return;
+      }
+
+      if (mouseDown) {
+        var mouseWheelDelta = 0,
+            ///
+        shiftKeyDown = this.keyEvents.isShiftKeyDown(),
+            relativeMouseCoordinates = subtract2(this.mouseCoordinates, this.previousMouseCoordinates);
+        this.handlers.forEach(function (handler) {
+          return handler(relativeMouseCoordinates, mouseWheelDelta, shiftKeyDown);
+        });
+      }
+    }
+  }, {
+    key: "mouseWheelHandler",
+    value: function mouseWheelHandler(mouseWheelDelta, canvas) {
+      var shiftKeyDown = this.keyEvents.isShiftKeyDown(),
+          relativeMouseCoordinates = zero2();
+      this.handlers.forEach(function (handler) {
+        return handler(relativeMouseCoordinates, mouseWheelDelta, shiftKeyDown);
+      });
+    }
+  }, {
+    key: "addUserInputHandler",
+    value: function addUserInputHandler(userInputHandler) {
+      var handler = userInputHandler; ///
+
+      this.handlers.push(handler);
+    }
+  }, {
+    key: "initialise",
+    value: function initialise(canvas) {
+      var mouseMoveHandler = this.mouseMoveHandler.bind(this),
+          mouseWheelHandler = this.mouseWheelHandler.bind(this);
+      this.keyEvents.initialise(canvas);
+      this.mouseEvents.initialise(canvas);
+      this.mouseEvents.addMouseMoveHandler(mouseMoveHandler);
+      this.mouseEvents.addMouseWheelHandler(mouseWheelHandler);
+    }
+  }], [{
+    key: "fromNothing",
+    value: function fromNothing() {
+      var handlers = [],
+          keyEvents = KeyEvents.fromNothing(),
+          mouseEvents = MouseEvents.fromNothing(),
+          mouseCoordinates = null,
+          ///
+      previousMouseCoordinates = null,
+          ///
+      userInput = new UserInput(handlers, keyEvents, mouseEvents, mouseCoordinates, previousMouseCoordinates);
+      return userInput;
+    }
+  }]);
+
+  return UserInput;
+}();
+
+module.exports = UserInput;
+
+},{"./keyEvents":"node_modules/xgl/lib/miscellaneous/keyEvents.js","./mouseEvents":"node_modules/xgl/lib/miscellaneous/mouseEvents.js","../maths/vector":"node_modules/xgl/lib/maths/vector.js"}],"node_modules/xgl/lib/element/scene.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var necessary = require('necessary');
+
+var Part = require('../element/part'),
+    Camera = require('../element/camera'),
+    Element = require('../element'),
+    UserInput = require('../miscellaneous/userInput'),
+    vectorMaths = require('../maths/vector');
+
+var asynchronousUtilities = necessary.asynchronousUtilities,
+    forEach = asynchronousUtilities.forEach,
+    zero2 = vectorMaths.zero2;
+
+var Scene = /*#__PURE__*/function (_Element) {
+  _inherits(Scene, _Element);
+
+  function Scene(parts, camera, canvas) {
+    var _this;
+
+    _classCallCheck(this, Scene);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Scene).call(this));
+    _this.parts = parts;
+    _this.camera = camera;
+    _this.canvas = canvas;
+    return _this;
+  }
+
+  _createClass(Scene, [{
+    key: "windowResizeHandler",
+    value: function windowResizeHandler() {
+      var clientWidth = this.canvas.getClientWidth(),
+          clientHeight = this.canvas.getClientHeight(),
+          width = clientWidth,
+          ///
+      height = clientHeight,
+          ///
+      render = this.render.bind(this),
+          callback = render; ///
+
+      this.canvas.resize(width, height);
+      var relativeMouseCoordinates = zero2(),
+          ///
+      mouseWheelDelta = 0,
+          ///
+      shiftKeyDown = false; ///
+
+      this.camera.update(relativeMouseCoordinates, mouseWheelDelta, shiftKeyDown, width, height, callback);
+    }
+  }, {
+    key: "userInputHandler",
+    value: function userInputHandler(relativeMouseCoordinates, mouseWheelDelta, shiftKeyDown) {
+      var width = this.canvas.getWidth(),
+          height = this.canvas.getHeight(),
+          render = this.render.bind(this),
+          callback = render; ///
+
+      this.camera.update(relativeMouseCoordinates, mouseWheelDelta, shiftKeyDown, width, height, callback);
+    }
+  }, {
+    key: "render",
+    value: function render(offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix) {
+      var _this2 = this;
+
+      this.canvas.clear();
+      this.parts.forEach(function (part) {
+        return part.render(_this2.canvas, offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix);
+      });
+    }
+  }, {
+    key: "initialise",
+    value: function initialise(canvas, update, done) {
+      var _this3 = this;
+
+      var userInput = UserInput.fromNothing(),
+          userInputHandler = this.userInputHandler.bind(this),
+          windowResizeHandler = this.windowResizeHandler.bind(this);
+      userInput.initialise(canvas);
+      initialiseParts(this.parts, update, canvas, function () {
+        window.onresize = windowResizeHandler;
+        userInput.addUserInputHandler(userInputHandler);
+
+        _this3.windowResizeHandler(); ///
+
+
+        done && done(); ///
+      });
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(properties) {
+      var canvas = properties.canvas,
+          done = properties.done,
+          update = properties.update,
+          childElements = properties.childElements,
+          parts = partsFromChildElements(childElements),
+          camera = cameraFromChildElements(childElements),
+          scene = Element.fromProperties(Scene, properties, parts, camera, canvas);
+      scene.initialise(canvas, update, done);
+      return scene;
+    }
+  }]);
+
+  return Scene;
+}(Element);
+
+module.exports = Scene;
+
+function defer(callback) {
+  setTimeout(callback, 0);
+}
+
+function initialiseParts(parts, update, canvas, done) {
+  forEach(parts, function (part, next, done, context, index) {
+    var partsLength = parts.length,
+        progress = (index + 1) / partsLength;
+    part.initialise(canvas);
+    defer(function () {
+      update && update(progress); ///
+
+      next();
+    });
+  }, done);
+}
+
+function partsFromChildElements(childElements) {
+  var parts = childElements.reduce(function (parts, childElement) {
+    if (childElement instanceof Part) {
+      var part = childElement; ///
+
+      parts.push(part);
+    }
+
+    return parts;
+  }, []);
+  return parts;
+}
+
+function cameraFromChildElements(childElements) {
+  var camera = childElements.reduce(function (camera, childElement) {
+    if (camera === null) {
+      if (childElement instanceof Camera) {
+        camera = childElement; ///
+      }
+    }
+
+    return camera;
+  }, null);
+  return camera;
+}
+
+},{"necessary":"node_modules/necessary/index.js","../element/part":"node_modules/xgl/lib/element/part.js","../element/camera":"node_modules/xgl/lib/element/camera.js","../element":"node_modules/xgl/lib/element.js","../miscellaneous/userInput":"node_modules/xgl/lib/miscellaneous/userInput.js","../maths/vector":"node_modules/xgl/lib/maths/vector.js"}],"node_modules/xgl/lib/utilities/offsets.js":[function(require,module,exports) {
+'use strict';
+
+var vectorMaths = require('../maths/vector'),
+    matrixUtilities = require('../utilities/matrix');
+
+var reflect3 = vectorMaths.reflect3,
+    transform4 = vectorMaths.transform4,
+    rotationsMatrixFromAngles = matrixUtilities.rotationsMatrixFromAngles;
+
+function relativeOffsetsFromAnglesAndDirections(angles, directions) {
+  var reverseOrder = true,
+      reflectedAngles = reflect3(angles),
+      rotationsMatrix = rotationsMatrixFromAngles(reflectedAngles, reverseOrder),
+      relativeOffsets = transform4(directions, rotationsMatrix).slice(0, 3); ///
+
+  return relativeOffsets;
+}
+
+module.exports = {
+  relativeOffsetsFromAnglesAndDirections: relativeOffsetsFromAnglesAndDirections
+};
+
+},{"../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/matrix":"node_modules/xgl/lib/utilities/matrix.js"}],"node_modules/xgl/lib/miscellaneous/pan.js":[function(require,module,exports) {
+'use strict';
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var constants = require('../constants'),
+    vectorMaths = require('../maths/vector'),
+    offsetsUtilities = require('../utilities/offsets');
+
+var add3 = vectorMaths.add3,
+    scale2 = vectorMaths.scale2,
+    reflect2 = vectorMaths.reflect2,
+    scale3 = vectorMaths.scale3,
+    relativeOffsetsFromAnglesAndDirections = offsetsUtilities.relativeOffsetsFromAnglesAndDirections,
+    DELTA_SCALAR = constants.DELTA_SCALAR,
+    INVERT_SCALAR = constants.INVERT_SCALAR,
+    OFFSET_SCALAR = constants.OFFSET_SCALAR;
+
+var Pan = /*#__PURE__*/function () {
+  function Pan(offsets) {
+    _classCallCheck(this, Pan);
+
+    this.offsets = offsets;
+  }
+
+  _createClass(Pan, [{
+    key: "getOffsets",
+    value: function getOffsets() {
+      return this.offsets;
+    }
+  }, {
+    key: "updateOffsets",
+    value: function updateOffsets(relativeMouseCoordinates, mouseWheelDelta, tilt) {
+      var angles = tilt.getAngles(),
+          scaledMouseWheelDelta = mouseWheelDelta * DELTA_SCALAR,
+          scaledReflectedRelativeMouseCoordinates = reflect2(scale2(relativeMouseCoordinates, OFFSET_SCALAR)),
+          directions = [].concat(_toConsumableArray(scaledReflectedRelativeMouseCoordinates), [scaledMouseWheelDelta, 0]),
+          relativeOffsets = relativeOffsetsFromAnglesAndDirections(angles, directions);
+      this.offsets = add3(this.offsets, relativeOffsets);
+    }
+  }], [{
+    key: "fromInitialOffsets",
+    value: function fromInitialOffsets(initialOffsets) {
+      var offsets = initialOffsets,
+          ///
+      pan = new Pan(offsets);
+      return pan;
+    }
+  }, {
+    key: "fromInitialPosition",
+    value: function fromInitialPosition(initialPosition) {
+      var offsets = scale3(initialPosition, INVERT_SCALAR),
+          pan = new Pan(offsets);
+      return pan;
+    }
+  }]);
+
+  return Pan;
+}();
+
+module.exports = Pan;
+
+},{"../constants":"node_modules/xgl/lib/constants.js","../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/offsets":"node_modules/xgl/lib/utilities/offsets.js"}],"node_modules/xgl/lib/miscellaneous/tilt.js":[function(require,module,exports) {
+'use strict';
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var constants = require('../constants'),
+    vectorMaths = require('../maths/vector'),
+    arrayUtilities = require('../utilities/array');
+
+var first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    add3 = vectorMaths.add3,
+    transform3 = vectorMaths.transform3,
+    ANGLES_SCALAR = constants.ANGLES_SCALAR,
+    DEGREES_TO_RADIANS_SCALAR = constants.DEGREES_TO_RADIANS_SCALAR;
+
+var Tilt = /*#__PURE__*/function () {
+  function Tilt(angles, flipped) {
+    _classCallCheck(this, Tilt);
+
+    this.angles = angles;
+    this.flipped = flipped;
+  }
+
+  _createClass(Tilt, [{
+    key: "getXAngle",
+    value: function getXAngle() {
+      var firstAngle = first(this.angles),
+          xAngle = firstAngle; ///
+
+      return xAngle;
+    }
+  }, {
+    key: "getYAngle",
+    value: function getYAngle() {
+      var secondAngle = second(this.angles),
+          yAngle = secondAngle; ///
+
+      return yAngle;
+    }
+  }, {
+    key: "getZAngle",
+    value: function getZAngle() {
+      var zAngle = 0;
+      return zAngle;
+    }
+  }, {
+    key: "getAngles",
+    value: function getAngles() {
+      return this.angles;
+    }
+  }, {
+    key: "updateAngles",
+    value: function updateAngles(relativeMouseCoordinates) {
+      var scalar = this.flipped ? +ANGLES_SCALAR : -ANGLES_SCALAR,
+          matrix = [0, scalar, 0, -scalar, 0, 0, 0, 0, 0],
+          relativeAngles = transform3([].concat(_toConsumableArray(relativeMouseCoordinates), [0]), matrix); ///
+
+      this.angles = add3(this.angles, relativeAngles);
+    }
+  }], [{
+    key: "fromInitialAnglesAndFlipped",
+    value: function fromInitialAnglesAndFlipped(initialAngles, flipped) {
+      var scalar = flipped ? +DEGREES_TO_RADIANS_SCALAR : -DEGREES_TO_RADIANS_SCALAR,
+          matrix = [0, scalar, 0, -scalar, 0, 0, 0, 0, 0],
+          angles = transform3([].concat(_toConsumableArray(initialAngles), [0]), matrix),
+          ///
+      tilt = new Tilt(angles, flipped);
+      return tilt;
+    }
+  }]);
+
+  return Tilt;
+}();
+
+module.exports = Tilt;
+
+},{"../constants":"node_modules/xgl/lib/constants.js","../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/element/camera/gaming.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Pan = require('../../miscellaneous/pan'),
+    Tilt = require('../../miscellaneous/tilt'),
+    Camera = require('../camera'),
+    vectorMaths = require('../../maths/vector'),
+    matrixUtilities = require('../../utilities/matrix');
+
+var zero2 = vectorMaths.zero2,
+    offsetsMatrixFromOffsets = matrixUtilities.offsetsMatrixFromOffsets,
+    rotationsMatrixFromAngles = matrixUtilities.rotationsMatrixFromAngles,
+    positionMatrixFromNothing = matrixUtilities.positionMatrixFromNothing,
+    projectionMatrixFromWidthAndHeight = matrixUtilities.projectionMatrixFromWidthAndHeight,
+    normalsMatrixFromRotationsMatrix = matrixUtilities.normalsMatrixFromRotationsMatrix;
+var defaultInitialAngles = zero2(),
+    defaultInitialPosition = [0, 0, 5];
+
+var GamingCamera = /*#__PURE__*/function (_Camera) {
+  _inherits(GamingCamera, _Camera);
+
+  function GamingCamera() {
+    _classCallCheck(this, GamingCamera);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(GamingCamera).apply(this, arguments));
+  }
+
+  _createClass(GamingCamera, [{
+    key: "update",
+    value: function update(relativeMouseCoordinates, mouseWheelDelta, shiftKeyDown, width, height, callback) {
+      var pan = this.getPan(),
+          tilt = this.getTilt();
+
+      if (false) {///
+      } else if (shiftKeyDown) {
+        pan.updateOffsets(relativeMouseCoordinates, mouseWheelDelta, tilt);
+      } else if (mouseWheelDelta !== 0) {
+        pan.updateOffsets(relativeMouseCoordinates, mouseWheelDelta, tilt);
+      } else {
+        tilt.updateAngles(relativeMouseCoordinates);
+      }
+
+      var angles = tilt.getAngles(),
+          offsets = pan.getOffsets(),
+          offsetsMatrix = offsetsMatrixFromOffsets(offsets),
+          positionMatrix = positionMatrixFromNothing(),
+          rotationsMatrix = rotationsMatrixFromAngles(angles),
+          projectionMatrix = projectionMatrixFromWidthAndHeight(width, height),
+          normalsMatrix = normalsMatrixFromRotationsMatrix(rotationsMatrix);
+      callback(offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix);
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(properties) {
+      var _properties$initialAn = properties.initialAngles,
+          initialAngles = _properties$initialAn === void 0 ? defaultInitialAngles : _properties$initialAn,
+          _properties$initialPo = properties.initialPosition,
+          initialPosition = _properties$initialPo === void 0 ? defaultInitialPosition : _properties$initialPo,
+          flipped = true,
+          pan = Pan.fromInitialPosition(initialPosition),
+          tilt = Tilt.fromInitialAnglesAndFlipped(initialAngles, flipped),
+          gamingCamera = Camera.fromProperties(GamingCamera, properties, pan, tilt);
+      return gamingCamera;
+    }
+  }]);
+
+  return GamingCamera;
+}(Camera);
+
+module.exports = GamingCamera;
+
+},{"../../miscellaneous/pan":"node_modules/xgl/lib/miscellaneous/pan.js","../../miscellaneous/tilt":"node_modules/xgl/lib/miscellaneous/tilt.js","../camera":"node_modules/xgl/lib/element/camera.js","../../maths/vector":"node_modules/xgl/lib/maths/vector.js","../../utilities/matrix":"node_modules/xgl/lib/utilities/matrix.js"}],"node_modules/xgl/lib/miscellaneous/zoom.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var constants = require('../constants');
+
+var DELTA_SCALAR = constants.DELTA_SCALAR,
+    MINIMUM_DISTANCE = constants.MINIMUM_DISTANCE;
+
+var Zoom = /*#__PURE__*/function () {
+  function Zoom(distance) {
+    _classCallCheck(this, Zoom);
+
+    this.distance = distance;
+  }
+
+  _createClass(Zoom, [{
+    key: "getDistance",
+    value: function getDistance() {
+      return this.distance;
+    }
+  }, {
+    key: "updateDistance",
+    value: function updateDistance(mouseWheelDelta) {
+      this.distance -= mouseWheelDelta * DELTA_SCALAR;
+      this.distance = Math.max(MINIMUM_DISTANCE, this.distance);
+    }
+  }], [{
+    key: "fromInitialDistance",
+    value: function fromInitialDistance(initialDistance) {
+      var distance = initialDistance,
+          ///
+      zoom = new Zoom(distance);
+      return zoom;
+    }
+  }]);
+
+  return Zoom;
+}();
+
+module.exports = Zoom;
+
+},{"../constants":"node_modules/xgl/lib/constants.js"}],"node_modules/xgl/lib/element/camera/design.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Pan = require('../../miscellaneous/pan'),
+    Tilt = require('../../miscellaneous/tilt'),
+    Zoom = require('../../miscellaneous/zoom'),
+    Camera = require('../camera'),
+    vectorMaths = require('../../maths/vector'),
+    matrixUtilities = require('../../utilities/matrix');
+
+var zero2 = vectorMaths.zero2,
+    zero3 = vectorMaths.zero3,
+    offsetsMatrixFromOffsets = matrixUtilities.offsetsMatrixFromOffsets,
+    rotationsMatrixFromAngles = matrixUtilities.rotationsMatrixFromAngles,
+    positionMatrixFromDistance = matrixUtilities.positionMatrixFromDistance,
+    projectionMatrixFromWidthAndHeight = matrixUtilities.projectionMatrixFromWidthAndHeight,
+    normalsMatrixFromRotationsMatrix = matrixUtilities.normalsMatrixFromRotationsMatrix;
+var defaultInitialAngles = zero2(),
+    defaultInitialOffsets = zero3(),
+    defaultInitialDistance = 5;
+
+var DesignCamera = /*#__PURE__*/function (_Camera) {
+  _inherits(DesignCamera, _Camera);
+
+  function DesignCamera(pan, tilt, zoom) {
+    var _this;
+
+    _classCallCheck(this, DesignCamera);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(DesignCamera).call(this, pan, tilt));
+    _this.zoom = zoom;
+    return _this;
+  }
+
+  _createClass(DesignCamera, [{
+    key: "update",
+    value: function update(relativeMouseCoordinates, mouseWheelDelta, shiftKeyDown, width, height, callback) {
+      var pan = this.getPan(),
+          tilt = this.getTilt();
+
+      if (false) {///
+      } else if (shiftKeyDown) {
+        pan.updateOffsets(relativeMouseCoordinates, mouseWheelDelta, tilt);
+      } else if (mouseWheelDelta !== 0) {
+        this.zoom.updateDistance(mouseWheelDelta);
+      } else {
+        tilt.updateAngles(relativeMouseCoordinates);
+      }
+
+      var angles = tilt.getAngles(),
+          offsets = pan.getOffsets(),
+          distance = this.zoom.getDistance(),
+          offsetsMatrix = offsetsMatrixFromOffsets(offsets),
+          positionMatrix = positionMatrixFromDistance(distance),
+          rotationsMatrix = rotationsMatrixFromAngles(angles),
+          projectionMatrix = projectionMatrixFromWidthAndHeight(width, height),
+          normalsMatrix = normalsMatrixFromRotationsMatrix(rotationsMatrix);
+      callback(offsetsMatrix, normalsMatrix, positionMatrix, rotationsMatrix, projectionMatrix);
+    }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(properties) {
+      var _properties$initialAn = properties.initialAngles,
+          initialAngles = _properties$initialAn === void 0 ? defaultInitialAngles : _properties$initialAn,
+          _properties$initialOf = properties.initialOffsets,
+          initialOffsets = _properties$initialOf === void 0 ? defaultInitialOffsets : _properties$initialOf,
+          _properties$initialDi = properties.initialDistance,
+          initialDistance = _properties$initialDi === void 0 ? defaultInitialDistance : _properties$initialDi,
+          flipped = false,
+          pan = Pan.fromInitialOffsets(initialOffsets),
+          tilt = Tilt.fromInitialAnglesAndFlipped(initialAngles, flipped),
+          zoom = Zoom.fromInitialDistance(initialDistance),
+          designCamera = Camera.fromProperties(DesignCamera, properties, pan, tilt, zoom);
+      return designCamera;
+    }
+  }]);
+
+  return DesignCamera;
+}(Camera);
+
+module.exports = DesignCamera;
+
+},{"../../miscellaneous/pan":"node_modules/xgl/lib/miscellaneous/pan.js","../../miscellaneous/tilt":"node_modules/xgl/lib/miscellaneous/tilt.js","../../miscellaneous/zoom":"node_modules/xgl/lib/miscellaneous/zoom.js","../camera":"node_modules/xgl/lib/element/camera.js","../../maths/vector":"node_modules/xgl/lib/maths/vector.js","../../utilities/matrix":"node_modules/xgl/lib/utilities/matrix.js"}],"node_modules/xgl/lib/primitive/normal.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var vectorMaths = require('../maths/vector'),
+    arrayUtilities = require('../utilities/array');
+
+var first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    third = arrayUtilities.third,
+    normalise3 = vectorMaths.normalise3,
+    subtract3 = vectorMaths.subtract3,
+    cross3 = vectorMaths.cross3;
+
+var Normal = /*#__PURE__*/function () {
+  function Normal(extent) {
+    _classCallCheck(this, Normal);
+
+    this.extent = extent;
+  }
+
+  _createClass(Normal, [{
+    key: "clone",
+    value: function clone() {
+      var extent = cloneExtent(this.extent),
+          normal = new Normal(extent);
+      return normal;
+    }
+  }, {
+    key: "getExtent",
+    value: function getExtent() {
+      return this.extent;
+    }
+  }], [{
+    key: "fromVertices",
+    value: function fromVertices(vertices) {
+      var firstVertex = first(vertices),
+          secondVertex = second(vertices),
+          thirdVertex = third(vertices),
+          firstPosition = firstVertex.getPosition(),
+          secondPosition = secondVertex.getPosition(),
+          thirdPosition = thirdVertex.getPosition(),
+          firstExtent = subtract3(secondPosition, firstPosition),
+          secondExtent = subtract3(thirdPosition, firstPosition),
+          extent = normalise3(cross3(firstExtent, secondExtent)),
+          normal = new Normal(extent);
+      return normal;
+    }
+  }]);
+
+  return Normal;
+}();
+
+module.exports = Normal;
+
+function cloneExtent(extent) {
+  return extent.slice();
+}
+
+},{"../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/primitive/vertex.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var rotationUtilities = require('../utilities/rotation');
+
+var rotatePosition = rotationUtilities.rotatePosition;
+
+var Vertex = /*#__PURE__*/function () {
+  function Vertex(position) {
+    _classCallCheck(this, Vertex);
+
+    this.position = position;
+  }
+
+  _createClass(Vertex, [{
+    key: "getPosition",
+    value: function getPosition() {
+      return this.position;
+    }
+  }, {
+    key: "clone",
+    value: function clone() {
+      var position = this.position.slice(),
+          ///
+      vertex = new Vertex(position);
+      return vertex;
+    }
+  }, {
+    key: "rotate",
+    value: function rotate(rotationQuaternion) {
+      this.position = rotatePosition(this.position, rotationQuaternion);
+    }
+  }, {
+    key: "applyTransform",
+    value: function applyTransform(transform) {
+      this.position = transform(this.position);
+    }
+  }], [{
+    key: "fromPosition",
+    value: function fromPosition(position) {
+      var vertex = new Vertex(position);
+      return vertex;
+    }
+  }, {
+    key: "fromCoordinateTuple",
+    value: function fromCoordinateTuple(coordinateTuple) {
+      var position = coordinateTuple.slice(),
+          ///
+      vertex = new Vertex(position);
+      return vertex;
+    }
+  }]);
 
   return Vertex;
 }();
 
-exports.Vertex = Vertex;
-},{"../math/vector3":"node_modules/xgl/dist/math/vector3.js","../math/vector2":"node_modules/xgl/dist/math/vector2.js"}],"node_modules/xgl/dist/graphics/sprite.js":[function(require,module,exports) {
-"use strict";
+module.exports = Vertex;
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Sprite = void 0;
+},{"../utilities/rotation":"node_modules/xgl/lib/utilities/rotation.js"}],"node_modules/xgl/lib/utilities/facet.js":[function(require,module,exports) {
+'use strict';
 
-var _gl = require("../gl/gl");
+var constants = require('../constants'),
+    vectorMaths = require('../maths/vector'),
+    arrayUtilities = require('../utilities/array');
 
-var _glBuffer = require("../gl/glBuffer");
+var VERTICES_LENGTH = constants.VERTICES_LENGTH,
+    first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    third = arrayUtilities.third,
+    subtract3 = vectorMaths.subtract3,
+    cross3 = vectorMaths.cross3,
+    length3 = vectorMaths.length3;
 
-var _materialManager = require("./materialManager");
+function cloneEdges(edges) {
+  edges = edges.map(function (edge) {
+    return edge.clone();
+  });
+  return edges;
+}
 
-var _vertex = require("./vertex");
+function cloneNormal(normal) {
+  normal = normal.clone();
+  return normal;
+}
 
-var _vector = require("../math/vector3");
+function cloneVertices(vertices) {
+  vertices = vertices.map(function (vertex) {
+    return vertex.clone();
+  });
+  return vertices;
+}
 
-var Sprite =
-/** @class */
-function () {
-  function Sprite(name, materialName, width, height) {
-    if (width === void 0) {
-      width = 100;
-    }
+function calculateEdges(vertices, Edge) {
+  var edges = vertices.map(function (vertex, index) {
+    var startIndex = index,
+        ///
+    endIndex = (startIndex + 1) % VERTICES_LENGTH,
+        startVertex = vertices[startIndex],
+        endVertex = vertices[endIndex],
+        edge = Edge.fromStartVertexAndEndVertex(startVertex, endVertex);
+    return edge;
+  });
+  return edges;
+}
 
-    if (height === void 0) {
-      height = 100;
-    }
+function calculateNormal(vertices, Normal) {
+  var normal = Normal.fromVertices(vertices);
+  return normal;
+}
 
-    this._origin = _vector.Vector3.zero;
-    this._vertices = [];
-    this._name = name;
-    this._width = width;
-    this._height = height;
-    this._materialName = materialName;
-    this._material = _materialManager.MaterialManager.getMaterial(this._materialName);
+function calculateArea(vertices) {
+  var firstVertex = first(vertices),
+      secondVertex = second(vertices),
+      thirdVertex = third(vertices),
+      firstVertexPosition = firstVertex.getPosition(),
+      secondVertexPosition = secondVertex.getPosition(),
+      thirdVertexPosition = thirdVertex.getPosition(),
+      firstExtent = subtract3(secondVertexPosition, firstVertexPosition),
+      secondExtent = subtract3(thirdVertexPosition, firstVertexPosition),
+      area = length3(cross3(firstExtent, secondExtent)) / 2;
+  return area;
+}
+
+module.exports = {
+  cloneEdges: cloneEdges,
+  cloneNormal: cloneNormal,
+  cloneVertices: cloneVertices,
+  calculateEdges: calculateEdges,
+  calculateNormal: calculateNormal,
+  calculateArea: calculateArea
+};
+
+},{"../constants":"node_modules/xgl/lib/constants.js","../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js"}],"node_modules/xgl/lib/primitive/facet.js":[function(require,module,exports) {
+'use strict';
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Edge = require('./edge'),
+    Normal = require('./normal'),
+    Vertex = require('./vertex'),
+    constants = require('../constants'),
+    facetUtilities = require('../utilities/facet'),
+    arrayUtilities = require('../utilities/array'),
+    midPointUtilities = require('../utilities/midPoint'),
+    intersectionUtilities = require('../utilities/intersection');
+
+var VERTICES_LENGTH = constants.VERTICES_LENGTH,
+    push = arrayUtilities.push,
+    _permute = arrayUtilities.permute,
+    calculateEdges = facetUtilities.calculateEdges,
+    calculateNormal = facetUtilities.calculateNormal,
+    calculateMidPointPosition = midPointUtilities.calculateMidPointPosition,
+    isMidPointPositionToOneSideOfMaskingEdges = midPointUtilities.isMidPointPositionToOneSideOfMaskingEdges,
+    calculateIntermediateVertexPosition = intersectionUtilities.calculateIntermediateVertexPosition,
+    calculateNonNullIntersections = intersectionUtilities.calculateNonNullIntersections,
+    calculateNullIntersectionIndex = intersectionUtilities.calculateNullIntersectionIndex,
+    calculateNonNullIntersectionIndex = intersectionUtilities.calculateNonNullIntersectionIndex;
+
+var Facet = /*#__PURE__*/function () {
+  function Facet(vertices, normal, edges) {
+    _classCallCheck(this, Facet);
+
+    this.vertices = vertices;
+    this.normal = normal;
+    this.edges = edges;
   }
 
-  Object.defineProperty(Sprite.prototype, "name", {
-    get: function () {
-      return this._name;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Sprite.prototype, "origin", {
-    get: function () {
-      return this._origin;
-    },
-    set: function (value) {
-      this._origin = value; // TODO: This should be better dynamically calculated at the shader
-
-      this.recalculateVertices();
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Sprite.prototype, "width", {
-    get: function () {
-      return this._width;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Sprite.prototype, "height", {
-    get: function () {
-      return this._height;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Sprite.prototype.destroy = function () {
-    this._buffer.destroy();
-
-    _materialManager.MaterialManager.releaseMaterial(this._materialName);
-
-    this._material = undefined;
-    this._materialName = undefined;
-  };
-
-  Sprite.prototype.load = function () {
-    this._buffer = new _glBuffer.GLBuffer();
-    var positionAttribute = new _glBuffer.AttributeInfo(); // positionAttribute.location = this._shader.getAttributeLocation('a_position');
-    // Standard set of attributes for now. Position attribute to be the first attribute in the shader.
-
-    positionAttribute.location = 0;
-    positionAttribute.size = 3;
-
-    this._buffer.addAttributeLocation(positionAttribute);
-
-    var textCoordAttribute = new _glBuffer.AttributeInfo();
-    textCoordAttribute.location = 1;
-    textCoordAttribute.size = 2;
-
-    this._buffer.addAttributeLocation(textCoordAttribute);
-
-    this.calculateVertices();
-  };
-
-  Sprite.prototype.update = function (time) {};
-
-  Sprite.prototype.draw = function (shader, model) {
-    var modelLocation = shader.getUniformLocation('u_model');
-
-    _gl.gl.uniformMatrix4fv(modelLocation, false, model.toFloat32Array());
-
-    var colorLocation = shader.getUniformLocation('u_tint'); // Orange tint
-    // gl.uniform4f(colorLocation, 1.0, 0.5, 0.0, 1.0);
-    // Blue tint
-    // gl.uniform4f(colorLocation, 0.0, 0.3, 1.0, 1.0);
-    // White tint
-
-    _gl.gl.uniform4fv(colorLocation, this._material.tint.toFloat32Array()); // What texture unit to unescape, 0 for now
-
-
-    if (this._material.diffuseTexture !== undefined) {
-      this._material.diffuseTexture.activateAndBind(0);
-
-      var diffuseLocation = shader.getUniformLocation('u_diffuse');
-
-      _gl.gl.uniform1i(diffuseLocation, 0);
-    }
-
-    this._buffer.bind();
-
-    this._buffer.draw();
-  };
-
-  Sprite.prototype.calculateVertices = function () {
-    var minX = -(this._width * this._origin.x);
-    var maxX = this._width * (1.0 - this._origin.x);
-    var minY = -(this._height * this._origin.y);
-    var maxY = this._height * (1.0 - this._origin.y);
-    this._vertices = [// x, y, z      u,v
-    new _vertex.Vertex(minX, minY, 0, 0, 0), new _vertex.Vertex(minX, maxY, 0, 0, 1.0), new _vertex.Vertex(maxX, maxY, 0, 1.0, 1.0), new _vertex.Vertex(maxX, maxY, 0, 1.0, 1.0), new _vertex.Vertex(maxX, minY, 0, 1.0, 0), new _vertex.Vertex(minX, minY, 0, 0, 0)];
-
-    for (var _i = 0, _a = this._vertices; _i < _a.length; _i++) {
-      var v = _a[_i];
-
-      this._buffer.pushBackData(v.toArray());
-    }
-
-    this._buffer.upload();
-
-    this._buffer.unbind();
-  };
-
-  Sprite.prototype.recalculateVertices = function () {
-    var minX = -(this._width * this._origin.x);
-    var maxX = this._width * (1.0 - this._origin.x);
-    var minY = -(this._height * this._origin.y);
-    var maxY = this._height * (1.0 - this._origin.y);
-
-    this._vertices[0].position.set(minX, minY);
-
-    this._vertices[1].position.set(minX, maxY);
-
-    this._vertices[2].position.set(maxX, maxY);
-
-    this._vertices[3].position.set(maxX, maxY);
-
-    this._vertices[4].position.set(maxX, minY);
-
-    this._vertices[5].position.set(minX, minY);
-
-    this._buffer.clearData();
-
-    for (var _i = 0, _a = this._vertices; _i < _a.length; _i++) {
-      var v = _a[_i];
-
-      this._buffer.pushBackData(v.toArray());
-    }
-
-    this._buffer.upload();
-
-    this._buffer.unbind();
-  };
-
-  return Sprite;
-}();
-
-exports.Sprite = Sprite;
-},{"../gl/gl":"node_modules/xgl/dist/gl/gl.js","../gl/glBuffer":"node_modules/xgl/dist/gl/glBuffer.js","./materialManager":"node_modules/xgl/dist/graphics/materialManager.js","./vertex":"node_modules/xgl/dist/graphics/vertex.js","../math/vector3":"node_modules/xgl/dist/math/vector3.js"}],"node_modules/xgl/dist/components/baseComponent.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BaseComponent = void 0;
-
-var BaseComponent =
-/** @class */
-function () {
-  function BaseComponent(data) {
-    this._data = data;
-    this.name = data.name;
-  }
-
-  BaseComponent.prototype.buildFromJson = function (json) {
-    throw new Error("Method not implemented.");
-  };
-
-  Object.defineProperty(BaseComponent.prototype, "owner", {
-    get: function () {
-      return this._owner;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  BaseComponent.prototype.setOwner = function (owner) {
-    this._owner = owner;
-  };
-
-  BaseComponent.prototype.load = function () {};
-
-  BaseComponent.prototype.updateReady = function () {};
-
-  BaseComponent.prototype.update = function (time) {};
-
-  BaseComponent.prototype.render = function (shader) {};
-
-  return BaseComponent;
-}();
-
-exports.BaseComponent = BaseComponent;
-},{}],"node_modules/xgl/dist/components/spriteComponent.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.SpriteComponent = exports.SpriteComponentBuilder = exports.SpriteComponentData = void 0;
-
-var _sprite = require("../graphics/sprite");
-
-var _baseComponent = require("./baseComponent");
-
-var _vector = require("../math/vector3");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var SpriteComponentData =
-/** @class */
-function () {
-  function SpriteComponentData() {
-    this.origin = _vector.Vector3.zero;
-  }
-
-  SpriteComponentData.prototype.setFromJson = function (json) {
-    if (json.name !== undefined) {
-      this.name = String(json.name);
-    }
-
-    if (json.width !== undefined) {
-      this.width = Number(json.width);
-    }
-
-    if (json.height !== undefined) {
-      this.height = Number(json.height);
-    }
-
-    if (json.materialName !== undefined) {
-      this.materialName = String(json.materialName);
-    }
-
-    if (json.origin !== undefined) {
-      this.origin.setFromJson(json.origin);
-    }
-  };
-
-  return SpriteComponentData;
-}();
-
-exports.SpriteComponentData = SpriteComponentData;
-
-var SpriteComponentBuilder =
-/** @class */
-function () {
-  function SpriteComponentBuilder() {}
-
-  Object.defineProperty(SpriteComponentBuilder.prototype, "type", {
-    get: function () {
-      return 'sprite';
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  SpriteComponentBuilder.prototype.buildFromJson = function (json) {
-    var data = new SpriteComponentData();
-    data.setFromJson(json);
-    return new SpriteComponent(data);
-  };
-
-  return SpriteComponentBuilder;
-}();
-
-exports.SpriteComponentBuilder = SpriteComponentBuilder;
-
-var SpriteComponent =
-/** @class */
-function (_super) {
-  __extends(SpriteComponent, _super);
-
-  function SpriteComponent(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this.width = data.width;
-    _this.height = data.height;
-    _this._sprite = new _sprite.Sprite(data.name, data.materialName, _this.width, _this.height);
-
-    if (!data.origin.equals(_vector.Vector3.zero)) {
-      _this._sprite.origin.copyFrom(data.origin);
-    }
-
-    return _this;
-  }
-
-  SpriteComponent.prototype.load = function () {
-    this._sprite.load();
-  };
-
-  SpriteComponent.prototype.render = function (shader) {
-    this._sprite.draw(shader, this.owner.worldMatrix);
-
-    _super.prototype.render.call(this, shader);
-  };
-
-  return SpriteComponent;
-}(_baseComponent.BaseComponent);
-
-exports.SpriteComponent = SpriteComponent;
-},{"../graphics/sprite":"node_modules/xgl/dist/graphics/sprite.js","./baseComponent":"node_modules/xgl/dist/components/baseComponent.js","../math/vector3":"node_modules/xgl/dist/math/vector3.js"}],"node_modules/xgl/dist/message/messageSubscriptionNode.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MessageSubscritionNode = void 0;
-
-var MessageSubscritionNode =
-/** @class */
-function () {
-  function MessageSubscritionNode(message, handler) {
-    this.message = message;
-    this.handler = handler;
-  }
-
-  return MessageSubscritionNode;
-}();
-
-exports.MessageSubscritionNode = MessageSubscritionNode;
-},{}],"node_modules/xgl/dist/message/messageBus.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MessageBus = void 0;
-
-var _message = require("./message");
-
-var _messageSubscriptionNode = require("./messageSubscriptionNode");
-
-var MessageBus =
-/** @class */
-function () {
-  function MessageBus() {}
-
-  MessageBus.addSubscription = function (code, handler) {
-    if (MessageBus._subscriptions[code] === undefined) {
-      MessageBus._subscriptions[code] = [];
-    }
-
-    if (MessageBus._subscriptions[code].indexOf(handler) !== -1) {
-      console.warn("Attemping to add  a duplicate handler to code " + code + ". Subscription not added.");
-    } else {
-      MessageBus._subscriptions[code].push(handler);
-    }
-  };
-
-  MessageBus.removeSubscription = function (code, handler) {
-    if (MessageBus._subscriptions[code] === undefined) {
-      console.warn("Cannot unsubscribe handler from the code: " + code + ", because that code is not subscribed to.");
-      return;
-    }
-
-    var nodeIndex = MessageBus._subscriptions[code].indexOf(handler);
-
-    if (nodeIndex !== -1) {
-      MessageBus._subscriptions[code].splice(nodeIndex, 1);
-    }
-  };
-
-  MessageBus.post = function (message) {
-    console.log('Message posted', message);
-    var handlers = MessageBus._subscriptions[message.code];
-
-    if (handlers === undefined) {
-      return;
-    }
-
-    for (var _i = 0, handlers_1 = handlers; _i < handlers_1.length; _i++) {
-      var h = handlers_1[_i];
-
-      if (message.priority === _message.MessagePriotity.HIGH) {
-        h.onMessage(message);
-      } else {
-        MessageBus._normalMessageQueue.push(new _messageSubscriptionNode.MessageSubscritionNode(message, h));
-      }
-    }
-  };
-
-  MessageBus.update = function (time) {
-    if (MessageBus._normalMessageQueue.length === 0) {
-      return;
-    }
-
-    var messageLimit = Math.min(MessageBus._normalQueueMessagePerUpdate, MessageBus._normalMessageQueue.length);
-
-    for (var i = 0; i < messageLimit; i++) {
-      var node = MessageBus._normalMessageQueue.pop();
-
-      node && node.handler.onMessage(node.message);
-    }
-  };
-
-  MessageBus._subscriptions = {};
-  MessageBus._normalQueueMessagePerUpdate = 10;
-  MessageBus._normalMessageQueue = [];
-  return MessageBus;
-}();
-
-exports.MessageBus = MessageBus;
-},{"./message":"node_modules/xgl/dist/message/message.js","./messageSubscriptionNode":"node_modules/xgl/dist/message/messageSubscriptionNode.js"}],"node_modules/xgl/dist/message/message.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Message = exports.MessagePriotity = void 0;
-
-var _messageBus = require("./messageBus");
-
-var MessagePriotity;
-exports.MessagePriotity = MessagePriotity;
-
-(function (MessagePriotity) {
-  MessagePriotity[MessagePriotity["NORMAL"] = 0] = "NORMAL";
-  MessagePriotity[MessagePriotity["HIGH"] = 1] = "HIGH";
-})(MessagePriotity || (exports.MessagePriotity = MessagePriotity = {}));
-
-var Message =
-/** @class */
-function () {
-  function Message(code, sender, context, priority) {
-    if (priority === void 0) {
-      priority = MessagePriotity.NORMAL;
-    }
-
-    this.code = code;
-    this.sender = sender;
-    this.context = context;
-    this.priority = priority;
-  }
-
-  Message.send = function (code, sender, context) {
-    _messageBus.MessageBus.post(new Message(code, sender, context));
-  };
-
-  Message.sendPriority = function (code, sender, context) {
-    _messageBus.MessageBus.post(new Message(code, sender, context, MessagePriotity.HIGH));
-  };
-
-  Message.subscribe = function (code, handler) {
-    _messageBus.MessageBus.addSubscription(code, handler);
-  };
-
-  Message.unsubscribe = function (code, handler) {
-    _messageBus.MessageBus.removeSubscription(code, handler);
-  };
-
-  return Message;
-}();
-
-exports.Message = Message;
-},{"./messageBus":"node_modules/xgl/dist/message/messageBus.js"}],"node_modules/xgl/dist/assets/imageAssetLoader.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ImageAssetLoader = exports.ImageAsset = void 0;
-
-var _assetManager = require("./assetManager");
-
-var ImageAsset =
-/** @class */
-function () {
-  function ImageAsset(name, data) {
-    this.name = name;
-    this.data = data;
-  }
-
-  Object.defineProperty(ImageAsset.prototype, "width", {
-    get: function () {
-      return this.data.width;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(ImageAsset.prototype, "height", {
-    get: function () {
-      return this.data.height;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  return ImageAsset;
-}();
-
-exports.ImageAsset = ImageAsset;
-
-var ImageAssetLoader =
-/** @class */
-function () {
-  function ImageAssetLoader() {}
-
-  Object.defineProperty(ImageAssetLoader.prototype, "supportedExtensions", {
-    get: function () {
-      return ['png', 'gif', 'jpg'];
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  ImageAssetLoader.prototype.loadAsset = function (assetName) {
-    var image = new Image();
-    image.onload = this.onImageLoaded.bind(this, assetName, image);
-    image.src = assetName;
-  };
-
-  ImageAssetLoader.prototype.onImageLoaded = function (assetName, image) {
-    console.log('OnImageLoaded: assetName/Image', assetName, image);
-    var asset = new ImageAsset(assetName, image);
-
-    _assetManager.AssetManager.onAssetLoaded(asset);
-  };
-
-  return ImageAssetLoader;
-}();
-
-exports.ImageAssetLoader = ImageAssetLoader;
-},{"./assetManager":"node_modules/xgl/dist/assets/assetManager.js"}],"node_modules/xgl/dist/assets/jsonAssetLoader.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.JsonAssetLoader = exports.JsonAsset = void 0;
-
-var _assetManager = require("./assetManager");
-
-var JsonAsset =
-/** @class */
-function () {
-  function JsonAsset(name, data) {
-    this.name = name;
-    this.data = data;
-  }
-
-  return JsonAsset;
-}();
-
-exports.JsonAsset = JsonAsset;
-
-var JsonAssetLoader =
-/** @class */
-function () {
-  function JsonAssetLoader() {}
-
-  Object.defineProperty(JsonAssetLoader.prototype, "supportedExtensions", {
-    get: function () {
-      return ['json'];
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  JsonAssetLoader.prototype.loadAsset = function (assetName) {
-    var request = new XMLHttpRequest();
-    request.open('GET', assetName);
-    request.addEventListener('load', this.onJsonLoaded.bind(this, assetName, request));
-    request.send();
-  };
-
-  JsonAssetLoader.prototype.onJsonLoaded = function (assetName, request) {
-    console.log('OnImageLoaded: assetName/Image', assetName, request);
-
-    if (request.readyState === request.DONE) {
-      var json = JSON.parse(request.responseText);
-      var asset = new JsonAsset(assetName, json);
-
-      _assetManager.AssetManager.onAssetLoaded(asset);
-    }
-  };
-
-  return JsonAssetLoader;
-}();
-
-exports.JsonAssetLoader = JsonAssetLoader;
-},{"./assetManager":"node_modules/xgl/dist/assets/assetManager.js"}],"node_modules/xgl/dist/assets/TextAssetLoader.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.TextAssetLoader = exports.TextAsset = void 0;
-
-var _assetManager = require("./assetManager");
-
-/**
- * Represents a text file asset.
- */
-var TextAsset =
-/** @class */
-function () {
-  /**
-   * Creates a new text asset.
-   * @param name The name of this asset.
-   * @param data The content of this asset.
-   */
-  function TextAsset(name, data) {
-    this.name = name;
-    this.data = data;
-  }
-
-  return TextAsset;
-}();
-
-exports.TextAsset = TextAsset;
-
-/**
- * The loader for a text asset.
- */
-var TextAssetLoader =
-/** @class */
-function () {
-  function TextAssetLoader() {}
-
-  Object.defineProperty(TextAssetLoader.prototype, "supportedExtensions", {
-    /**
-     * The list of supported file extensions.
-     */
-    get: function () {
-      return ["txt"];
-    },
-    enumerable: true,
-    configurable: true
-  });
-  /**
-   * Loads a text asset with the provided name.
-   * @param assetName The asset to be loaded.
-   */
-
-  TextAssetLoader.prototype.loadAsset = function (assetName) {
-    var request = new XMLHttpRequest();
-    request.open("GET", assetName);
-    request.addEventListener("load", this.onTextLoaded.bind(this, assetName, request));
-    request.send();
-  };
-  /**
-   * Fired when a text asset has loaded.
-   * @param assetName The name of the asset.
-   * @param request The request object.
-   */
-
-
-  TextAssetLoader.prototype.onTextLoaded = function (assetName, request) {
-    console.debug("onTextLoaded: assetName/request", assetName, request);
-
-    if (request.readyState === request.DONE) {
-      var asset = new TextAsset(assetName, request.responseText);
-
-      _assetManager.AssetManager.onAssetLoaded(asset);
-    }
-  };
-
-  return TextAssetLoader;
-}();
-
-exports.TextAssetLoader = TextAssetLoader;
-},{"./assetManager":"node_modules/xgl/dist/assets/assetManager.js"}],"node_modules/xgl/dist/assets/assetManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.AssetManager = exports.MESSAGE_ASSET_LOADER_ASSET_LOADED = void 0;
-
-var _message = require("../message/message");
-
-var _imageAssetLoader = require("./imageAssetLoader");
-
-var _jsonAssetLoader = require("./jsonAssetLoader");
-
-var _TextAssetLoader = require("./TextAssetLoader");
-
-var MESSAGE_ASSET_LOADER_ASSET_LOADED = 'MESSAGE_ASSET_LOADER_ASSET_LOADED::';
-exports.MESSAGE_ASSET_LOADER_ASSET_LOADED = MESSAGE_ASSET_LOADER_ASSET_LOADED;
-
-var AssetManager =
-/** @class */
-function () {
-  function AssetManager() {}
-
-  AssetManager.initialize = function () {
-    AssetManager._loaders.push(new _imageAssetLoader.ImageAssetLoader());
-
-    AssetManager._loaders.push(new _jsonAssetLoader.JsonAssetLoader());
-
-    AssetManager._loaders.push(new _TextAssetLoader.TextAssetLoader());
-  };
-
-  AssetManager.prototype.registerLoader = function (loader) {
-    AssetManager._loaders.push(loader);
-  };
-
-  AssetManager.onAssetLoaded = function (asset) {
-    AssetManager._loadedAssets[asset.name] = asset;
-
-    _message.Message.send(MESSAGE_ASSET_LOADER_ASSET_LOADED + asset.name, this, asset);
-  };
-
-  AssetManager.loadAsset = function (assetName) {
-    var extension = assetName.split('.').pop();
-    extension = extension ? extension.toLowerCase() : extension;
-
-    for (var _i = 0, _a = AssetManager._loaders; _i < _a.length; _i++) {
-      var l = _a[_i];
-
-      if (l.supportedExtensions.indexOf(extension) !== -1) {
-        l.loadAsset(assetName);
-        return;
-      }
-    }
-
-    console.warn("Unable to load asset with extension " + extension + ", because there is no loader associated with it.");
-  };
-
-  AssetManager.isAssetLoaded = function (assetName) {
-    return AssetManager._loadedAssets[assetName] !== undefined;
-  };
-
-  AssetManager.getAsset = function (assetName) {
-    if (AssetManager.isAssetLoaded(assetName)) {
-      return AssetManager._loadedAssets[assetName];
-    } else {
-      AssetManager.loadAsset(assetName);
-    } // @ts-ignore
-
-
-    return undefined;
-  };
-
-  AssetManager._loaders = [];
-  AssetManager._loadedAssets = {};
-  return AssetManager;
-}();
-
-exports.AssetManager = AssetManager;
-},{"../message/message":"node_modules/xgl/dist/message/message.js","./imageAssetLoader":"node_modules/xgl/dist/assets/imageAssetLoader.js","./jsonAssetLoader":"node_modules/xgl/dist/assets/jsonAssetLoader.js","./TextAssetLoader":"node_modules/xgl/dist/assets/TextAssetLoader.js"}],"node_modules/xgl/dist/graphics/animatedSprite.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.AnimatedSprite = exports.AnimatedSpriteInfo = void 0;
-
-var _vector = require("../math/vector2");
-
-var _sprite = require("./sprite");
-
-var _message = require("../message/message");
-
-var _assetManager = require("../assets/assetManager");
-
-var _materialManager = require("./materialManager");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var UVInfo =
-/** @class */
-function () {
-  function UVInfo(min, max) {
-    this.min = min;
-    this.max = max;
-  }
-
-  return UVInfo;
-}();
-
-var AnimatedSpriteInfo =
-/** @class */
-function () {
-  function AnimatedSpriteInfo() {
-    /** The width of this sprite. */
-    this.width = 100;
-    /** The height of this sprite. */
-
-    this.height = 100;
-    /** The frame width of this sprite. */
-
-    this.frameWidth = 10;
-    /** The frame height of this sprite. */
-
-    this.frameHeight = 10;
-    /** The number of frames to be animated. */
-
-    this.frameCount = 1;
-    /** The sequence of frame indexes to be played. */
-
-    this.frameSequence = [];
-    /** The number of milliseconds each frame takes. */
-
-    this.frameTime = 60;
-  }
-
-  return AnimatedSpriteInfo;
-}();
-
-exports.AnimatedSpriteInfo = AnimatedSpriteInfo;
-
-var AnimatedSprite =
-/** @class */
-function (_super) {
-  __extends(AnimatedSprite, _super);
-
-  function AnimatedSprite(info) {
-    var _this = _super.call(this, info.name, info.materialName, info.width, info.height) || this;
-
-    _this._frameTime = 33;
-    _this._frameUVs = [];
-    _this._currentFrame = 0;
-    _this._currentTime = 0;
-    _this._assetLoaded = false;
-    _this._assetWidth = 2;
-    _this._assetHeight = 2;
-    _this._isPlaying = true;
-    _this._frameWidth = info.frameWidth;
-    _this._frameHeight = info.frameHeight;
-    _this._frameCount = info.frameCount;
-    _this._frameSequence = info.frameSequence;
-    _this._frameTime = info.frameTime;
-
-    _message.Message.subscribe(_assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED + _this._material.diffuseTextureName, _this);
-
-    return _this;
-  }
-
-  Object.defineProperty(AnimatedSprite.prototype, "isPlaying", {
-    get: function () {
-      return this._isPlaying;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  AnimatedSprite.prototype.destroy = function () {
-    _super.prototype.destroy.call(this);
-  };
-
-  AnimatedSprite.prototype.play = function () {
-    this._isPlaying = true;
-  };
-
-  AnimatedSprite.prototype.stop = function () {
-    this._isPlaying = false;
-  };
-
-  AnimatedSprite.prototype.setFrame = function (frameNumber) {
-    if (frameNumber >= this._frameCount) {
-      throw new Error("Frame is out of range: " + frameNumber + ", frame count " + this._frameCount);
-    }
-
-    this._currentFrame = frameNumber;
-  };
-  /**
-   * Calculates UV coordinates once the texture is loaded
-   *
-   * @param message
-   */
-
-
-  AnimatedSprite.prototype.onMessage = function (message) {
-    if (message.code === _assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED + this._material.diffuseTextureName) {
-      this._assetLoaded = true;
-      var asset = message.context;
-      this._assetWidth = asset.width;
-      this._assetHeight = asset.height;
-
-      this._calculateUVs();
-    }
-  };
-
-  AnimatedSprite.prototype.load = function () {
-    _super.prototype.load.call(this);
-
-    if (!this._assetLoaded) {
-      this.setupFromMaterial();
-    }
-  };
-
-  AnimatedSprite.prototype.update = function (time) {
-    if (!this._assetLoaded) {
-      this.setupFromMaterial();
-      return;
-    }
-
-    if (!this._isPlaying) {
-      return;
-    }
-
-    this._currentTime += time;
-
-    if (this._currentTime > this._frameTime) {
-      this._currentFrame++;
-      this._currentTime = 0;
-
-      if (this._currentFrame >= this._frameSequence.length) {
-        this._currentFrame = 0;
-      } // Gets current frame U and V coordinates within the tiled texture containing all sprite frames
-      // Example data as reference
-      // this._vertices = [
-      //     // x, y, z      u,v
-      //     new Vertex(0, 0, 0, 0, 0),
-      //     new Vertex(0, this._height, 0, 0, 1.0),
-      //     new Vertex(this._width, this._height, 0, 1.0, 1.0),
-      //     new Vertex(this._width, this._height, 0, 1.0, 1.0),
-      //     new Vertex(this._width, 0, 0, 1.0, 0),
-      //     new Vertex(0, 0, 0, 0, 0)
-      // ];
-
-
-      var frameUVs = this._frameSequence[this._currentFrame];
-
-      this._vertices[0].textCoords.copyFrom(this._frameUVs[frameUVs].min);
-
-      this._vertices[1].textCoords = new _vector.Vector2(this._frameUVs[frameUVs].min.x, this._frameUVs[frameUVs].max.y);
-
-      this._vertices[2].textCoords.copyFrom(this._frameUVs[frameUVs].max);
-
-      this._vertices[3].textCoords.copyFrom(this._frameUVs[frameUVs].max);
-
-      this._vertices[4].textCoords = new _vector.Vector2(this._frameUVs[frameUVs].max.x, this._frameUVs[frameUVs].min.y);
-
-      this._vertices[5].textCoords.copyFrom(this._frameUVs[frameUVs].min);
-
-      this._buffer.clearData();
-
-      for (var _i = 0, _a = this._vertices; _i < _a.length; _i++) {
-        var v = _a[_i];
-
-        this._buffer.pushBackData(v.toArray());
-      }
-
-      this._buffer.upload();
-
-      this._buffer.bind();
-    }
-
-    _super.prototype.update.call(this, time);
-  };
-
-  AnimatedSprite.prototype._calculateUVs = function () {
-    var totalWidth = 0;
-    var yValue = 0;
-
-    for (var i = 0; i < this._frameCount; ++i) {
-      totalWidth = i * this._frameWidth;
-
-      if (totalWidth > this._assetWidth) {
-        yValue++;
-        totalWidth = 0;
-      }
-
-      var uMin = i * this._frameWidth / this._assetWidth;
-      var vMin = yValue * this._frameHeight / this._assetHeight;
-      var min = new _vector.Vector2(uMin, vMin);
-      var uMax = (i * this._frameWidth + this._frameWidth) / this._assetWidth;
-      var vMax = (yValue * this._frameHeight + this._frameHeight) / this._assetHeight;
-      var max = new _vector.Vector2(uMax, vMax);
-
-      this._frameUVs.push(new UVInfo(min, max));
-    }
-  }; // Fixes race condition where texture has been cached
-
-
-  AnimatedSprite.prototype.setupFromMaterial = function () {
-    if (!this._assetLoaded) {
-      var material = _materialManager.MaterialManager.getMaterial(this._materialName);
-
-      if (material.diffuseTexture.isLoaded) {
-        if (_assetManager.AssetManager.isAssetLoaded(material.diffuseTextureName)) {
-          this._assetWidth = material.diffuseTexture.width;
-          this._assetHeight = material.diffuseTexture.height;
-          this._assetLoaded = true;
-
-          this._calculateUVs();
-        }
-      }
-    }
-  };
-
-  return AnimatedSprite;
-}(_sprite.Sprite);
-
-exports.AnimatedSprite = AnimatedSprite;
-},{"../math/vector2":"node_modules/xgl/dist/math/vector2.js","./sprite":"node_modules/xgl/dist/graphics/sprite.js","../message/message":"node_modules/xgl/dist/message/message.js","../assets/assetManager":"node_modules/xgl/dist/assets/assetManager.js","./materialManager":"node_modules/xgl/dist/graphics/materialManager.js"}],"node_modules/xgl/dist/components/animatedSpriteComponent.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.AnimatedSpriteComponent = exports.AnimatedSpriteComponentBuilder = exports.AnimatedSpriteComponentData = void 0;
-
-var _animatedSprite = require("../graphics/animatedSprite");
-
-var _baseComponent = require("./baseComponent");
-
-var _spriteComponent = require("./spriteComponent");
-
-var _vector = require("../math/vector3");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var AnimatedSpriteComponentData =
-/** @class */
-function (_super) {
-  __extends(AnimatedSpriteComponentData, _super);
-
-  function AnimatedSpriteComponentData() {
-    var _this = _super !== null && _super.apply(this, arguments) || this;
-
-    _this.frameSequence = [];
-    _this.autoPlay = true;
-    _this.frameTime = 33;
-    return _this;
-  }
-
-  AnimatedSpriteComponentData.prototype.setFromJson = function (json) {
-    _super.prototype.setFromJson.call(this, json);
-
-    if (json.autoPlay !== undefined) {
-      this.autoPlay = Boolean(json.autoPlay);
-    }
-
-    if (json.frameWidth === undefined) {
-      throw new Error("AnimatedComponentData requires 'frameWidth' to be defined");
-    } else {
-      this.frameWidth = Number(json.frameWidth);
-    }
-
-    if (json.frameHeight === undefined) {
-      throw new Error("AnimatedComponentData requires 'frameHeight' to be defined");
-    } else {
-      this.frameHeight = Number(json.frameHeight);
-    }
-
-    if (json.frameCount === undefined) {
-      throw new Error("AnimatedComponentData requires 'frameCount' to be defined");
-    } else {
-      this.frameCount = Number(json.frameCount);
-    }
-
-    if (json.frameSequence === undefined) {
-      throw new Error("AnimatedComponentData requires 'frameSequence' to be defined");
-    } else {
-      this.frameSequence = json.frameSequence;
-    }
-
-    if (json.frameTime !== undefined) {
-      this.frameTime = Number(json.frameTime);
-    }
-  };
-
-  return AnimatedSpriteComponentData;
-}(_spriteComponent.SpriteComponentData);
-
-exports.AnimatedSpriteComponentData = AnimatedSpriteComponentData;
-
-var AnimatedSpriteComponentBuilder =
-/** @class */
-function () {
-  function AnimatedSpriteComponentBuilder() {}
-
-  Object.defineProperty(AnimatedSpriteComponentBuilder.prototype, "type", {
-    get: function () {
-      return 'animatedSprite';
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  AnimatedSpriteComponentBuilder.prototype.buildFromJson = function (json) {
-    var data = new AnimatedSpriteComponentData();
-    data.setFromJson(json);
-    return new AnimatedSpriteComponent(data);
-  };
-
-  return AnimatedSpriteComponentBuilder;
-}();
-
-exports.AnimatedSpriteComponentBuilder = AnimatedSpriteComponentBuilder;
-
-var AnimatedSpriteComponent =
-/** @class */
-function (_super) {
-  __extends(AnimatedSpriteComponent, _super);
-
-  function AnimatedSpriteComponent(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this._autoPlay = data.autoPlay;
-    var spriteInfo = new _animatedSprite.AnimatedSpriteInfo();
-    spriteInfo.name = name;
-    spriteInfo.materialName = data.materialName;
-    spriteInfo.frameWidth = data.frameWidth;
-    spriteInfo.frameHeight = data.frameHeight;
-    spriteInfo.width = data.frameWidth;
-    spriteInfo.height = data.frameHeight;
-    spriteInfo.frameCount = data.frameCount;
-    spriteInfo.frameSequence = data.frameSequence;
-    spriteInfo.frameTime = data.frameTime;
-    _this._sprite = new _animatedSprite.AnimatedSprite(spriteInfo);
-
-    if (!data.origin.equals(_vector.Vector3.zero)) {
-      _this._sprite.origin.copyFrom(data.origin);
-    }
-
-    return _this;
-  }
-
-  Object.defineProperty(AnimatedSpriteComponent.prototype, "isPlaying", {
-    get: function () {
-      return this._sprite.isPlaying;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  AnimatedSpriteComponent.prototype.load = function () {
-    this._sprite.load();
-  };
-
-  AnimatedSpriteComponent.prototype.updateReady = function () {
-    if (!this._autoPlay) {
-      this._sprite.stop();
-    }
-  };
-
-  AnimatedSpriteComponent.prototype.update = function (time) {
-    this._sprite.update(time);
-
-    _super.prototype.update.call(this, time);
-  };
-
-  AnimatedSpriteComponent.prototype.render = function (shader) {
-    this._sprite.draw(shader, this.owner.worldMatrix);
-
-    _super.prototype.render.call(this, shader);
-  };
-
-  AnimatedSpriteComponent.prototype.play = function () {
-    this._sprite.play();
-  };
-
-  AnimatedSpriteComponent.prototype.stop = function () {
-    this._sprite.stop();
-  };
-
-  AnimatedSpriteComponent.prototype.setFrame = function (frameNumber) {
-    this._sprite.setFrame(frameNumber);
-  };
-
-  return AnimatedSpriteComponent;
-}(_baseComponent.BaseComponent);
-
-exports.AnimatedSpriteComponent = AnimatedSpriteComponent;
-},{"../graphics/animatedSprite":"node_modules/xgl/dist/graphics/animatedSprite.js","./baseComponent":"node_modules/xgl/dist/components/baseComponent.js","./spriteComponent":"node_modules/xgl/dist/components/spriteComponent.js","../math/vector3":"node_modules/xgl/dist/math/vector3.js"}],"node_modules/xgl/dist/graphics/texture.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Texture = void 0;
-
-var _gl = require("../gl/gl");
-
-var _message = require("../message/message");
-
-var _assetManager = require("../assets/assetManager");
-
-var LEVEL = 0;
-var BORDER = 0;
-var TEMP_IMAGE_DATA = new Uint8Array([255, 255, 255, 255]);
-
-var Texture =
-/** @class */
-function () {
-  function Texture(name, width, height) {
-    if (width === void 0) {
-      width = 1;
-    }
-
-    if (height === void 0) {
-      height = 1;
-    }
-
-    this._isLoaded = false;
-    this._name = name;
-    this._width = width;
-    this._height = height;
-    this._handle = _gl.gl.createTexture();
-    this.bind();
-
-    _gl.gl.texImage2D(_gl.gl.TEXTURE_2D, LEVEL, _gl.gl.RGBA, 1, 1, BORDER, _gl.gl.RGBA, _gl.gl.UNSIGNED_BYTE, TEMP_IMAGE_DATA);
-
-    var asset = _assetManager.AssetManager.getAsset(this.name);
-
-    if (asset !== undefined) {
-      this.loadTextureFromAsset(asset);
-    } else {
-      _message.Message.subscribe(_assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED + this.name, this);
-    }
-  }
-
-  Object.defineProperty(Texture.prototype, "name", {
-    get: function () {
-      return this._name;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Texture.prototype, "isLoaded", {
-    get: function () {
-      return this._isLoaded;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Texture.prototype, "width", {
-    get: function () {
-      return this._width;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Texture.prototype, "height", {
-    get: function () {
-      return this._height;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Texture.prototype.destroy = function () {
-    _gl.gl.deleteTexture(this._handle);
-  };
-
-  Texture.prototype.activateAndBind = function (textureUnit) {
-    if (textureUnit === void 0) {
-      textureUnit = 0;
-    }
-
-    _gl.gl.activeTexture(_gl.gl.TEXTURE0 + textureUnit);
-
-    this.bind();
-  };
-
-  Texture.prototype.bind = function () {
-    _gl.gl.bindTexture(_gl.gl.TEXTURE_2D, this._handle);
-  };
-
-  Texture.prototype.unbind = function () {
-    _gl.gl.bindTexture(_gl.gl.TEXTURE_2D, undefined);
-  };
-
-  Texture.prototype.onMessage = function (message) {
-    if (message.code === _assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED + this.name) {
-      this.loadTextureFromAsset(message.context);
-    }
-  };
-
-  Texture.prototype.loadTextureFromAsset = function (asset) {
-    this._width = asset.width;
-    this._height = asset.height;
-    this.bind();
-
-    _gl.gl.texImage2D(_gl.gl.TEXTURE_2D, LEVEL, _gl.gl.RGBA, _gl.gl.RGBA, _gl.gl.UNSIGNED_BYTE, asset.data);
-
-    if (this.isPowerOf2()) {
-      _gl.gl.generateMipmap(_gl.gl.TEXTURE_2D);
-    } else {
-      // Do not generate a mipmap and clamp wrapping to edge
-      // If it isnot a powered of 2 texture we cannot tile it in webgl
-      _gl.gl.texParameteri(_gl.gl.TEXTURE_2D, _gl.gl.TEXTURE_WRAP_S, _gl.gl.CLAMP_TO_EDGE);
-
-      _gl.gl.texParameteri(_gl.gl.TEXTURE_2D, _gl.gl.TEXTURE_WRAP_T, _gl.gl.CLAMP_TO_EDGE);
-    } // TODO: Set texture filtering based on configuration
-    // gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    // Pixelated look with NEAREST
-
-
-    _gl.gl.texParameteri(_gl.gl.TEXTURE_2D, _gl.gl.TEXTURE_MIN_FILTER, _gl.gl.NEAREST);
-
-    _gl.gl.texParameteri(_gl.gl.TEXTURE_2D, _gl.gl.TEXTURE_MAG_FILTER, _gl.gl.NEAREST);
-
-    this._isLoaded = true;
-  };
-
-  Texture.prototype.isPowerOf2 = function () {
-    return this.isValuePowerOf2(this._width) && this.isValuePowerOf2(this._height);
-  };
-
-  Texture.prototype.isValuePowerOf2 = function (value) {
-    return (value & value - 1) == 0;
-  };
-
-  return Texture;
-}();
-
-exports.Texture = Texture;
-},{"../gl/gl":"node_modules/xgl/dist/gl/gl.js","../message/message":"node_modules/xgl/dist/message/message.js","../assets/assetManager":"node_modules/xgl/dist/assets/assetManager.js"}],"node_modules/xgl/dist/graphics/textureManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.TextureManager = void 0;
-
-var _texture = require("./texture");
-
-var TextureReferenceNode =
-/** @class */
-function () {
-  function TextureReferenceNode(texture) {
-    this.referenceCount = 1;
-    this.texture = texture;
-  }
-
-  return TextureReferenceNode;
-}();
-
-var TextureManager =
-/** @class */
-function () {
-  function TextureManager() {}
-
-  TextureManager.getTexture = function (textureName) {
-    if (TextureManager._textures[name] === undefined) {
-      var texture = new _texture.Texture(textureName);
-      TextureManager._textures[textureName] = new TextureReferenceNode(texture);
-    } else {
-      TextureManager._textures[textureName].referenceCount++;
-    }
-
-    return TextureManager._textures[textureName].texture;
-  };
-
-  TextureManager.releaseTexture = function (textureName) {
-    if (TextureManager._textures[name] === undefined) {
-      console.warn("A texture named " + textureName + " does not exist and cannot be released");
-    } else {
-      TextureManager._textures[textureName].referenceCount--;
-
-      if (TextureManager._textures[textureName].referenceCount < 1) {
-        TextureManager._textures[textureName].texture.destroy();
-
-        TextureManager._textures[textureName] = undefined;
-        delete TextureManager._textures[textureName];
-      }
-    }
-  };
-
-  TextureManager._textures = {};
-  return TextureManager;
-}();
-
-exports.TextureManager = TextureManager;
-},{"./texture":"node_modules/xgl/dist/graphics/texture.js"}],"node_modules/xgl/dist/graphics/material.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Material = void 0;
-
-var _textureManager = require("./textureManager");
-
-var Material =
-/** @class */
-function () {
-  function Material(name, diffuseTextureName, tint) {
-    this._name = name;
-    this._diffuseTextureName = diffuseTextureName;
-    this._tint = tint;
-
-    if (this._diffuseTextureName !== undefined) {
-      this._diffuseTexture = _textureManager.TextureManager.getTexture(this._diffuseTextureName);
-    }
-  }
-
-  Object.defineProperty(Material.prototype, "name", {
-    get: function () {
-      return this._name;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Material.prototype, "diffuseTextureName", {
-    get: function () {
-      return this._diffuseTextureName;
-    },
-    set: function (value) {
-      if (this._diffuseTextureName !== undefined) {
-        _textureManager.TextureManager.releaseTexture(this._diffuseTextureName);
-      }
-
-      this._diffuseTextureName = value;
-
-      if (this._diffuseTextureName !== undefined) {
-        this._diffuseTexture = _textureManager.TextureManager.getTexture(this._diffuseTextureName);
-      }
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Material.prototype, "diffuseTexture", {
-    get: function () {
-      return this._diffuseTexture;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Material.prototype, "tint", {
-    get: function () {
-      return this._tint;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Material.prototype.destroy = function () {
-    _textureManager.TextureManager.releaseTexture(this._diffuseTextureName);
-
-    this._diffuseTexture = undefined;
-  };
-
-  return Material;
-}();
-
-exports.Material = Material;
-},{"./textureManager":"node_modules/xgl/dist/graphics/textureManager.js"}],"node_modules/xgl/dist/graphics/color.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Color = void 0;
-
-var Color =
-/** @class */
-function () {
-  function Color(r, g, b, a) {
-    if (r === void 0) {
-      r = 255;
-    }
-
-    if (g === void 0) {
-      g = 255;
-    }
-
-    if (b === void 0) {
-      b = 255;
-    }
-
-    if (a === void 0) {
-      a = 255;
-    }
-
-    this._r = r;
-    this._g = g;
-    this._b = b;
-    this._a = a;
-  }
-
-  Object.defineProperty(Color.prototype, "r", {
-    get: function () {
-      return this._r;
-    },
-    set: function (value) {
-      this._r = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Color.prototype, "rFloat", {
-    get: function () {
-      return this._r / 255.0;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Color.prototype, "g", {
-    get: function () {
-      return this._g;
-    },
-    set: function (value) {
-      this._g = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Color.prototype, "gFloat", {
-    get: function () {
-      return this._g / 255.0;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Color.prototype, "b", {
-    get: function () {
-      return this._b;
-    },
-    set: function (value) {
-      this._b = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Color.prototype, "bFloat", {
-    get: function () {
-      return this._b / 255.0;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Color.prototype, "a", {
-    get: function () {
-      return this._a;
-    },
-    set: function (value) {
-      this._a = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Color.prototype, "aFloat", {
-    get: function () {
-      return this._a / 255.0;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Color.prototype.toArray = function () {
-    return [this._r, this._g, this._b, this._a];
-  };
-
-  Color.prototype.toFloatArray = function () {
-    return [this._r / 255, this._g / 255, this._b / 255, this._a / 255];
-  };
-
-  Color.prototype.toFloat32Array = function () {
-    return new Float32Array(this.toFloatArray());
-  };
-
-  Color.white = function () {
-    return new Color(255, 255, 255, 255);
-  };
-
-  Color.black = function () {
-    return new Color(0, 0, 0, 255);
-  };
-
-  Color.red = function () {
-    return new Color(255, 0, 0, 255);
-  };
-
-  Color.green = function () {
-    return new Color(0, 255, 0, 255);
-  };
-
-  Color.blue = function () {
-    return new Color(0, 0, 255, 255);
-  };
-
-  return Color;
-}();
-
-exports.Color = Color;
-},{}],"node_modules/xgl/dist/math/matrix4x4.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Matrix4x4 = void 0;
-
-// Migrate math to use gl matrix library
-// http://glmatrix.net/
-// import { mat4 } from 'gl-matrix';
-var Matrix4x4 =
-/** @class */
-function () {
-  function Matrix4x4() {
-    this._data = []; // Identity matrix
-
-    this._data = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, // Translation: x, y, z, n
-    0, 0, 0, 1];
-  }
-
-  Object.defineProperty(Matrix4x4.prototype, "data", {
-    get: function () {
-      return this._data;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Matrix4x4.identity = function () {
-    return new Matrix4x4();
-  }; // orthographic matrix renders all as it if would all be flat
-
-
-  Matrix4x4.orthographic = function (left, right, bottom, top, nearClip, farClip) {
-    var m = new Matrix4x4();
-    var lr = 1.0 / (left - right);
-    var bt = 1.0 / (bottom - top);
-    var nf = 1.0 / (nearClip - farClip); // Replacing the diagonal 1s
-
-    m._data[0] = -2.0 * lr;
-    m._data[5] = -2.0 * bt;
-    m._data[10] = -2.0 * nf; // Replacing last row
-
-    m._data[12] = (left + right) * lr;
-    m._data[13] = (top + bottom) * bt;
-    m._data[14] = (farClip + nearClip) * nf;
-    return m;
-  };
-
-  Matrix4x4.translation = function (position) {
-    var m = new Matrix4x4();
-    m._data[12] = position.x;
-    m._data[13] = position.y;
-    m._data[14] = position.z;
-    return m;
-  };
-  /**
-   * Creates a rotation matrix on the X axis from the provided angle in radians.
-   * @param angleInRadians The angle in radians.
-   */
-
-
-  Matrix4x4.rotationX = function (angleInRadians) {
-    var m = new Matrix4x4();
-    var c = Math.cos(angleInRadians);
-    var s = Math.sin(angleInRadians);
-    m._data[5] = c;
-    m._data[6] = s;
-    m._data[9] = -s;
-    m._data[10] = c;
-    return m;
-  };
-  /**
-   * Creates a rotation matrix on the Y axis from the provided angle in radians.
-   * @param angleInRadians The angle in radians.
-   */
-
-
-  Matrix4x4.rotationY = function (angleInRadians) {
-    var m = new Matrix4x4();
-    var c = Math.cos(angleInRadians);
-    var s = Math.sin(angleInRadians);
-    m._data[0] = c;
-    m._data[2] = -s;
-    m._data[8] = s;
-    m._data[10] = c;
-    return m;
-  };
-  /**
-   * Creates a rotation matrix on the Z axis from the provided angle in radians.
-   *
-   *  0..PI -> Half Rotation
-   *  0..2*PI -> Full Rotation
-   *
-   * @param angleInRadians The angle in radians.
-   */
-
-
-  Matrix4x4.rotationZ = function (angleInRadians) {
-    var m = new Matrix4x4();
-    var c = Math.cos(angleInRadians);
-    var s = Math.sin(angleInRadians);
-    m._data[0] = c;
-    m._data[1] = s;
-    m._data[4] = -s;
-    m._data[5] = c;
-    return m;
-  };
-  /**
-   * Creates a rotation matrix from the provided angles in radians.
-   * @param xRadians The angle in radians on the X axis.
-   * @param yRadians The angle in radians on the Y axis.
-   * @param zRadians The angle in radians on the Z axis.
-   */
-
-
-  Matrix4x4.rotationXYZ = function (xRadians, yRadians, zRadians) {
-    var rx = Matrix4x4.rotationX(xRadians);
-    var ry = Matrix4x4.rotationY(yRadians);
-    var rz = Matrix4x4.rotationZ(zRadians); // ZYX
-
-    return Matrix4x4.multiply(Matrix4x4.multiply(rz, ry), rx);
-  };
-  /**
-   * Creates a scale matrix.
-   * @param scale The scale to use.
-   */
-
-
-  Matrix4x4.scale = function (scale) {
-    var m = new Matrix4x4();
-    m._data[0] = scale.x;
-    m._data[5] = scale.y;
-    m._data[10] = scale.z;
-    return m;
-  };
-  /**
-   * Multiplies matrix a by matrix b and returns the result.
-   * @param a The first matrix.
-   * @param b The second matrix.
-   */
-
-
-  Matrix4x4.multiply = function (a, b) {
-    var m = new Matrix4x4();
-    var b00 = b._data[0 * 4 + 0];
-    var b01 = b._data[0 * 4 + 1];
-    var b02 = b._data[0 * 4 + 2];
-    var b03 = b._data[0 * 4 + 3];
-    var b10 = b._data[1 * 4 + 0];
-    var b11 = b._data[1 * 4 + 1];
-    var b12 = b._data[1 * 4 + 2];
-    var b13 = b._data[1 * 4 + 3];
-    var b20 = b._data[2 * 4 + 0];
-    var b21 = b._data[2 * 4 + 1];
-    var b22 = b._data[2 * 4 + 2];
-    var b23 = b._data[2 * 4 + 3];
-    var b30 = b._data[3 * 4 + 0];
-    var b31 = b._data[3 * 4 + 1];
-    var b32 = b._data[3 * 4 + 2];
-    var b33 = b._data[3 * 4 + 3];
-    var a00 = a._data[0 * 4 + 0];
-    var a01 = a._data[0 * 4 + 1];
-    var a02 = a._data[0 * 4 + 2];
-    var a03 = a._data[0 * 4 + 3];
-    var a10 = a._data[1 * 4 + 0];
-    var a11 = a._data[1 * 4 + 1];
-    var a12 = a._data[1 * 4 + 2];
-    var a13 = a._data[1 * 4 + 3];
-    var a20 = a._data[2 * 4 + 0];
-    var a21 = a._data[2 * 4 + 1];
-    var a22 = a._data[2 * 4 + 2];
-    var a23 = a._data[2 * 4 + 3];
-    var a30 = a._data[3 * 4 + 0];
-    var a31 = a._data[3 * 4 + 1];
-    var a32 = a._data[3 * 4 + 2];
-    var a33 = a._data[3 * 4 + 3];
-    m._data[0] = b00 * a00 + b01 * a10 + b02 * a20 + b03 * a30;
-    m._data[1] = b00 * a01 + b01 * a11 + b02 * a21 + b03 * a31;
-    m._data[2] = b00 * a02 + b01 * a12 + b02 * a22 + b03 * a32;
-    m._data[3] = b00 * a03 + b01 * a13 + b02 * a23 + b03 * a33;
-    m._data[4] = b10 * a00 + b11 * a10 + b12 * a20 + b13 * a30;
-    m._data[5] = b10 * a01 + b11 * a11 + b12 * a21 + b13 * a31;
-    m._data[6] = b10 * a02 + b11 * a12 + b12 * a22 + b13 * a32;
-    m._data[7] = b10 * a03 + b11 * a13 + b12 * a23 + b13 * a33;
-    m._data[8] = b20 * a00 + b21 * a10 + b22 * a20 + b23 * a30;
-    m._data[9] = b20 * a01 + b21 * a11 + b22 * a21 + b23 * a31;
-    m._data[10] = b20 * a02 + b21 * a12 + b22 * a22 + b23 * a32;
-    m._data[11] = b20 * a03 + b21 * a13 + b22 * a23 + b23 * a33;
-    m._data[12] = b30 * a00 + b31 * a10 + b32 * a20 + b33 * a30;
-    m._data[13] = b30 * a01 + b31 * a11 + b32 * a21 + b33 * a31;
-    m._data[14] = b30 * a02 + b31 * a12 + b32 * a22 + b33 * a32;
-    m._data[15] = b30 * a03 + b31 * a13 + b32 * a23 + b33 * a33;
-    return m;
-  };
-  /** Returns the data of this matrix as a Float32Array. */
-
-
-  Matrix4x4.prototype.toFloat32Array = function () {
-    return new Float32Array(this._data);
-  };
-  /**
-   * Creates a copy of matrix m.
-   * @param m The matrix to copy.
-   */
-
-
-  Matrix4x4.prototype.copyFrom = function (m) {
-    for (var i = 0; i < 16; ++i) {
-      this._data[i] = m._data[i];
-    }
-  };
-
-  return Matrix4x4;
-}();
-
-exports.Matrix4x4 = Matrix4x4;
-},{}],"node_modules/xgl/dist/math/transform.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Transform = void 0;
-
-var _vector = require("./vector3");
-
-var _matrix4x = require("./matrix4x4");
-
-/**
- * Represents the transformation of an object, providing position, rotation and scale.
- */
-var Transform =
-/** @class */
-function () {
-  function Transform() {
-    /** The position. Default: Vector3.zero */
-    this.position = _vector.Vector3.zero;
-    /** The rotation. Default: Vector3.zero */
-
-    this.rotation = _vector.Vector3.zero;
-    /** The rotation. Default: Vector3.one */
-
-    this.scale = _vector.Vector3.one;
-  }
-  /**
-   * Creates a copy of the provided transform.
-   * @param transform The transform to be copied.
-   */
-
-
-  Transform.prototype.copyFrom = function (transform) {
-    this.position.copyFrom(transform.position);
-    this.rotation.copyFrom(transform.rotation);
-    this.scale.copyFrom(transform.scale);
-  };
-  /** Creates and returns a matrix based on this transform. */
-
-
-  Transform.prototype.getTransformationMatrix = function () {
-    var translation = _matrix4x.Matrix4x4.translation(this.position);
-
-    var rotation = _matrix4x.Matrix4x4.rotationXYZ(this.rotation.x, this.rotation.y, this.rotation.z);
-
-    var scale = _matrix4x.Matrix4x4.scale(this.scale); // T * R * S
-
-
-    return _matrix4x.Matrix4x4.multiply(_matrix4x.Matrix4x4.multiply(translation, rotation), scale);
-  };
-  /**
-   * Sets the values of this transform to the ones provided in the given JSON.
-   * Only values which are overridden need be provided. For example, a position of [0,1,0]
-   * needs only to provide the y value (1) as 0 is the default for x and z.
-   * @param json The JSON to set from.
-   */
-
-
-  Transform.prototype.setFromJson = function (json) {
-    if (json.position !== undefined) {
-      this.position.setFromJson(json.position);
-    }
-
-    if (json.rotation !== undefined) {
-      this.rotation.setFromJson(json.rotation);
-    }
-
-    if (json.scale !== undefined) {
-      this.scale.setFromJson(json.scale);
-    }
-  };
-
-  return Transform;
-}();
-
-exports.Transform = Transform;
-},{"./vector3":"node_modules/xgl/dist/math/vector3.js","./matrix4x4":"node_modules/xgl/dist/math/matrix4x4.js"}],"node_modules/xgl/dist/world/simObject.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.SimObject = void 0;
-
-var _transform = require("../math/transform");
-
-var _matrix4x = require("../math/matrix4x4");
-
-var _vector = require("../math/vector3");
-
-var SimObject =
-/** @class */
-function () {
-  function SimObject(id, name, scene) {
-    this._children = [];
-    this._isLoaded = false;
-    this._components = [];
-    this._behaviors = [];
-    this._isVisible = true;
-    this._localMatrix = _matrix4x.Matrix4x4.identity();
-    this._worldMatrix = _matrix4x.Matrix4x4.identity();
-    this.transform = new _transform.Transform();
-    this._id = id;
-    this.name = name;
-    this._scene = scene;
-  }
-
-  Object.defineProperty(SimObject.prototype, "id", {
-    get: function () {
-      return this._id;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(SimObject.prototype, "parent", {
-    get: function () {
-      return this._parent;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(SimObject.prototype, "worldMatrix", {
-    get: function () {
-      return this._worldMatrix;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(SimObject.prototype, "isLoaded", {
-    get: function () {
-      return this._isLoaded;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(SimObject.prototype, "isVisible", {
-    get: function () {
-      return this._isVisible;
-    },
-    set: function (value) {
-      this._isVisible = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  SimObject.prototype.addChild = function (child) {
-    child._parent = this;
-
-    this._children.push(child);
-
-    child.onAdded(this._scene);
-  };
-
-  SimObject.prototype.removeChaild = function (child) {
-    var index = this._children.indexOf(child);
-
-    if (index !== -1) {
-      child._parent = undefined;
-
-      this._children.splice(index, 1);
-    }
-  };
-
-  SimObject.prototype.getComponentByName = function (name) {
-    for (var _i = 0, _a = this._components; _i < _a.length; _i++) {
-      var component = _a[_i];
-
-      if (component.name === name) {
-        return component;
-      }
-    }
-
-    for (var _b = 0, _c = this._children; _b < _c.length; _b++) {
-      var child = _c[_b];
-      var component = this.getComponentByName(name);
-
-      if (component !== undefined) {
-        return component;
-      }
-    }
-
-    return undefined;
-  };
-
-  SimObject.prototype.getBehaviorByName = function (name) {
-    for (var _i = 0, _a = this._behaviors; _i < _a.length; _i++) {
-      var behavior = _a[_i];
-
-      if (behavior.name === name) {
-        return behavior;
-      }
-    }
-
-    for (var _b = 0, _c = this._children; _b < _c.length; _b++) {
-      var child = _c[_b];
-      var behavior = this.getBehaviorByName(name);
-
-      if (behavior !== undefined) {
-        return behavior;
-      }
-    }
-
-    return undefined;
-  };
-
-  SimObject.prototype.getObjectByName = function (name) {
-    if (this.name === name) {
-      return this;
-    }
-
-    for (var _i = 0, _a = this._children; _i < _a.length; _i++) {
-      var child = _a[_i];
-      var result = child.getObjectByName(name);
-
-      if (result !== undefined) {
-        return result;
-      }
-    }
-
-    return undefined;
-  };
-
-  SimObject.prototype.addComponent = function (component) {
-    this._components.push(component);
-
-    component.setOwner(this);
-  };
-
-  SimObject.prototype.addBehavior = function (behavior) {
-    this._behaviors.push(behavior);
-
-    behavior.setOwner(this);
-  };
-
-  SimObject.prototype.load = function () {
-    this._isLoaded = true;
-
-    for (var _i = 0, _a = this._components; _i < _a.length; _i++) {
-      var c = _a[_i];
-      c.load();
-    }
-
-    for (var _b = 0, _c = this._children; _b < _c.length; _b++) {
-      var child = _c[_b];
-      child.load();
-    }
-  };
-
-  SimObject.prototype.updateReady = function () {
-    for (var _i = 0, _a = this._components; _i < _a.length; _i++) {
-      var c = _a[_i];
-      c.updateReady();
-    }
-
-    for (var _b = 0, _c = this._behaviors; _b < _c.length; _b++) {
-      var b = _c[_b];
-      b.updateReady();
-    }
-
-    for (var _d = 0, _e = this._children; _d < _e.length; _d++) {
-      var child = _e[_d];
-      child.updateReady();
-    }
-  };
-
-  SimObject.prototype.update = function (time) {
-    // Dont do that on the update MSInputMethodContext.Only when it changes.For now in here
-    this._localMatrix = this.transform.getTransformationMatrix();
-    this.updateWorldMatrix(this.parent !== undefined ? this.parent.worldMatrix : undefined);
-
-    for (var _i = 0, _a = this._components; _i < _a.length; _i++) {
-      var c = _a[_i];
-      c.update(time);
-    }
-
-    for (var _b = 0, _c = this._behaviors; _b < _c.length; _b++) {
-      var b = _c[_b];
-      b.update(time);
-    }
-
-    for (var _d = 0, _e = this._children; _d < _e.length; _d++) {
-      var child = _e[_d];
-      child.update(time);
-    }
-  };
-
-  SimObject.prototype.render = function (shader) {
-    if (!this.isVisible) {
-      return;
-    }
-
-    for (var _i = 0, _a = this._components; _i < _a.length; _i++) {
-      var c = _a[_i];
-      c.render(shader);
-    }
-
-    for (var _b = 0, _c = this._children; _b < _c.length; _b++) {
-      var child = _c[_b];
-      child.render(shader);
-    }
-  };
-
-  SimObject.prototype.getWorldPosition = function () {
-    return new _vector.Vector3(this._worldMatrix.data[12], this._worldMatrix.data[13], this._worldMatrix.data[14]);
-  };
-
-  SimObject.prototype.onAdded = function (scene) {
-    this._scene = scene;
-  };
-
-  SimObject.prototype.updateWorldMatrix = function (parentWorldMatrix) {
-    if (parentWorldMatrix !== undefined) {
-      this._worldMatrix = _matrix4x.Matrix4x4.multiply(parentWorldMatrix, this._localMatrix);
-    } else {
-      this.worldMatrix.copyFrom(this._localMatrix);
-    }
-  };
-
-  return SimObject;
-}();
-
-exports.SimObject = SimObject;
-},{"../math/transform":"node_modules/xgl/dist/math/transform.js","../math/matrix4x4":"node_modules/xgl/dist/math/matrix4x4.js","../math/vector3":"node_modules/xgl/dist/math/vector3.js"}],"node_modules/xgl/dist/world/scene.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Scene = void 0;
-
-var _simObject = require("./simObject");
-
-var Scene =
-/** @class */
-function () {
-  function Scene() {
-    this._root = new _simObject.SimObject(0, '__ROOT__', this);
-  }
-
-  Object.defineProperty(Scene.prototype, "root", {
-    get: function () {
-      return this._root;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Scene.prototype, "isLoaded", {
-    get: function () {
-      return this._root.isLoaded;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Scene.prototype.addObject = function (object) {
-    this._root.addChild(object);
-  };
-
-  Scene.prototype.getObjectByName = function (name) {
-    return this._root.getObjectByName(name);
-  };
-
-  Scene.prototype.load = function () {
-    this._root.load();
-  };
-
-  Scene.prototype.update = function (time) {
-    this._root.update(time);
-  };
-
-  Scene.prototype.render = function (shader) {
-    this._root.render(shader);
-  };
-
-  return Scene;
-}();
-
-exports.Scene = Scene;
-},{"./simObject":"node_modules/xgl/dist/world/simObject.js"}],"node_modules/xgl/dist/components/componentManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ComponentManager = void 0;
-
-var ComponentManager =
-/** @class */
-function () {
-  function ComponentManager() {}
-
-  ComponentManager.registerBuilder = function (builder) {
-    ComponentManager._registeredBuilders[builder.type] = builder;
-  };
-
-  ComponentManager.extractComponent = function (json) {
-    var component = undefined;
-
-    if (json.type !== undefined) {
-      if (ComponentManager._registeredBuilders[String(json.type)] !== undefined) {
-        component = ComponentManager._registeredBuilders[String(json.type)].buildFromJson(json);
-      }
-    }
-
-    if (component === undefined) {
-      throw new Error("Component manager error - type is missing or builder is not registered for this type.");
-    }
-
-    return component;
-  };
-
-  ComponentManager._registeredBuilders = {};
-  return ComponentManager;
-}();
-
-exports.ComponentManager = ComponentManager;
-},{}],"node_modules/xgl/dist/behaviors/behaviorManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BehaviorManager = void 0;
-
-var BehaviorManager =
-/** @class */
-function () {
-  function BehaviorManager() {}
-
-  BehaviorManager.registerBuilder = function (builder) {
-    BehaviorManager._registeredBuilders[builder.type] = builder;
-  };
-
-  BehaviorManager.extractBehavior = function (json) {
-    var behavior = undefined;
-
-    if (json.type !== undefined) {
-      if (BehaviorManager._registeredBuilders[String(json.type)] !== undefined) {
-        behavior = BehaviorManager._registeredBuilders[String(json.type)].buildFromJson(json);
-      }
-    }
-
-    if (behavior === undefined) {
-      throw new Error("Behavior manager error - type is missing or builder is not registered for this type.");
-    }
-
-    return behavior;
-  };
-
-  BehaviorManager._registeredBuilders = {};
-  return BehaviorManager;
-}();
-
-exports.BehaviorManager = BehaviorManager;
-},{}],"node_modules/xgl/dist/world/zone.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Zone = exports.ZoneState = void 0;
-
-var _scene = require("./scene");
-
-var _simObject = require("./simObject");
-
-var _componentManager = require("../components/componentManager");
-
-var _behaviorManager = require("../behaviors/behaviorManager");
-
-var ZoneState;
-exports.ZoneState = ZoneState;
-
-(function (ZoneState) {
-  ZoneState[ZoneState["UNINITIALIZED"] = 0] = "UNINITIALIZED";
-  ZoneState[ZoneState["LOADING"] = 1] = "LOADING";
-  ZoneState[ZoneState["UPDATING"] = 2] = "UPDATING";
-})(ZoneState || (exports.ZoneState = ZoneState = {}));
-
-var Zone =
-/** @class */
-function () {
-  function Zone(id, name, description) {
-    this._state = ZoneState.UNINITIALIZED;
-    this._globalID = -1;
-    this._id = id;
-    this._name = name;
-    this._description = description;
-    this._scene = new _scene.Scene();
-  }
-
-  Object.defineProperty(Zone.prototype, "id", {
-    get: function () {
-      return this._id;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Zone.prototype, "name", {
-    get: function () {
-      return this._name;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Zone.prototype, "description", {
-    get: function () {
-      return this._description;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(Zone.prototype, "scene", {
-    get: function () {
-      return this._scene;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Zone.prototype.initialize = function (zoneData) {
-    if (zoneData.objects === undefined) {
-      throw new Error('Zone initialization error objects not present.');
-    }
-
-    for (var o in zoneData.objects) {
-      var obj = zoneData.objects[o];
-      this.loadSimObject(obj, this._scene.root);
-    }
-  };
-
-  Zone.prototype.load = function () {
-    this._state = ZoneState.LOADING;
-
-    this._scene.load();
-
-    this._scene.root.updateReady();
-
-    this._state = ZoneState.UPDATING;
-  };
-
-  Zone.prototype.unload = function () {};
-
-  Zone.prototype.update = function (time) {
-    if (this._state === ZoneState.UPDATING) {
-      this._scene.update(time);
-    }
-  };
-
-  Zone.prototype.render = function (shader) {
-    if (this._state === ZoneState.UPDATING) {
-      this._scene.render(shader);
-    }
-  };
-
-  Zone.prototype.onActivated = function () {};
-
-  Zone.prototype.onDeactivated = function () {};
-
-  Zone.prototype.loadSimObject = function (dataSection, parent) {
-    var name = '';
-
-    if (dataSection.name !== undefined) {
-      name = String(dataSection.name);
-    }
-
-    this._globalID++;
-    var simObject = new _simObject.SimObject(this._globalID, name, this._scene);
-
-    if (dataSection.transform !== undefined) {
-      simObject.transform.setFromJson(dataSection.transform);
-    }
-
-    if (dataSection.components !== undefined) {
-      for (var c in dataSection.components) {
-        var data = dataSection.components[c];
-
-        var component = _componentManager.ComponentManager.extractComponent(data);
-
-        simObject.addComponent(component);
-      }
-    }
-
-    if (dataSection.behaviors !== undefined) {
-      for (var b in dataSection.behaviors) {
-        var data = dataSection.behaviors[b];
-
-        var behavior = _behaviorManager.BehaviorManager.extractBehavior(data);
-
-        simObject.addBehavior(behavior);
-      }
-    }
-
-    if (dataSection.children !== undefined) {
-      for (var i in dataSection.children) {
-        var obj = dataSection.children[i];
-        this.loadSimObject(obj, simObject);
-      }
-    }
-
-    if (parent !== undefined) {
-      parent.addChild(simObject);
-    }
-  };
-
-  return Zone;
-}();
-
-exports.Zone = Zone;
-},{"./scene":"node_modules/xgl/dist/world/scene.js","./simObject":"node_modules/xgl/dist/world/simObject.js","../components/componentManager":"node_modules/xgl/dist/components/componentManager.js","../behaviors/behaviorManager":"node_modules/xgl/dist/behaviors/behaviorManager.js"}],"node_modules/xgl/dist/world/zoneManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ZoneManager = void 0;
-
-var _zone = require("./zone");
-
-var _assetManager = require("../assets/assetManager");
-
-var _message = require("../message/message");
-
-var ZoneManager =
-/** @class */
-function () {
-  function ZoneManager() {}
-
-  ZoneManager.initialize = function () {
-    ZoneManager._inst = new ZoneManager(); // Temporary
-
-    ZoneManager._registeredZones[0] = "assets/zones/testZone.json";
-  };
-
-  ZoneManager.changeZone = function (id) {
-    if (this._activeZone !== undefined) {
-      ZoneManager._activeZone.onDeactivated();
-
-      ZoneManager._activeZone.unload();
-
-      ZoneManager._activeZone = undefined;
-    }
-
-    if (ZoneManager._registeredZones[id] !== undefined) {
-      if (_assetManager.AssetManager.isAssetLoaded(ZoneManager._registeredZones[id])) {
-        var asset = _assetManager.AssetManager.getAsset(ZoneManager._registeredZones[id]);
-
-        ZoneManager.loadZone(asset);
-      } else {
-        _message.Message.subscribe(_assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED + ZoneManager._registeredZones[id], ZoneManager._inst);
-
-        _assetManager.AssetManager.loadAsset(ZoneManager._registeredZones[id]);
-      }
-    } else {
-      throw new Error("Zone id: " + id + " does not exist");
-    }
-  };
-
-  ZoneManager.update = function (time) {
-    if (ZoneManager._activeZone !== undefined) {
-      ZoneManager._activeZone.update(time);
-    }
-  };
-
-  ZoneManager.render = function (shader) {
-    if (ZoneManager._activeZone !== undefined) {
-      ZoneManager._activeZone.render(shader);
-    }
-  };
-
-  ZoneManager.prototype.onMessage = function (message) {
-    if (message.code.indexOf(_assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED) !== -1) {
-      var asset = message.context;
-      ZoneManager.loadZone(asset);
-    }
-  };
-
-  ZoneManager.loadZone = function (asset) {
-    var zoneData = asset.data;
-    var zoneId;
-
-    if (zoneData.id === undefined) {
-      throw new Error("Zone file format exception. Zone ID not present");
-    } else {
-      zoneId = Number(zoneData.id);
-    }
-
-    var zoneName;
-
-    if (zoneData.name === undefined) {
-      throw new Error("Zone file format exception. Zone name not present");
-    } else {
-      zoneName = String(zoneData.name);
-    }
-
-    var zoneDescription = '';
-
-    if (zoneData.description !== undefined) {
-      zoneDescription = String(zoneData.description);
-    }
-
-    ZoneManager._activeZone = new _zone.Zone(zoneId, zoneName, zoneDescription);
-
-    ZoneManager._activeZone.initialize(zoneData);
-
-    ZoneManager._activeZone.onActivated();
-
-    ZoneManager._activeZone.load();
-
-    _message.Message.send("GAME_READY", this);
-  };
-
-  ZoneManager._globalZoneID = -1;
-  ZoneManager._registeredZones = {};
-  return ZoneManager;
-}();
-
-exports.ZoneManager = ZoneManager;
-},{"./zone":"node_modules/xgl/dist/world/zone.js","../assets/assetManager":"node_modules/xgl/dist/assets/assetManager.js","../message/message":"node_modules/xgl/dist/message/message.js"}],"node_modules/xgl/dist/behaviors/baseBehavior.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BaseBehavior = void 0;
-
-var BaseBehavior =
-/** @class */
-function () {
-  function BaseBehavior(data) {
-    this._data = data;
-    this.name = this._data.name;
-  }
-
-  BaseBehavior.prototype.setOwner = function (owner) {
-    this._owner = owner;
-  };
-
-  BaseBehavior.prototype.updateReady = function () {};
-
-  BaseBehavior.prototype.update = function (time) {};
-
-  BaseBehavior.prototype.apply = function (userData) {};
-
-  return BaseBehavior;
-}();
-
-exports.BaseBehavior = BaseBehavior;
-},{}],"node_modules/xgl/dist/behaviors/rotationBehavior.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.RotationBehavior = exports.RotationBehaviorBuilder = exports.RotationBehaviorData = void 0;
-
-var _baseBehavior = require("./baseBehavior");
-
-var _vector = require("../math/vector3");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var RotationBehaviorData =
-/** @class */
-function () {
-  function RotationBehaviorData() {
-    this.rotation = _vector.Vector3.zero;
-  }
-
-  RotationBehaviorData.prototype.setFromJson = function (json) {
-    if (json.name === undefined) {
-      throw new Error('Name must be defined in behavior data');
-    }
-
-    this.name = String(json.name);
-
-    if (json.rotation !== undefined) {
-      this.rotation.setFromJson(json.rotation);
-    }
-  };
-
-  return RotationBehaviorData;
-}();
-
-exports.RotationBehaviorData = RotationBehaviorData;
-
-var RotationBehaviorBuilder =
-/** @class */
-function () {
-  function RotationBehaviorBuilder() {}
-
-  Object.defineProperty(RotationBehaviorBuilder.prototype, "type", {
-    get: function () {
-      return 'rotation';
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  RotationBehaviorBuilder.prototype.buildFromJson = function (json) {
-    var data = new RotationBehaviorData();
-    data.setFromJson(json);
-    return new RotationBehavior(data);
-  };
-
-  return RotationBehaviorBuilder;
-}();
-
-exports.RotationBehaviorBuilder = RotationBehaviorBuilder;
-
-var RotationBehavior =
-/** @class */
-function (_super) {
-  __extends(RotationBehavior, _super);
-
-  function RotationBehavior(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this.rotation = data.rotation;
-    return _this;
-  }
-
-  RotationBehavior.prototype.update = function (time) {
-    this._owner.transform.rotation.add(this.rotation);
-
-    _super.prototype.update.call(this, time);
-  };
-
-  return RotationBehavior;
-}(_baseBehavior.BaseBehavior);
-
-exports.RotationBehavior = RotationBehavior;
-},{"./baseBehavior":"node_modules/xgl/dist/behaviors/baseBehavior.js","../math/vector3":"node_modules/xgl/dist/math/vector3.js"}],"node_modules/xgl/dist/input/inputManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.InputManager = exports.MouseContext = exports.Keys = void 0;
-
-var _vector = require("../math/vector2");
-
-var _message = require("../message/message");
-
-var Keys;
-exports.Keys = Keys;
-
-(function (Keys) {
-  Keys[Keys["LEFT"] = 37] = "LEFT";
-  Keys[Keys["UP"] = 38] = "UP";
-  Keys[Keys["RIGHT"] = 39] = "RIGHT";
-  Keys[Keys["DOWN"] = 40] = "DOWN";
-})(Keys || (exports.Keys = Keys = {}));
-
-var MouseContext =
-/** @class */
-function () {
-  function MouseContext(lefDown, rightDown, position) {
-    this.leftDown = lefDown;
-    this.rightDown = rightDown;
-    this.position = position;
-  }
-
-  return MouseContext;
-}();
-
-exports.MouseContext = MouseContext;
-
-var InputManager =
-/** @class */
-function () {
-  function InputManager() {}
-
-  InputManager.initialize = function (viewport) {
-    for (var i = 0; i < 255; i++) {
-      InputManager._keys[i] = false;
-    }
-
-    window.addEventListener('keydown', InputManager.onKeyDown);
-    window.addEventListener('keyup', InputManager.onKeyUp);
-    viewport.addEventListener('mousemove', InputManager.onMouseMove);
-    viewport.addEventListener('mousedown', InputManager.onMouseDown);
-    viewport.addEventListener('mouseup', InputManager.onMouseUp);
-  };
-
-  InputManager.isKeyDown = function (key) {
-    return InputManager._keys[key];
-  };
-
-  InputManager.getMousePosition = function () {
-    return new _vector.Vector2(this._mouseX, this._mouseY);
-  };
-
-  InputManager.setResolutionScale = function (scale) {
-    InputManager._resolutionScale.copyFrom(scale);
-  };
-
-  InputManager.onKeyDown = function (event) {
-    InputManager._keys[event.keyCode] = true;
-    return true;
-  };
-
-  InputManager.onKeyUp = function (event) {
-    InputManager._keys[event.keyCode] = false;
-    return true;
-  };
-
-  InputManager.onMouseMove = function (event) {
-    InputManager._previousMouseX = InputManager._mouseX;
-    InputManager._previousMouseY = InputManager._mouseY;
-    var rect = event.target.getBoundingClientRect();
-    InputManager._mouseX = (event.clientX - Math.round(rect.left)) * (1 / InputManager._resolutionScale.x);
-    InputManager._mouseY = (event.clientY - Math.round(rect.top)) * (1 / InputManager._resolutionScale.y);
-  };
-
-  InputManager.onMouseDown = function (event) {
-    if (event.button === 0) {
-      this._letfDown = true;
-    } else if (event.button == 2) {
-      this._rightDown = true;
-    }
-
-    _message.Message.send('MOUSE_DOWN', this, new MouseContext(InputManager._letfDown, InputManager._rightDown, InputManager.getMousePosition()));
-  };
-
-  InputManager.onMouseUp = function (event) {
-    if (event.button === 0) {
-      this._letfDown = false;
-    } else if (event.button == 2) {
-      this._rightDown = false;
-    }
-
-    _message.Message.send('MOUSE_UP', this, new MouseContext(InputManager._letfDown, InputManager._rightDown, InputManager.getMousePosition()));
-  };
-
-  InputManager._keys = [];
-  InputManager._letfDown = false;
-  InputManager._rightDown = false;
-  InputManager._resolutionScale = _vector.Vector2.one;
-  return InputManager;
-}();
-
-exports.InputManager = InputManager;
-},{"../math/vector2":"node_modules/xgl/dist/math/vector2.js","../message/message":"node_modules/xgl/dist/message/message.js"}],"node_modules/xgl/dist/behaviors/keyboardMovementBehavior.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.KeyboardMovementBehavior = exports.KeyboardMovementBehaviorBuilder = exports.KeyboardMovementBehaviorData = void 0;
-
-var _baseBehavior = require("./baseBehavior");
-
-var _inputManager = require("../input/inputManager");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var KeyboardMovementBehaviorData =
-/** @class */
-function () {
-  function KeyboardMovementBehaviorData() {
-    this.speed = 0.1;
-  }
-
-  KeyboardMovementBehaviorData.prototype.setFromJson = function (json) {
-    if (json.name === undefined) {
-      throw new Error('Name must be defined in behavior data');
-    }
-
-    this.name = String(json.name);
-
-    if (json.speed !== undefined) {
-      this.speed = Number(json.speed);
-    }
-  };
-
-  return KeyboardMovementBehaviorData;
-}();
-
-exports.KeyboardMovementBehaviorData = KeyboardMovementBehaviorData;
-
-var KeyboardMovementBehaviorBuilder =
-/** @class */
-function () {
-  function KeyboardMovementBehaviorBuilder() {}
-
-  Object.defineProperty(KeyboardMovementBehaviorBuilder.prototype, "type", {
-    get: function () {
-      return 'keyboardMovement';
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  KeyboardMovementBehaviorBuilder.prototype.buildFromJson = function (json) {
-    var data = new KeyboardMovementBehaviorData();
-    data.setFromJson(json);
-    return new KeyboardMovementBehavior(data);
-  };
-
-  return KeyboardMovementBehaviorBuilder;
-}();
-
-exports.KeyboardMovementBehaviorBuilder = KeyboardMovementBehaviorBuilder;
-
-var KeyboardMovementBehavior =
-/** @class */
-function (_super) {
-  __extends(KeyboardMovementBehavior, _super);
-
-  function KeyboardMovementBehavior(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this.speed = 0.1;
-    _this.speed = data.speed;
-    return _this;
-  }
-
-  KeyboardMovementBehavior.prototype.update = function (time) {
-    if (_inputManager.InputManager.isKeyDown(_inputManager.Keys.LEFT)) {
-      this._owner.transform.position.x -= this.speed;
-    }
-
-    if (_inputManager.InputManager.isKeyDown(_inputManager.Keys.RIGHT)) {
-      this._owner.transform.position.x += this.speed;
-    }
-
-    if (_inputManager.InputManager.isKeyDown(_inputManager.Keys.UP)) {
-      this._owner.transform.position.y -= this.speed;
-    }
-
-    if (_inputManager.InputManager.isKeyDown(_inputManager.Keys.DOWN)) {
-      this._owner.transform.position.y += this.speed;
-    }
-
-    _super.prototype.update.call(this, time);
-  };
-
-  return KeyboardMovementBehavior;
-}(_baseBehavior.BaseBehavior);
-
-exports.KeyboardMovementBehavior = KeyboardMovementBehavior;
-},{"./baseBehavior":"node_modules/xgl/dist/behaviors/baseBehavior.js","../input/inputManager":"node_modules/xgl/dist/input/inputManager.js"}],"node_modules/xgl/dist/audio/audioManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.AudioManager = exports.SoundEffect = void 0;
-
-var SoundEffect =
-/** @class */
-function () {
-  function SoundEffect(assetPath, loop) {
-    this._player = new Audio(assetPath);
-    this.loop = loop;
-  }
-
-  Object.defineProperty(SoundEffect.prototype, "loop", {
-    get: function () {
-      return this._player.loop;
-    },
-    set: function (value) {
-      this._player.loop = value;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  SoundEffect.prototype.destroy = function () {
-    this._player = undefined;
-  };
-
-  SoundEffect.prototype.play = function () {
-    if (!this._player.paused) {
-      this.stop();
-    }
-
-    this._player.play();
-  };
-
-  SoundEffect.prototype.pause = function () {
-    this._player.pause();
-  };
-
-  SoundEffect.prototype.stop = function () {
-    this._player.pause();
-
-    this._player.currentTime = 0;
-  };
-
-  return SoundEffect;
-}();
-
-exports.SoundEffect = SoundEffect;
-
-var AudioManager =
-/** @class */
-function () {
-  function AudioManager() {}
-
-  AudioManager.loadSoundFile = function (name, assetPath, loop) {
-    AudioManager._soundEffects[name] = new SoundEffect(assetPath, loop);
-  };
-
-  AudioManager.playSound = function (name) {
-    if (this._soundEffects[name] !== undefined) {
-      this._soundEffects[name].play();
-    }
-  };
-
-  AudioManager.stopSound = function (name) {
-    if (this._soundEffects[name] !== undefined) {
-      this._soundEffects[name].stop();
-    }
-  };
-
-  AudioManager.stopAll = function (name) {
-    for (var sfx in AudioManager._soundEffects) {
-      this._soundEffects[sfx].stop();
-    }
-  };
-
-  AudioManager.pauseSound = function (name) {
-    if (this._soundEffects[name] !== undefined) {
-      this._soundEffects[name].pause();
-    }
-  };
-
-  AudioManager.pauseAll = function (name) {
-    for (var sfx in AudioManager._soundEffects) {
-      this._soundEffects[sfx].pause();
-    }
-  };
-
-  AudioManager._soundEffects = {};
-  return AudioManager;
-}();
-
-exports.AudioManager = AudioManager;
-},{}],"node_modules/xgl/dist/graphics/shapes2D/circle2D.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Circle2D = void 0;
-
-var _vector = require("../../math/vector2");
-
-var _rectangle2D = require("./rectangle2D");
-
-var Circle2D =
-/** @class */
-function () {
-  function Circle2D() {
-    this.position = _vector.Vector2.zero;
-    this.origin = _vector.Vector2.zero;
-  }
-
-  Object.defineProperty(Circle2D.prototype, "offset", {
-    get: function () {
-      return new _vector.Vector2(this.radius + this.radius * this.origin.x, this.radius + this.radius * this.origin.y);
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Circle2D.prototype.setFromJson = function (json) {
-    if (json.position !== undefined) {
-      this.position.setFromJson(json.position);
-    }
-
-    if (json.offset !== undefined) {
-      this.offset.setFromJson(json.offset);
-    }
-
-    if (json.radius === undefined) {
-      throw new Error("Rectangle2D requires radius to be present.");
-    }
-
-    this.radius = Number(json.radius);
-  };
-
-  Circle2D.prototype.intersects = function (other) {
-    if (other instanceof Circle2D) {
-      var distance = Math.abs(_vector.Vector2.distance(other.position, this.position));
-      var radiusLengths = this.radius + other.radius;
-
-      if (distance <= radiusLengths) {
-        return true;
-      }
-    }
-
-    if (other instanceof _rectangle2D.Rectangle2D) {
-      var deltaX = this.position.x - Math.max(other.position.x, Math.min(this.position.x, other.position.x + other.width));
-      var deltaY = this.position.y - Math.max(other.position.y, Math.min(this.position.y, other.position.y + other.height));
-
-      if (deltaX * deltaX + deltaY * deltaY < this.radius * this.radius) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  Circle2D.prototype.pointInShape = function (point) {
-    var absDistance = Math.abs(_vector.Vector2.distance(this.position, point));
-
-    if (absDistance <= this.radius) {
-      return true;
-    }
-
-    return false;
-  };
-
-  return Circle2D;
-}();
-
-exports.Circle2D = Circle2D;
-},{"../../math/vector2":"node_modules/xgl/dist/math/vector2.js","./rectangle2D":"node_modules/xgl/dist/graphics/shapes2D/rectangle2D.js"}],"node_modules/xgl/dist/graphics/shapes2D/rectangle2D.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Rectangle2D = void 0;
-
-var _vector = require("../../math/vector2");
-
-var _circle2D = require("./circle2D");
-
-var Rectangle2D =
-/** @class */
-function () {
-  function Rectangle2D(x, y, width, height) {
-    if (x === void 0) {
-      x = 0;
-    }
-
-    if (y === void 0) {
-      y = 0;
-    }
-
-    if (width === void 0) {
-      width = 0;
-    }
-
-    if (height === void 0) {
-      height = 0;
-    }
-
-    this.position = _vector.Vector2.zero;
-    this.origin = _vector.Vector2.zero;
-    this.position.x = x;
-    this.position.y = y;
-    this.width = width;
-    this.height = height;
-  }
-
-  Object.defineProperty(Rectangle2D.prototype, "offset", {
-    get: function () {
-      return new _vector.Vector2(this.width * this.origin.x, this.height * this.origin.y);
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  Rectangle2D.prototype.setFromJson = function (json) {
-    if (json.position !== undefined) {
-      this.position.setFromJson(json.position);
-    }
-
-    if (json.offset !== undefined) {
-      this.offset.setFromJson(json.offset);
-    }
-
-    if (json.width === undefined) {
-      throw new Error("Rectangle2D requires width to be present.");
-    }
-
-    this.width = Number(json.width);
-
-    if (json.height === undefined) {
-      throw new Error("Rectangle2D requires height to be present.");
-    }
-
-    this.height = Number(json.height);
-  }; // TODO: Add support to rotated shapes
-
-
-  Rectangle2D.prototype.intersects = function (other) {
-    if (other instanceof Rectangle2D) {
-      var a = this.getExtents(this);
-      var b = this.getExtents(other);
-      return a.position.x <= b.width && a.width >= b.position.x && a.position.y <= b.height && a.height >= b.position.y;
-    }
-
-    if (other instanceof _circle2D.Circle2D) {
-      var deltaX = other.position.x - Math.max(this.position.x, Math.min(other.position.x, this.position.x + this.width));
-      var deltaY = other.position.y - Math.max(this.position.y, Math.min(other.position.y, this.position.y + this.height));
-
-      if (deltaX * deltaX + deltaY * deltaY < other.radius * other.radius) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
-  Rectangle2D.prototype.pointInShape = function (point) {
-    var x = this.width < 0 ? this.position.x - this.width : this.position.x;
-    var y = this.height < 0 ? this.position.y - this.height : this.position.y;
-    var extentX = this.width < 0 ? this.position.x : this.position.x + this.width;
-    var extentY = this.height < 0 ? this.position.y : this.position.y + this.height;
-
-    if (point.x >= x && point.x <= extentX && point.y >= y && point.y <= extentY) {
-      return true;
-    }
-
-    return false;
-  };
-
-  Rectangle2D.prototype.getExtents = function (shape) {
-    var x = shape.width < 0 ? shape.position.x - shape.width : shape.position.x;
-    var y = shape.height < 0 ? shape.position.y - shape.height : shape.position.y;
-    var extentX = shape.width < 0 ? shape.position.x : shape.position.x + shape.width;
-    var extentY = shape.height < 0 ? shape.position.y : shape.position.y + shape.height;
-    return new Rectangle2D(x, y, extentX, extentY);
-  };
-
-  return Rectangle2D;
-}();
-
-exports.Rectangle2D = Rectangle2D;
-},{"../../math/vector2":"node_modules/xgl/dist/math/vector2.js","./circle2D":"node_modules/xgl/dist/graphics/shapes2D/circle2D.js"}],"node_modules/xgl/dist/collision/CollisionManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.CollisionManager = exports.CollisionData = void 0;
-
-var _message = require("../message/message");
-
-var CollisionData =
-/** @class */
-function () {
-  function CollisionData(time, a, b) {
-    this.time = time;
-    this.a = a;
-    this.b = b;
-  }
-
-  return CollisionData;
-}();
-
-exports.CollisionData = CollisionData;
-
-var CollisionManager =
-/** @class */
-function () {
-  function CollisionManager() {}
-
-  CollisionManager.registerCollisionComponent = function (component) {
-    CollisionManager._components.push(component);
-  };
-
-  CollisionManager.unRegisterCollisionComponent = function (component) {
-    var index = CollisionManager._components.indexOf(component);
-
-    if (index !== -1) {
-      CollisionManager._components.slice(index, 1);
-    }
-  };
-
-  CollisionManager.clear = function () {
-    CollisionManager._components.length = 0;
-  };
-
-  CollisionManager.update = function (time) {
-    CollisionManager._totalTime += time; // TODO: do this properly. Whole function!
-
-    for (var c = 0; c < CollisionManager._components.length; ++c) {
-      var comp = CollisionManager._components[c];
-
-      for (var o = 0; o < CollisionManager._components.length; ++o) {
-        var other = CollisionManager._components[o]; // Do not check collisions with self
-
-        if (comp === other) {
-          continue;
-        } // if both shapes are static stop detection
-
-
-        if (comp.isStatic && other.isStatic) {
-          continue;
-        }
-
-        if (comp.shape.intersects(other.shape)) {
-          // There is a collision
-          var exists = false;
-
-          for (var d = 0; d < CollisionManager._collisionData.length; ++d) {
-            var data = CollisionManager._collisionData[d];
-
-            if (data.a === comp && data.b === other || data.a === other && data.b === comp) {
-              // We have existing data, update it
-              // onCollisionUpdate
-              comp.onCollisionUpdate(other);
-              other.onCollisionUpdate(comp);
-              data.time = CollisionManager._totalTime;
-              exists = true;
-              break;
-            }
-          }
-
-          if (!exists) {
-            // Create a new collision
-            // onCollisionEntry
-            var col = new CollisionData(CollisionManager._totalTime, comp, other);
-            comp.onCollisionEntry(other);
-            other.onCollisionEntry(comp);
-
-            _message.Message.sendPriority("COLLISION_ENTRY", undefined, col);
-
-            this._collisionData.push(col);
-          }
-        }
-      }
-    } // Collision that not longer exist
-
-
-    var removeData = [];
-
-    for (var d = 0; d < CollisionManager._collisionData.length; ++d) {
-      var data = CollisionManager._collisionData[d];
-
-      if (data.time !== CollisionManager._totalTime) {
-        // onCollisionExit
-        removeData.push(data);
-      }
-    }
-
-    while (removeData.length !== 0) {
-      var data = removeData.shift();
-
-      var index = CollisionManager._collisionData.indexOf(data);
-
-      CollisionManager._collisionData.splice(index, 1);
-
-      data.a.onCollisionExit(data.b);
-      data.b.onCollisionExit(data.a);
-
-      _message.Message.sendPriority("COLLISION_EXIT", undefined, data);
-    }
-  };
-
-  CollisionManager._totalTime = 0;
-  CollisionManager._components = [];
-  CollisionManager._collisionData = [];
-  return CollisionManager;
-}();
-
-exports.CollisionManager = CollisionManager;
-},{"../message/message":"node_modules/xgl/dist/message/message.js"}],"node_modules/xgl/dist/components/collisionComponent.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.CollisionComponent = exports.CollisionComponentBuilder = exports.CollisionComponentData = void 0;
-
-var _baseComponent = require("./baseComponent");
-
-var _rectangle2D = require("../graphics/shapes2D/rectangle2D");
-
-var _circle2D = require("../graphics/shapes2D/circle2D");
-
-var _CollisionManager = require("../collision/CollisionManager");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var CollisionComponentData =
-/** @class */
-function () {
-  function CollisionComponentData() {
-    this.static = true;
-  }
-
-  CollisionComponentData.prototype.setFromJson = function (json) {
-    if (json.name !== undefined) {
-      this.name = String(json.name);
-    }
-
-    if (json.static !== undefined) {
-      this.static = Boolean(json.static);
-    }
-
-    if (json.shape === undefined) {
-      throw new Error('CollisionComponentData requires shape to be present.');
-    }
-
-    if (json.shape.type === undefined) {
-      throw new Error('CollisionComponentData requires shape.type to be present.');
-    }
-
-    var shapeType = String(json.shape.type).toLowerCase();
-
-    switch (shapeType) {
-      case 'rectangle':
-        this.shape = new _rectangle2D.Rectangle2D();
-        break;
-
-      case 'circle':
-        this.shape = new _circle2D.Circle2D();
-        break;
-
-      default:
-        throw new Error('Unssuported shape type ' + shapeType);
-        break;
-    }
-
-    this.shape.setFromJson(json.shape);
-  };
-
-  return CollisionComponentData;
-}();
-
-exports.CollisionComponentData = CollisionComponentData;
-
-var CollisionComponentBuilder =
-/** @class */
-function () {
-  function CollisionComponentBuilder() {}
-
-  Object.defineProperty(CollisionComponentBuilder.prototype, "type", {
-    get: function () {
-      return 'collision';
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  CollisionComponentBuilder.prototype.buildFromJson = function (json) {
-    var data = new CollisionComponentData();
-    data.setFromJson(json);
-    return new CollisionComponent(data);
-  };
-
-  return CollisionComponentBuilder;
-}();
-
-exports.CollisionComponentBuilder = CollisionComponentBuilder;
-
-var CollisionComponent =
-/** @class */
-function (_super) {
-  __extends(CollisionComponent, _super);
-
-  function CollisionComponent(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this._shape = data.shape;
-    _this._static = data.static;
-    return _this;
-  }
-
-  Object.defineProperty(CollisionComponent.prototype, "shape", {
-    get: function () {
-      return this._shape;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(CollisionComponent.prototype, "isStatic", {
-    get: function () {
-      return this._static;
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  CollisionComponent.prototype.load = function () {
-    _super.prototype.load.call(this); // TODO: Update this to handle nested objects. Get world position
-
-
-    this._shape.position.copyFrom(this._owner.getWorldPosition().toVector2().subtract(this._shape.offset)); // Tell the collision manager we exists
-
-
-    _CollisionManager.CollisionManager.registerCollisionComponent(this);
-  };
-
-  CollisionComponent.prototype.update = function (time) {
-    // TODO: Update this to handle nested objects. Get world position
-    this._shape.position.copyFrom(this._owner.getWorldPosition().toVector2().subtract(this._shape.offset));
-
-    _super.prototype.update.call(this, time);
-  };
-
-  CollisionComponent.prototype.render = function (shader) {
-    // this._shape.draw(shader, this.owner.worldMatrix); 
-    _super.prototype.render.call(this, shader);
-  };
-
-  CollisionComponent.prototype.onCollisionEntry = function (other) {
-    console.log('onCollisionEntry ', this, other);
-  };
-
-  CollisionComponent.prototype.onCollisionUpdate = function (other) {// console.log('onCollisionUpdate ', this, other);
-  };
-
-  CollisionComponent.prototype.onCollisionExit = function (other) {
-    console.log('onCollisionExit ', this, other);
-  };
-
-  return CollisionComponent;
-}(_baseComponent.BaseComponent);
-
-exports.CollisionComponent = CollisionComponent;
-},{"./baseComponent":"node_modules/xgl/dist/components/baseComponent.js","../graphics/shapes2D/rectangle2D":"node_modules/xgl/dist/graphics/shapes2D/rectangle2D.js","../graphics/shapes2D/circle2D":"node_modules/xgl/dist/graphics/shapes2D/circle2D.js","../collision/CollisionManager":"node_modules/xgl/dist/collision/CollisionManager.js"}],"node_modules/xgl/dist/math/mathExtensions.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MathExt = void 0;
-
-var MathExt =
-/** @class */
-function () {
-  function MathExt() {}
-
-  MathExt.clamp = function (value, min, max) {
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
-  };
-
-  MathExt.degToRad = function (degrees) {
-    return degrees * Math.PI / 180.0;
-  };
-
-  MathExt.radToDeg = function (radians) {
-    return radians * 180.0 / Math.PI;
-  };
-
-  return MathExt;
-}();
-
-exports.MathExt = MathExt;
-},{}],"node_modules/xgl/dist/behaviors/PlayerBehavior.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.PlayerBehavior = exports.PlayerBehaviorBuilder = exports.PlayerBehaviorData = void 0;
-
-var _baseBehavior = require("./baseBehavior");
-
-var _vector = require("../math/vector2");
-
-var _message = require("../message/message");
-
-var _audioManager = require("../audio/audioManager");
-
-var _mathExtensions = require("../math/mathExtensions");
-
-var _vector2 = require("../math/vector3");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var PlayerBehaviorData =
-/** @class */
-function () {
-  function PlayerBehaviorData() {
-    this.acceleration = new _vector.Vector2(0, 920);
-  }
-
-  PlayerBehaviorData.prototype.setFromJson = function (json) {
-    if (json.name === undefined) {
-      throw new Error('Name must be defined in behavior data');
-    }
-
-    this.name = String(json.name);
-
-    if (json.acceleration !== undefined) {
-      this.acceleration.setFromJson(json.acceleration);
-    }
-
-    if (json.animatedSpriteName === undefined) {
-      throw new Error('animatedSpriteName must be defined in behavior data');
-    } else {
-      this.animatedSpriteName = String(json.animatedSpriteName);
-    }
-
-    if (json.playerCollisionComponent === undefined) {
-      throw new Error('playerCollisionComponent must be defined in behavior data');
-    } else {
-      this.playerCollisionComponent = String(json.playerCollisionComponent);
-    }
-
-    if (json.groundCollisionComponent === undefined) {
-      throw new Error('groundCollisionComponent must be defined in behavior data');
-    } else {
-      this.groundCollisionComponent = String(json.groundCollisionComponent);
-    }
-
-    if (json.scoreCollisionComponent === undefined) {
-      throw new Error('scoreCollisionComponent must be defined in behavior data');
-    } else {
-      this.scoreCollisionComponent = String(json.scoreCollisionComponent);
-    }
-  };
-
-  return PlayerBehaviorData;
-}();
-
-exports.PlayerBehaviorData = PlayerBehaviorData;
-
-var PlayerBehaviorBuilder =
-/** @class */
-function () {
-  function PlayerBehaviorBuilder() {}
-
-  Object.defineProperty(PlayerBehaviorBuilder.prototype, "type", {
-    get: function () {
-      return 'player';
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  PlayerBehaviorBuilder.prototype.buildFromJson = function (json) {
-    var data = new PlayerBehaviorData();
-    data.setFromJson(json);
-    return new PlayerBehavior(data);
-  };
-
-  return PlayerBehaviorBuilder;
-}();
-
-exports.PlayerBehaviorBuilder = PlayerBehaviorBuilder;
-
-var PlayerBehavior =
-/** @class */
-function (_super) {
-  __extends(PlayerBehavior, _super);
-
-  function PlayerBehavior(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this._velocity = _vector.Vector2.zero;
-    _this._isAlive = true;
-    _this._isPlaying = false;
-    _this._initialPosition = _vector2.Vector3.zero;
-    _this._score = 0;
-    _this._highScore = 0; // TODO: move this to configuration.
-
-    _this._pipeNames = ["pipe1Collision_end", "pipe1Collision_middle_top", "pipe1Collision_endneg", "pipe1Collision_middle_bottom"];
-    _this._acceleration = data.acceleration;
-    _this._playerCollisionComponent = data.playerCollisionComponent;
-    _this._groundCollisionComponent = data.groundCollisionComponent;
-    _this._scoreCollisionComponent = data.scoreCollisionComponent;
-    _this._animatedSpriteName = data.animatedSpriteName;
-
-    _message.Message.subscribe("MOUSE_DOWN", _this);
-
-    _message.Message.subscribe("COLLISION_ENTRY", _this);
-
-    _message.Message.subscribe("GAME_READY", _this);
-
-    _message.Message.subscribe("GAME_RESET", _this);
-
-    _message.Message.subscribe("GAME_START", _this);
-
-    _message.Message.subscribe("PLAYER_DIED", _this);
-
-    return _this;
-  }
-
-  PlayerBehavior.prototype.updateReady = function () {
-    _super.prototype.updateReady.call(this); // Get a reference to the animated sprite
-
-
-    this._sprite = this._owner.getComponentByName(this._animatedSpriteName);
-
-    if (this._sprite === undefined) {
-      throw new Error("AnimatedSpriteComponent named " + this._animatedSpriteName + " is not attaached to the owner of this component");
-    } // Make sure the animation plays right away.
-
-
-    this._sprite.setFrame(0);
-
-    this._initialPosition.copyFrom(this._owner.transform.position);
-  };
-
-  PlayerBehavior.prototype.update = function (time) {
-    var seconds = time / 1000;
-
-    if (this._isPlaying) {
-      this._velocity.add(this._acceleration.clone().scale(seconds));
-    } // Limit velocity
-
-
-    if (this._velocity.y > 400) {
-      this._velocity.y = 400;
-    } // Prevent Flying too high
-
-
-    if (this._owner.transform.position.y < -13) {
-      this._owner.transform.position.y = -13;
-      this._velocity.y = 0;
-    }
-
-    this._owner.transform.position.add(this._velocity.clone().scale(seconds).toVector3());
-
-    if (this._velocity.y < 0) {
-      this._owner.transform.rotation.z -= _mathExtensions.MathExt.degToRad(600.0) * seconds;
-
-      if (this._owner.transform.rotation.z < _mathExtensions.MathExt.degToRad(-20)) {
-        this._owner.transform.rotation.z = _mathExtensions.MathExt.degToRad(-20);
-      }
-    }
-
-    if (this.isFalling() || !this._isAlive) {
-      this._owner.transform.rotation.z += _mathExtensions.MathExt.degToRad(480.0) * seconds;
-
-      if (this._owner.transform.rotation.z > _mathExtensions.MathExt.degToRad(90)) {
-        this._owner.transform.rotation.z = _mathExtensions.MathExt.degToRad(90);
-      }
-    }
-
-    if (this.shouldNotFlap()) {
-      this._sprite.stop();
-    } else if (!this._sprite.isPlaying) {
-      this._sprite.play();
-    }
-
-    _super.prototype.update.call(this, time);
-  };
-
-  PlayerBehavior.prototype.onMessage = function (message) {
-    switch (message.code) {
-      case "MOUSE_DOWN":
-        this.onFlap();
-        break;
-
-      case "COLLISION_ENTRY":
-        var data = message.context;
-
-        if (data.a.name !== this._playerCollisionComponent && data.b.name !== this._playerCollisionComponent) {
-          return;
-        }
-
-        if (data.a.name === this._groundCollisionComponent || data.b.name === this._groundCollisionComponent) {
-          this.die();
-          this.decelerate();
-        } else if (this._pipeNames.indexOf(data.a.name) !== -1 || this._pipeNames.indexOf(data.b.name) !== -1) {
-          this.die();
-        } else if (data.a.name === this._scoreCollisionComponent || data.b.name === this._scoreCollisionComponent) {
-          if (this._isAlive && this._isPlaying) {
-            this.setScore(this._score + 1);
-
-            _audioManager.AudioManager.playSound("ting");
-          }
-        }
-
-        break;
-      // Shows the tutorial, click to GAME_START
-
-      case "GAME_RESET":
-        _message.Message.send("GAME_HIDE", this);
-
-        _message.Message.send("RESET_HIDE", this);
-
-        _message.Message.send("SPLASH_HIDE", this);
-
-        _message.Message.send("TUTORIAL_SHOW", this);
-
-        this.reset();
-        break;
-      // Starts the main game.
-
-      case "GAME_START":
-        _message.Message.send("GAME_SHOW", this);
-
-        _message.Message.send("RESET_HIDE", this);
-
-        _message.Message.send("SPLASH_HIDE", this);
-
-        _message.Message.send("TUTORIAL_HIDE", this);
-
-        this._isPlaying = true;
-        this._isAlive = true;
-        this.start();
-        break;
-      // Zone is loaded, show play button/splash screen
-
-      case "GAME_READY":
-        _message.Message.send("RESET_HIDE", this);
-
-        _message.Message.send("TUTORIAL_HIDE", this);
-
-        _message.Message.send("GAME_HIDE", this);
-
-        _message.Message.send("SPLASH_SHOW", this);
-
-        break;
-      // Show score and restart button
-
-      case "PLAYER_DIED":
-        _message.Message.send("RESET_SHOW", this);
-
-        break;
-    }
-  };
-
-  PlayerBehavior.prototype.isFalling = function () {
-    return this._velocity.y > 220.0;
-  };
-
-  PlayerBehavior.prototype.shouldNotFlap = function () {
-    return !this._isPlaying || this._velocity.y > 220.0 || !this._isAlive;
-  };
-
-  PlayerBehavior.prototype.die = function () {
-    if (this._isPlaying && this._isAlive) {
-      this._isAlive = false;
-
-      _audioManager.AudioManager.playSound('dead');
-
-      _message.Message.send("PLAYER_DIED", this);
-    }
-  };
-
-  PlayerBehavior.prototype.reset = function () {
-    this._isAlive = true;
-    this._isPlaying = false;
-
-    this._sprite.owner.transform.position.copyFrom(this._initialPosition);
-
-    this._sprite.owner.transform.rotation.z = 0;
-    this.setScore(0);
-
-    this._velocity.set(0, 0);
-
-    this._acceleration.set(0, 920);
-
-    this._sprite.play();
-  };
-
-  PlayerBehavior.prototype.start = function () {
-    this._isPlaying = true;
-
-    _message.Message.send("PLAYER_RESET", this);
-  };
-
-  PlayerBehavior.prototype.decelerate = function () {
-    this._acceleration.y = 0;
-    this._velocity.y = 0;
-  };
-
-  PlayerBehavior.prototype.onFlap = function () {
-    if (this._isAlive && this._isPlaying) {
-      this._velocity.y = -280;
-
-      _audioManager.AudioManager.playSound('flap');
-    }
-  };
-
-  PlayerBehavior.prototype.setScore = function (score) {
-    this._score = score;
-
-    _message.Message.send("counterText:SetText", this, this._score);
-
-    _message.Message.send("scoreText:SetText", this, this._score);
-
-    if (this._score > this._highScore) {
-      this._highScore = this._score;
-
-      _message.Message.send("bestText:SetText", this, this._highScore);
-    }
-  };
-
-  return PlayerBehavior;
-}(_baseBehavior.BaseBehavior);
-
-exports.PlayerBehavior = PlayerBehavior;
-},{"./baseBehavior":"node_modules/xgl/dist/behaviors/baseBehavior.js","../math/vector2":"node_modules/xgl/dist/math/vector2.js","../message/message":"node_modules/xgl/dist/message/message.js","../audio/audioManager":"node_modules/xgl/dist/audio/audioManager.js","../math/mathExtensions":"node_modules/xgl/dist/math/mathExtensions.js","../math/vector3":"node_modules/xgl/dist/math/vector3.js"}],"node_modules/xgl/dist/behaviors/ScrollBehavior.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.ScrollBehavior = exports.ScrollBehaviorBuilder = exports.ScrollBehaviorData = void 0;
-
-var _vector = require("../math/vector2");
-
-var _baseBehavior = require("./baseBehavior");
-
-var _message = require("../message/message");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var ScrollBehaviorData =
-/** @class */
-function () {
-  function ScrollBehaviorData() {
-    this.velocity = _vector.Vector2.zero;
-    this.minPosition = _vector.Vector2.zero;
-    this.resetPosition = _vector.Vector2.zero;
-  }
-
-  ScrollBehaviorData.prototype.setFromJson = function (json) {
-    if (json.name === undefined) {
-      throw new Error("Name must be defined in behavior data.");
-    }
-
-    this.name = String(json.name);
-
-    if (json.startMessage !== undefined) {
-      this.startMessage = String(json.startMessage);
-    }
-
-    if (json.stopMessage !== undefined) {
-      this.stopMessage = String(json.stopMessage);
-    }
-
-    if (json.resetMessage !== undefined) {
-      this.resetMessage = String(json.resetMessage);
-    }
-
-    if (json.velocity !== undefined) {
-      this.velocity.setFromJson(json.velocity);
-    } else {
-      throw new Error("ScrollBehaviorData requires property 'velocity' to be defined!");
-    }
-
-    if (json.minPosition !== undefined) {
-      this.minPosition.setFromJson(json.minPosition);
-    } else {
-      throw new Error("ScrollBehaviorData requires property 'minPosition' to be defined!");
-    }
-
-    if (json.resetPosition !== undefined) {
-      this.resetPosition.setFromJson(json.resetPosition);
-    } else {
-      throw new Error("ScrollBehaviorData requires property 'resetPosition' to be defined!");
-    }
-
-    if (json.minResetY !== undefined) {
-      this.minResetY = Number(json.minResetY);
-    }
-
-    if (json.maxResetY !== undefined) {
-      this.maxResetY = Number(json.maxResetY);
-    }
-  };
-
-  return ScrollBehaviorData;
-}();
-
-exports.ScrollBehaviorData = ScrollBehaviorData;
-
-var ScrollBehaviorBuilder =
-/** @class */
-function () {
-  function ScrollBehaviorBuilder() {}
-
-  Object.defineProperty(ScrollBehaviorBuilder.prototype, "type", {
-    get: function () {
-      return "scroll";
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  ScrollBehaviorBuilder.prototype.buildFromJson = function (json) {
-    var data = new ScrollBehaviorData();
-    data.setFromJson(json);
-    return new ScrollBehavior(data);
-  };
-
-  return ScrollBehaviorBuilder;
-}();
-
-exports.ScrollBehaviorBuilder = ScrollBehaviorBuilder;
-
-var ScrollBehavior =
-/** @class */
-function (_super) {
-  __extends(ScrollBehavior, _super);
-
-  function ScrollBehavior(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this._velocity = _vector.Vector2.zero;
-    _this._minPosition = _vector.Vector2.zero;
-    _this._resetPosition = _vector.Vector2.zero;
-    _this._isScrolling = false;
-    _this._initialPosition = _vector.Vector2.zero;
-
-    _this._velocity.copyFrom(data.velocity);
-
-    _this._minPosition.copyFrom(data.minPosition);
-
-    _this._resetPosition.copyFrom(data.resetPosition);
-
-    _this._startMessage = data.startMessage;
-    _this._stopMessage = data.stopMessage;
-    _this._resetMessage = data.resetMessage;
-
-    if (data.minResetY !== undefined) {
-      _this._minResetY = data.minResetY;
-    }
-
-    if (data.maxResetY !== undefined) {
-      _this._maxResetY = data.maxResetY;
-    }
-
-    return _this;
-  }
-
-  ScrollBehavior.prototype.updateReady = function () {
-    _super.prototype.updateReady.call(this);
-
-    if (this._startMessage !== undefined) {
-      _message.Message.subscribe(this._startMessage, this);
-    }
-
-    if (this._stopMessage !== undefined) {
-      _message.Message.subscribe(this._stopMessage, this);
-    }
-
-    if (this._resetMessage !== undefined) {
-      _message.Message.subscribe(this._resetMessage, this);
-    }
-
-    this._initialPosition.copyFrom(this._owner.transform.position.toVector2());
-  };
-
-  ScrollBehavior.prototype.update = function (time) {
-    if (this._isScrolling) {
-      this._owner.transform.position.add(this._velocity.clone().scale(time / 1000).toVector3());
-
-      var scrollY_1 = this._minResetY !== undefined && this._maxResetY !== undefined;
-
-      if (this._owner.transform.position.x <= this._minPosition.x && (scrollY_1 || !scrollY_1 && this._owner.transform.position.y <= this._minPosition.y)) {
-        this.reset();
-      }
-    }
-  };
-
-  ScrollBehavior.prototype.onMessage = function (message) {
-    if (message.code === this._startMessage) {
-      this._isScrolling = true;
-    } else if (message.code === this._stopMessage) {
-      this._isScrolling = false;
-    } else if (message.code === this._resetMessage) {
-      this.initial();
-    }
-  };
-
-  ScrollBehavior.prototype.reset = function () {
-    if (this._minResetY !== undefined && this._maxResetY !== undefined) {
-      this._owner.transform.position.set(this._resetPosition.x, this.getRandomY());
-    } else {
-      this._owner.transform.position.copyFrom(this._resetPosition.toVector3());
-    }
-  };
-
-  ScrollBehavior.prototype.getRandomY = function () {
-    // Inclusive of the min and max set in the data.
-    return Math.floor(Math.random() * (this._maxResetY - this._minResetY + 1)) + this._minResetY;
-  };
-
-  ScrollBehavior.prototype.initial = function () {
-    this._owner.transform.position.copyFrom(this._initialPosition.toVector3());
-  };
-
-  return ScrollBehavior;
-}(_baseBehavior.BaseBehavior);
-
-exports.ScrollBehavior = ScrollBehavior;
-},{"../math/vector2":"node_modules/xgl/dist/math/vector2.js","./baseBehavior":"node_modules/xgl/dist/behaviors/baseBehavior.js","../message/message":"node_modules/xgl/dist/message/message.js"}],"node_modules/xgl/dist/graphics/BitmapFont.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BitmapFont = exports.FontGlyph = void 0;
-
-var _assetManager = require("../assets/assetManager");
-
-var _message = require("../message/message");
-
-var _vector = require("../math/vector2");
-
-var FontUtilities =
-/** @class */
-function () {
-  function FontUtilities() {}
-
-  FontUtilities.extractFieldValue = function (field) {
-    return field.split("=")[1];
-  };
-
-  return FontUtilities;
-}();
-/**
- * A single font glyph used for a bitmap font.
- */
-
-
-var FontGlyph =
-/** @class */
-function () {
-  function FontGlyph() {}
-  /**
-   * Extracts a glyph from the provided fields.
-   * @param fields The fields to extract from.
-   */
-
-
-  FontGlyph.fromFields = function (fields) {
-    var glyph = new FontGlyph();
-    glyph.id = Number(FontUtilities.extractFieldValue(fields[1]));
-    glyph.x = Number(FontUtilities.extractFieldValue(fields[2]));
-    glyph.y = Number(FontUtilities.extractFieldValue(fields[3]));
-    glyph.width = Number(FontUtilities.extractFieldValue(fields[4]));
-    glyph.height = Number(FontUtilities.extractFieldValue(fields[5]));
-    glyph.xOffset = Number(FontUtilities.extractFieldValue(fields[6]));
-    glyph.yOffset = Number(FontUtilities.extractFieldValue(fields[7]));
-    glyph.xAdvance = Number(FontUtilities.extractFieldValue(fields[8]));
-    glyph.page = Number(FontUtilities.extractFieldValue(fields[9]));
-    glyph.channel = Number(FontUtilities.extractFieldValue(fields[10]));
-    return glyph;
-  };
-
-  return FontGlyph;
-}();
-
-exports.FontGlyph = FontGlyph;
-
-/**
- * A composition of configuration and images which allows text to be drawn to the screen.
- */
-var BitmapFont =
-/** @class */
-function () {
-  /**
-   * Creates a new bitmap font.
-   * @param name The name of the font.
-   * @param fontFile The font info file.
-   */
-  function BitmapFont(name, fontFile) {
-    this._assetLoaded = false;
-    this._glyphs = {};
-    this._name = name;
-    this._fontFileName = fontFile;
-  }
-
-  Object.defineProperty(BitmapFont.prototype, "name", {
-    /** The name of the font. */
-    get: function () {
-      return this._name;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(BitmapFont.prototype, "size", {
-    /** The size of this font. */
-    get: function () {
-      return this._size;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(BitmapFont.prototype, "imageWidth", {
-    /** The width of the image used for this font. */
-    get: function () {
-      return this._imageWidth;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(BitmapFont.prototype, "imageHeight", {
-    /** The height of the image used for this font. */
-    get: function () {
-      return this._imageHeight;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(BitmapFont.prototype, "textureName", {
-    /** The name of the texture image used for this font. */
-    get: function () {
-      return this._imageFile;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(BitmapFont.prototype, "isLoaded", {
-    /** Indicates if this bitmap font is loaded. */
-    get: function () {
-      return this._assetLoaded;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  /** Loads this font. */
-
-  BitmapFont.prototype.load = function () {
-    var asset = _assetManager.AssetManager.getAsset(this._fontFileName);
-
-    if (asset !== undefined) {
-      this.processFontFile(asset.data);
-    } else {
-      _message.Message.subscribe(_assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED + this._fontFileName, this);
-    }
-  };
-  /**
-   * The message handler.
-   */
-
-
-  BitmapFont.prototype.onMessage = function (message) {
-    if (message.code === _assetManager.MESSAGE_ASSET_LOADER_ASSET_LOADED + this._fontFileName) {
-      this.processFontFile(message.context.data);
-    }
-  };
-  /**
-   * Gets a glyph for the provided character.
-   * @param char The character to retrieve a glyph for.
-   */
-
-
-  BitmapFont.prototype.getGlyph = function (char) {
-    // Replace unrecognized characters with a '?'.
-    var code = char.charCodeAt(0);
-    code = this._glyphs[code] === undefined ? 63 : code;
-    return this._glyphs[code];
-  };
-  /**
-   * Measures the provided text in the x and y dimensions.
-   * @param text The text to be measured.
-   */
-
-
-  BitmapFont.prototype.measureText = function (text) {
-    var size = _vector.Vector2.zero;
-    var maxX = 0;
-    var x = 0;
-    var y = 0;
-
-    for (var _i = 0, text_1 = text; _i < text_1.length; _i++) {
-      var c = text_1[_i];
-
-      switch (c) {
-        case "\n":
-          if (x > maxX) {
-            maxX = x;
-          }
-
-          x = 0;
-          y += this._size;
+  _createClass(Facet, [{
+    key: "getVertices",
+    value: function getVertices() {
+      return this.vertices;
+    }
+  }, {
+    key: "getNormal",
+    value: function getNormal() {
+      return this.normal;
+    }
+  }, {
+    key: "getEdges",
+    value: function getEdges() {
+      return this.edges;
+    }
+  }, {
+    key: "getVertexPositions",
+    value: function getVertexPositions() {
+      var vertexPositions = this.vertices.map(function (vertex) {
+        return vertex.getPosition();
+      });
+      return vertexPositions;
+    }
+  }, {
+    key: "getVertexNormals",
+    value: function getVertexNormals() {
+      var normalExtent = this.normal.getExtent(),
+          vertexNormal = normalExtent,
+          ///
+      vertexNormals = [vertexNormal, vertexNormal, vertexNormal];
+      return vertexNormals;
+    }
+  }, {
+    key: "getVertexIndexes",
+    value: function getVertexIndexes(index) {
+      var vertexIndex = index * 3,
+          vertexIndexes = [vertexIndex + 0, vertexIndex + 1, vertexIndex + 2];
+      return vertexIndexes;
+    }
+  }, {
+    key: "isMasked",
+    value: function isMasked(maskingFacet) {
+      var maskingEdges = maskingFacet.getMaskingEdges(),
+          midPointPosition = calculateMidPointPosition(this.vertices),
+          midPointPositionToOneSideOfMaskingEdges = isMidPointPositionToOneSideOfMaskingEdges(midPointPosition, maskingEdges),
+          masked = midPointPositionToOneSideOfMaskingEdges; ///
+
+      return masked;
+    }
+  }, {
+    key: "permute",
+    value: function permute(places) {
+      this.vertices = _permute(this.vertices, places);
+      this.normal = calculateNormal(this.vertices, Normal);
+      this.edges = calculateEdges(this.vertices, Edge);
+    }
+  }, {
+    key: "rotate",
+    value: function rotate(rotationQuaternion) {
+      this.vertices.forEach(function (vertex) {
+        return vertex.rotate(rotationQuaternion);
+      });
+      this.normal = calculateNormal(this.vertices, Normal);
+      this.edges = calculateEdges(this.vertices, Edge);
+    }
+  }, {
+    key: "applyTransform",
+    value: function applyTransform(transform) {
+      this.vertices.forEach(function (vertex) {
+        return vertex.applyTransform(transform);
+      });
+      this.normal = calculateNormal(this.vertices, Normal);
+      this.edges = calculateEdges(this.vertices, Edge);
+    }
+  }, {
+    key: "splitWithIntersections",
+    value: function splitWithIntersections(intersections, smallerFacets) {
+      var nonNullIntersections = calculateNonNullIntersections(intersections),
+          nonNullIntersectionsLength = nonNullIntersections.length;
+
+      switch (nonNullIntersectionsLength) {
+        case 2:
+          this.splitWithTwoNonNullIntersections(intersections, smallerFacets);
           break;
 
-        default:
-          x += this.getGlyph(c).xAdvance;
+        case 1:
+          this.splitWithOneNonNullIntersection(intersections, smallerFacets);
+          break;
+
+        case 0:
+          this.splitWithNoNonNullIntersections(intersections, smallerFacets);
           break;
       }
     }
+  }, {
+    key: "splitWithTwoNonNullIntersections",
+    value: function splitWithTwoNonNullIntersections(intersections, smallerFacets) {
+      var nullIntersectionIndex = calculateNullIntersectionIndex(intersections),
+          places = (VERTICES_LENGTH - nullIntersectionIndex) % VERTICES_LENGTH;
+      intersections = _permute(intersections, places);
+      intersections = intersections.slice(1); ///
 
-    size.set(maxX, y);
-    return size;
-  };
-
-  BitmapFont.prototype.processFontFile = function (content) {
-    var charCount = 0;
-    var lines = content.split("\n");
-
-    for (var _i = 0, lines_1 = lines; _i < lines_1.length; _i++) {
-      var line = lines_1[_i]; // Sanitize the line.
-
-      var data = line.replace(/\s\s+/g, ' ');
-      var fields = data.split(" "); // Look at the type of line
-
-      switch (fields[0]) {
-        case "info":
-          this._size = Number(FontUtilities.extractFieldValue(fields[2]));
-          break;
-
-        case "common":
-          this._imageWidth = Number(FontUtilities.extractFieldValue(fields[3]));
-          this._imageHeight = Number(FontUtilities.extractFieldValue(fields[4]));
-          break;
-
-        case "page":
-          {
-            var id = Number(FontUtilities.extractFieldValue(fields[1]));
-            this._imageFile = FontUtilities.extractFieldValue(fields[2]); // Strip quotes.
-
-            this._imageFile = this._imageFile.replace(/"/g, ""); // Prepend the path to the image name. TODO: This should be configurable.
-
-            this._imageFile = ("assets/fonts/" + this._imageFile).trim();
-          }
-          break;
-
-        case "chars":
-          charCount = Number(FontUtilities.extractFieldValue(fields[1])); // Increment the expected count, the file's count is off by one.
-
-          charCount++;
-          break;
-
-        case "char":
-          {
-            var glyph = FontGlyph.fromFields(fields);
-            this._glyphs[glyph.id] = glyph;
-          }
-          break;
-      }
-    } // Verify the loaded glyphs
-
-
-    var actualGlyphCount = 0; // Only count properties
-
-    var keys = Object.keys(this._glyphs);
-
-    for (var _a = 0, keys_1 = keys; _a < keys_1.length; _a++) {
-      var key = keys_1[_a];
-
-      if (this._glyphs.hasOwnProperty(key)) {
-        actualGlyphCount++;
-      }
+      this.permute(places);
+      var startVertexPositionIndexes = [1, 2],
+          endVertexPositionIndexes = [2, 0],
+          indexTuples = [[0, 1, 3], [3, 4, 0], [3, 2, 4]];
+      this.splitWithIndexTuplesAndIntersections(startVertexPositionIndexes, endVertexPositionIndexes, indexTuples, intersections, smallerFacets);
     }
+  }, {
+    key: "splitWithOneNonNullIntersection",
+    value: function splitWithOneNonNullIntersection(intersections, smallerFacets) {
+      var nonNullIntersectionIndex = calculateNonNullIntersectionIndex(intersections),
+          places = (VERTICES_LENGTH - nonNullIntersectionIndex) % VERTICES_LENGTH;
+      intersections = _permute(intersections, places);
+      intersections = intersections.slice(0, 1); ///
 
-    if (actualGlyphCount !== charCount) {
-      throw new Error("Font file reported existence of " + charCount + " glyphs, but only " + actualGlyphCount + " were found.");
+      this.permute(places);
+      var startVertexPositionIndexes = [0],
+          endVertexPositionIndexes = [1],
+          indexTuples = [[0, 3, 2], [3, 1, 2]];
+      this.splitWithIndexTuplesAndIntersections(startVertexPositionIndexes, endVertexPositionIndexes, indexTuples, intersections, smallerFacets);
     }
+  }, {
+    key: "splitWithNoNonNullIntersections",
+    value: function splitWithNoNonNullIntersections(intersections, smallerFacets) {
+      var smallerFacet = this.fromVertices(this.vertices); ///
 
-    this._assetLoaded = true;
-  };
-
-  return BitmapFont;
-}();
-
-exports.BitmapFont = BitmapFont;
-},{"../assets/assetManager":"node_modules/xgl/dist/assets/assetManager.js","../message/message":"node_modules/xgl/dist/message/message.js","../math/vector2":"node_modules/xgl/dist/math/vector2.js"}],"node_modules/xgl/dist/graphics/BitmapFontManager.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BitmapFontManager = void 0;
-
-var _BitmapFont = require("./BitmapFont");
-
-/** Represents the configuration for a bitmap font. These are typically created and stored in a fonts file. */
-var BitmapFontConfig =
-/** @class */
-function () {
-  function BitmapFontConfig() {}
-  /**
-   * Creates a BitmapFontConfig from the provided JSON.
-   * @param json The JSON to create from.
-   */
-
-
-  BitmapFontConfig.fromJson = function (json) {
-    var config = new BitmapFontConfig();
-
-    if (json.name !== undefined) {
-      config.name = String(json.name);
+      smallerFacets.push(smallerFacet);
     }
+  }, {
+    key: "splitWithIndexTuplesAndIntersections",
+    value: function splitWithIndexTuplesAndIntersections(startVertexPositionIndexes, endVertexPositionIndexes, indexTuples, intersections, smallerFacets) {
+      var _this = this;
 
-    if (json.fontFile !== undefined) {
-      config.fontFile = String(json.fontFile);
-    } else {
-      throw new Error("Cannot create a bitmap font without a font file.");
-    }
+      var vertexPositions = this.getVertexPositions(),
+          intermediateVertexPositions = intersections.map(function (intersection, index) {
+        var startVertexPositionIndex = startVertexPositionIndexes[index],
+            endVertexPositionIndex = endVertexPositionIndexes[index],
+            startVertexPosition = vertexPositions[startVertexPositionIndex],
+            endVertexPosition = vertexPositions[endVertexPositionIndex],
+            intermediateVertexPosition = calculateIntermediateVertexPosition(startVertexPosition, endVertexPosition, intersection);
+        return intermediateVertexPosition;
+      });
+      push(vertexPositions, intermediateVertexPositions);
+      indexTuples.forEach(function (indexTuple) {
+        var positions = vertexPositions,
+            ///
+        indexes = indexTuple,
+            ///
+        facet = _this,
+            smallerFacet = smallerFacetFromPositionsIndexesAndFacet(positions, indexes, facet);
 
-    return config;
-  };
-
-  return BitmapFontConfig;
-}();
-/** A manager for bitmap fonts. */
-
-
-var BitmapFontManager =
-/** @class */
-function () {
-  /** Hide the constructor to prevent instantiation. */
-  function BitmapFontManager() {}
-  /**
-   * The message handler.
-   * @param message The message to be handled.
-   */
-  // public static onMessage(message: Message): void {
-  //     // TODO: one for each asset.
-  //     if (message.code === MESSAGE_ASSET_LOADER_ASSET_LOADED + "assets/fonts/fonts.json") {
-  //         // Message.unsubscribeCallback(MESSAGE_ASSET_LOADER_ASSET_LOADED + "assets/fonts/fonts.json",
-  //         //     BitmapFontManager.onMessage);
-  //         BitmapFontManager.processFontAsset(message.context as JsonAsset);
-  //     }
-  // }
-
-
-  BitmapFontManager.addFont = function (name, fontFile) {
-    BitmapFontManager._fonts[name] = new _BitmapFont.BitmapFont(name, fontFile);
-  };
-
-  Object.defineProperty(BitmapFontManager, "isLoaded", {
-    /** Indicates if this manager is loaded. */
-    get: function () {
-      if (BitmapFontManager._configLoaded) {
-        // If the config is loaded, check that all fonts are loaded.
-        var keys = Object.keys(BitmapFontManager._fonts);
-
-        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
-          var key = keys_1[_i];
-
-          if (!BitmapFontManager._fonts[key].isLoaded) {
-            console.debug("Font " + key + " is still loading...");
-            return false;
-          }
+        if (smallerFacet !== null) {
+          smallerFacets.push(smallerFacet);
         }
-
-        console.debug("All fonts are loaded");
-        return true;
-      }
-
-      return false;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  /**
-   * Gets a font by the given name.
-   * @param name The name of the font.
-   */
-
-  BitmapFontManager.getFont = function (name) {
-    if (BitmapFontManager._fonts[name] === undefined) {
-      throw new Error("A font named " + name + " does not exist.");
+      });
     }
+  }]);
 
-    return BitmapFontManager._fonts[name];
-  };
-  /**
-   * Loads registered fonts.
-   */
-  // public static load(): void {
-  //     // Get the asset(s). TODO: This probably should come from a central asset manifest.
-  //     let asset = AssetManager.getAsset("assets/fonts/fonts.json");
-  //     if (asset !== undefined) {
-  //         BitmapFontManager.processFontAsset(asset as JsonAsset);
-  //     } else {
-  //         // Listen for the asset load.
-  //         // Message.subscribeCallback(MESSAGE_ASSET_LOADER_ASSET_LOADED + "assets/fonts/fonts.json",
-  //         //     BitmapFontManager.onMessage);
-  //     }
-  // }
-
-
-  BitmapFontManager.load = function () {
-    var keys = Object.keys(BitmapFontManager._fonts);
-
-    for (var _i = 0, keys_2 = keys; _i < keys_2.length; _i++) {
-      var key = keys_2[_i];
-
-      BitmapFontManager._fonts[key].load();
-    }
-  };
-
-  BitmapFontManager.updateReady = function () {
-    var keys = Object.keys(BitmapFontManager._fonts);
-
-    for (var _i = 0, keys_3 = keys; _i < keys_3.length; _i++) {
-      var key = keys_3[_i];
-
-      if (!BitmapFontManager._fonts[key].isLoaded) {
-        console.debug("Font " + key + " is still loading...");
-        return false;
-      }
-    }
-
-    console.debug("All fonts are loaded...");
-    return true;
-  };
-
-  BitmapFontManager.processFontAsset = function (asset) {
-    var fonts = asset.data.bitmapFonts;
-
-    if (fonts) {
-      for (var _i = 0, fonts_1 = fonts; _i < fonts_1.length; _i++) {
-        var font = fonts_1[_i];
-        var f = BitmapFontConfig.fromJson(font);
-        BitmapFontManager._fonts[font.name] = new _BitmapFont.BitmapFont(font.name, font.fontFile); // Start it loading, since all fonts should always be available.
-
-        BitmapFontManager._fonts[font.name].load();
-      }
-    } // TODO: Should only set this if ALL queued assets have loaded.
-
-
-    BitmapFontManager._configLoaded = true;
-  };
-
-  BitmapFontManager._configLoaded = false;
-  BitmapFontManager._fonts = {};
-  return BitmapFontManager;
+  return Facet;
 }();
 
-exports.BitmapFontManager = BitmapFontManager;
-},{"./BitmapFont":"node_modules/xgl/dist/graphics/BitmapFont.js"}],"node_modules/xgl/dist/graphics/BitmapText.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BitmapText = void 0;
-
-var _vector = require("../math/vector3");
-
-var _glBuffer = require("../gl/glBuffer");
-
-var _material = require("./material");
-
-var _vertex = require("./vertex");
-
-var _BitmapFontManager = require("./BitmapFontManager");
-
-var _color = require("./color");
-
-var _gl = require("../gl/gl");
-
-/**
- * A bitmap text graphics object which is responsible for the underlying rendering
- * of text to the screen.
- */
-var BitmapText =
-/** @class */
-function () {
-  /**
-   * Creates a new bitmap text graphics object.
-   * @param name The name of the text object.
-   * @param fontName The name of the font to be used.
-   */
-  function BitmapText(name, fontName) {
-    this._isDirty = false;
-    this._origin = _vector.Vector3.zero;
-    this._vertices = [];
-    this._name = name;
-    this._fontName = fontName;
-  }
-
-  Object.defineProperty(BitmapText.prototype, "name", {
-    /**
-     * The name of this object.
-     */
-    get: function () {
-      return this._name;
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(BitmapText.prototype, "text", {
-    /** Gets the text value of this object. */
-    get: function () {
-      return this._text;
-    },
-
-    /** Sets the text value of this object. */
-    set: function (value) {
-      if (this._text !== value) {
-        this._text = value;
-        this._isDirty = true;
-      }
-    },
-    enumerable: true,
-    configurable: true
-  });
-  Object.defineProperty(BitmapText.prototype, "origin", {
-    /** Gets the origin for this object. */
-    get: function () {
-      return this._origin;
-    },
-
-    /** Sets the origin for this object. */
-    set: function (value) {
-      this._origin = value;
-      this.calculateVertices();
-    },
-    enumerable: true,
-    configurable: true
-  });
-  /** Destroys this object. */
-
-  BitmapText.prototype.destroy = function () {
-    this._buffer.destroy();
-
-    this._material.destroy();
-
-    this._material = undefined;
-  };
-  /** Loads this bitmap text object. */
-
-
-  BitmapText.prototype.load = function () {
-    this._bitmapFont = _BitmapFontManager.BitmapFontManager.getFont(this._fontName); // TODO: probably need a simpler shader for UI elements such as this.
-    // let shader = ShaderManager.GetShader(BuiltinShader.BASIC);
-    // if (shader === undefined) {
-    //     throw new Error("Unable to basic builtin shader.");
-    // }
+module.exports = Facet;
 
-    this._material = new _material.Material("BITMAP_FONT_" + this.name + "_" + this._bitmapFont.size,
-    /*shader,*/
-    this._bitmapFont.textureName, _color.Color.white());
-    this._buffer = new _glBuffer.GLBuffer();
-    var positionAttribute = new _glBuffer.AttributeInfo();
-    positionAttribute.location = 0;
-    positionAttribute.size = 3;
+function smallerFacetFromPositionsIndexesAndFacet(positions, indexes, facet) {
+  var vertices = indexes.map(function (index) {
+    var position = positions[index];
+    position = position.slice(); ///
 
-    this._buffer.addAttributeLocation(positionAttribute);
+    var vertex = Vertex.fromPosition(position);
+    return vertex;
+  }),
+      smallerFacet = facet.fromVertices(vertices);
+  return smallerFacet;
+}
 
-    var texCoordAttribute = new _glBuffer.AttributeInfo();
-    texCoordAttribute.location = 1;
-    texCoordAttribute.size = 2;
+},{"./edge":"node_modules/xgl/lib/primitive/edge.js","./normal":"node_modules/xgl/lib/primitive/normal.js","./vertex":"node_modules/xgl/lib/primitive/vertex.js","../constants":"node_modules/xgl/lib/constants.js","../utilities/facet":"node_modules/xgl/lib/utilities/facet.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js","../utilities/midPoint":"node_modules/xgl/lib/utilities/midPoint.js","../utilities/intersection":"node_modules/xgl/lib/utilities/intersection.js"}],"node_modules/xgl/lib/primitive/facet/coloured.js":[function(require,module,exports) {
+'use strict';
 
-    this._buffer.addAttributeLocation(texCoordAttribute);
-  };
-  /**
-   * Updates this object.
-   * @param time The amount of time in milliseconds since the last update.
-   */
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
-  BitmapText.prototype.update = function (time) {
-    if (this._isDirty && this._bitmapFont.isLoaded) {
-      this.calculateVertices();
-      this._isDirty = false;
-    }
-  };
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
 
-  BitmapText.prototype.draw = function (shader, model) {
-    var modelLocation = shader.getUniformLocation("u_model");
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
 
-    _gl.gl.uniformMatrix4fv(modelLocation, false, model.toFloat32Array());
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-    var colorLocation = shader.getUniformLocation("u_tint");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    _gl.gl.uniform4fv(colorLocation, this._material.tint.toFloat32Array());
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-    if (this._material.diffuseTexture != undefined) {
-      this._material.diffuseTexture.activateAndBind(0);
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-      var diffuseLocation = shader.getUniformLocation("u_diffuse");
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-      _gl.gl.uniform1i(diffuseLocation, 0);
-    }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-    this._buffer.bind();
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-    this._buffer.draw();
-  };
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-  BitmapText.prototype.calculateVertices = function () {
-    this._vertices.length = 0;
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-    this._buffer.clearData();
+var Edge = require('../edge'),
+    Facet = require('../facet'),
+    Normal = require('../normal'),
+    Vertex = require('../vertex'),
+    facetUtilities = require('../../utilities/facet'),
+    verticesUtilities = require('../../utilities/vertices'),
+    approximateUtilities = require('../../utilities/approximate');
 
-    var x = 0;
-    var y = 0;
+var isApproximatelyEqualToZero = approximateUtilities.isApproximatelyEqualToZero,
+    verticesFromCoordinateTuplesAndIndexTuple = verticesUtilities.verticesFromCoordinateTuplesAndIndexTuple,
+    cloneEdges = facetUtilities.cloneEdges,
+    cloneNormal = facetUtilities.cloneNormal,
+    cloneVertices = facetUtilities.cloneVertices,
+    calculateArea = facetUtilities.calculateArea,
+    calculateEdges = facetUtilities.calculateEdges,
+    calculateNormal = facetUtilities.calculateNormal;
 
-    for (var _i = 0, _a = this._text; _i < _a.length; _i++) {
-      var c = _a[_i];
+var ColouredFacet = /*#__PURE__*/function (_Facet) {
+  _inherits(ColouredFacet, _Facet);
 
-      if (c === "\n") {
-        x = 0;
-        y += this._bitmapFont.size;
-        continue;
-      }
+  function ColouredFacet(vertices, normal, edges, rgba) {
+    var _this;
 
-      var g = this._bitmapFont.getGlyph(c);
+    _classCallCheck(this, ColouredFacet);
 
-      var minX = x + g.xOffset;
-      var minY = y + g.yOffset;
-      var maxX = minX + g.width;
-      var maxY = minY + g.height;
-      var minu = g.x / this._bitmapFont.imageWidth;
-      var minv = g.y / this._bitmapFont.imageHeight;
-      var maxu = (g.x + g.width) / this._bitmapFont.imageWidth;
-      var maxv = (g.y + g.height) / this._bitmapFont.imageHeight;
-
-      this._vertices.push(new _vertex.Vertex(minX, minY, 0, minu, minv));
-
-      this._vertices.push(new _vertex.Vertex(minX, maxY, 0, minu, maxv));
-
-      this._vertices.push(new _vertex.Vertex(maxX, maxY, 0, maxu, maxv));
-
-      this._vertices.push(new _vertex.Vertex(maxX, maxY, 0, maxu, maxv));
-
-      this._vertices.push(new _vertex.Vertex(maxX, minY, 0, maxu, minv));
-
-      this._vertices.push(new _vertex.Vertex(minX, minY, 0, minu, minv));
-
-      x += g.xAdvance;
-    }
-
-    for (var _b = 0, _c = this._vertices; _b < _c.length; _b++) {
-      var v = _c[_b];
-
-      this._buffer.pushBackData(v.toArray());
-    }
-
-    this._buffer.upload();
-
-    this._buffer.unbind();
-  };
-
-  return BitmapText;
-}();
-
-exports.BitmapText = BitmapText;
-},{"../math/vector3":"node_modules/xgl/dist/math/vector3.js","../gl/glBuffer":"node_modules/xgl/dist/gl/glBuffer.js","./material":"node_modules/xgl/dist/graphics/material.js","./vertex":"node_modules/xgl/dist/graphics/vertex.js","./BitmapFontManager":"node_modules/xgl/dist/graphics/BitmapFontManager.js","./color":"node_modules/xgl/dist/graphics/color.js","../gl/gl":"node_modules/xgl/dist/gl/gl.js"}],"node_modules/xgl/dist/components/BitmapTextComponent.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.BitmapTextComponent = exports.BitmapTextComponentBuilder = exports.BitmapTextComponentData = void 0;
-
-var _vector = require("../math/vector3");
-
-var _baseComponent = require("./baseComponent");
-
-var _BitmapText = require("../graphics/BitmapText");
-
-var _message = require("../message/message");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var BitmapTextComponentData =
-/** @class */
-function () {
-  function BitmapTextComponentData() {
-    this.origin = _vector.Vector3.zero;
-  }
-
-  BitmapTextComponentData.prototype.setFromJson = function (json) {
-    if (json.name !== undefined) {
-      this.name = String(json.name);
-    }
-
-    if (json.fontName !== undefined) {
-      this.fontName = String(json.fontName);
-    }
-
-    if (json.text !== undefined) {
-      this.text = String(json.text);
-    }
-
-    if (json.origin !== undefined) {
-      this.origin.setFromJson(json.origin);
-    }
-  };
-
-  return BitmapTextComponentData;
-}();
-
-exports.BitmapTextComponentData = BitmapTextComponentData;
-
-var BitmapTextComponentBuilder =
-/** @class */
-function () {
-  function BitmapTextComponentBuilder() {}
-
-  Object.defineProperty(BitmapTextComponentBuilder.prototype, "type", {
-    get: function () {
-      return "bitmapText";
-    },
-    enumerable: true,
-    configurable: true
-  });
-
-  BitmapTextComponentBuilder.prototype.buildFromJson = function (json) {
-    var data = new BitmapTextComponentData();
-    data.setFromJson(json);
-    return new BitmapTextComponent(data);
-  };
-
-  return BitmapTextComponentBuilder;
-}();
-
-exports.BitmapTextComponentBuilder = BitmapTextComponentBuilder;
-
-/**
- * A component which renders bitmap text.
- */
-var BitmapTextComponent =
-/** @class */
-function (_super) {
-  __extends(BitmapTextComponent, _super);
-  /**
-   * Creates a new BitmapTextComponent.
-   * @param data The data to use for creation.
-   */
-
-
-  function BitmapTextComponent(data) {
-    var _this = _super.call(this, data) || this;
-
-    _this._fontName = data.fontName;
-    _this._bitmapText = new _BitmapText.BitmapText(_this.name, _this._fontName);
-
-    if (!data.origin.equals(_vector.Vector3.zero)) {
-      _this._bitmapText.origin.copyFrom(data.origin);
-    }
-
-    _this._bitmapText.text = data.text; // Listen for text updates.
-
-    _message.Message.subscribe(_this.name + ":SetText", _this);
-
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ColouredFacet).call(this, vertices, normal, edges));
+    _this.rgba = rgba;
     return _this;
   }
-  /** Loads this component. */
 
-
-  BitmapTextComponent.prototype.load = function () {
-    this._bitmapText.load();
-  };
-  /**
-   * Updates this component.
-   * @param time The amount of time in milliseconds since the last update.
-   */
-
-
-  BitmapTextComponent.prototype.update = function (time) {
-    this._bitmapText.update(time);
-  };
-  /**
-   * Renders this component.
-   * @param shader The shader to use for rendering.
-   */
-
-
-  BitmapTextComponent.prototype.render = function (shader) {
-    this._bitmapText.draw(shader, this._owner.worldMatrix);
-
-    _super.prototype.render.call(this, shader);
-  };
-  /**
-   * The message handler.
-   * @param message The message to be handled.
-   */
-
-
-  BitmapTextComponent.prototype.onMessage = function (message) {
-    if (message.code === this.name + ":SetText") {
-      this._bitmapText.text = String(message.context);
+  _createClass(ColouredFacet, [{
+    key: "clone",
+    value: function clone() {
+      var vertices = this.getVertices(),
+          normal = this.getNormal(),
+          edges = this.getEdges();
+      vertices = cloneVertices(vertices);
+      normal = cloneNormal(normal);
+      edges = cloneEdges(edges);
+      var rgba = this.rgba,
+          colouredFacet = new ColouredFacet(vertices, normal, edges, rgba);
+      return colouredFacet;
     }
-  };
-
-  return BitmapTextComponent;
-}(_baseComponent.BaseComponent);
-
-exports.BitmapTextComponent = BitmapTextComponent;
-},{"../math/vector3":"node_modules/xgl/dist/math/vector3.js","./baseComponent":"node_modules/xgl/dist/components/baseComponent.js","../graphics/BitmapText":"node_modules/xgl/dist/graphics/BitmapText.js","../message/message":"node_modules/xgl/dist/message/message.js"}],"node_modules/xgl/dist/behaviors/MouseClickBehavior.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.MouseClickBehavior = exports.MouseClickBehaviorBuilder = exports.MouseClickBehaviorData = void 0;
-
-var _baseBehavior = require("./baseBehavior");
-
-var _message = require("../message/message");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
+  }, {
+    key: "getVertexColours",
+    value: function getVertexColours() {
+      var vertexColour = this.rgba,
+          ///
+      vertexColours = [vertexColour, vertexColour, vertexColour];
+      return vertexColours;
     }
+  }, {
+    key: "fromVertices",
+    value: function fromVertices(vertices) {
+      var colouredFacet = null;
+      var area = calculateArea(vertices),
+          areaApproximatelyEqualToZero = isApproximatelyEqualToZero(area),
+          largeEnough = !areaApproximatelyEqualToZero; ///
 
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
+      if (largeEnough) {
+        var rgba = this.rgba,
+            normal = calculateNormal(vertices, Normal),
+            edges = calculateEdges(vertices, Edge);
+        colouredFacet = new ColouredFacet(vertices, normal, edges, rgba);
+      }
 
-/**
- * The data for a mouse click behavior.
- */
-var MouseClickBehaviorData =
-/** @class */
-function () {
-  function MouseClickBehaviorData() {}
-  /**
-   * Sets this data from the provided json.
-   * @param json The json to set from.
-   */
-
-
-  MouseClickBehaviorData.prototype.setFromJson = function (json) {
-    if (json.name === undefined) {
-      throw new Error("Name must be defined in behavior data.");
+      return colouredFacet;
     }
+  }], [{
+    key: "fromCoordinateTuplesIndexTupleAndColour",
+    value: function fromCoordinateTuplesIndexTupleAndColour(coordinateTuples, indexTuple, colour) {
+      var colouredFacet = null;
+      var vertices = verticesFromCoordinateTuplesAndIndexTuple(coordinateTuples, indexTuple, Vertex),
+          area = calculateArea(vertices),
+          areaApproximatelyEqualToZero = isApproximatelyEqualToZero(area),
+          largeEnough = !areaApproximatelyEqualToZero; ///
 
-    this.name = String(json.name);
+      if (largeEnough) {
+        var normal = calculateNormal(vertices, Normal),
+            edges = calculateEdges(vertices, Edge),
+            rgba = [].concat(_toConsumableArray(colour), [1]); ///
 
-    if (json.width === undefined) {
-      throw new Error("width must be defined in behavior data.");
-    } else {
-      this.width = Number(json.width);
+        colouredFacet = new ColouredFacet(vertices, normal, edges, rgba);
+      }
+
+      return colouredFacet;
     }
+  }]);
 
-    if (json.height === undefined) {
-      throw new Error("height must be defined in behavior data.");
-    } else {
-      this.height = Number(json.height);
-    }
+  return ColouredFacet;
+}(Facet);
 
-    if (json.messageCode === undefined) {
-      throw new Error("messageCode must be defined in behavior data.");
-    } else {
-      this.messageCode = String(json.messageCode);
-    }
-  };
+module.exports = ColouredFacet;
 
-  return MouseClickBehaviorData;
-}();
+},{"../edge":"node_modules/xgl/lib/primitive/edge.js","../facet":"node_modules/xgl/lib/primitive/facet.js","../normal":"node_modules/xgl/lib/primitive/normal.js","../vertex":"node_modules/xgl/lib/primitive/vertex.js","../../utilities/facet":"node_modules/xgl/lib/utilities/facet.js","../../utilities/vertices":"node_modules/xgl/lib/utilities/vertices.js","../../utilities/approximate":"node_modules/xgl/lib/utilities/approximate.js"}],"node_modules/xgl/lib/element/canvas/coloured.js":[function(require,module,exports) {
+'use strict';
 
-exports.MouseClickBehaviorData = MouseClickBehaviorData;
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-/**
- * The builder for a MouseClick behavior.
- */
-var MouseClickBehaviorBuilder =
-/** @class */
-function () {
-  function MouseClickBehaviorBuilder() {}
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  Object.defineProperty(MouseClickBehaviorBuilder.prototype, "type", {
-    get: function () {
-      return "mouseClick";
-    },
-    enumerable: true,
-    configurable: true
-  });
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  MouseClickBehaviorBuilder.prototype.buildFromJson = function (json) {
-    var data = new MouseClickBehaviorData();
-    data.setFromJson(json);
-    return new MouseClickBehavior(data);
-  };
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-  return MouseClickBehaviorBuilder;
-}();
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-exports.MouseClickBehaviorBuilder = MouseClickBehaviorBuilder;
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-/**
- * A behavior which detects clicks within a given width and height, relative to the
- * position of the object to which it is attached. When clicked, a message with the
- * configured message code is sent.
- */
-var MouseClickBehavior =
-/** @class */
-function (_super) {
-  __extends(MouseClickBehavior, _super);
-  /**
-   * Creates a new MouseClickBehavior.
-   * @param data The data for this behavior.
-   */
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 
-  function MouseClickBehavior(data) {
-    var _this = _super.call(this, data) || this;
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-    _this._width = data.width;
-    _this._height = data.height;
-    _this._messageCode = data.messageCode;
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-    _message.Message.subscribe("MOUSE_UP", _this);
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+var ColouredFacet = require('../../primitive/facet/coloured'),
+    CanvasElement = require('../../element/canvas');
+
+var ColouredCanvasElement = /*#__PURE__*/function (_CanvasElement) {
+  _inherits(ColouredCanvasElement, _CanvasElement);
+
+  function ColouredCanvasElement(transform, facets, mask, hidden, coordinates, indexes, colour) {
+    var _this;
+
+    _classCallCheck(this, ColouredCanvasElement);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ColouredCanvasElement).call(this, transform, facets, mask, hidden));
+    _this.coordinates = coordinates;
+    _this.indexes = indexes;
+    _this.colour = colour;
     return _this;
   }
-  /**
-   * The message handler.
-   * @param message The message to be handled.
-   */
 
+  _createClass(ColouredCanvasElement, [{
+    key: "createFacets",
+    value: function createFacets(hidden) {
+      var _this2 = this;
 
-  MouseClickBehavior.prototype.onMessage = function (message) {
-    if (message.code === "MOUSE_UP") {
-      if (!this._owner.isVisible) {
-        return;
-      }
+      hidden = _get(_getPrototypeOf(ColouredCanvasElement.prototype), "createFacets", this).call(this, hidden); ///
 
-      var context = message.context;
+      if (!hidden) {
+        var indexTuples = this.indexes,
+            ///
+        facets = indexTuples.map(function (indexTuple) {
+          var coordinateTuples = _this2.coordinates,
+              ///
+          colouredFacet = ColouredFacet.fromCoordinateTuplesIndexTupleAndColour(coordinateTuples, indexTuple, _this2.colour),
+              facet = colouredFacet; ///
 
-      var worldPos = this._owner.getWorldPosition();
-
-      var extentsX = worldPos.x + this._width;
-      var extentsY = worldPos.y + this._height;
-
-      if (context.position.x >= worldPos.x && context.position.x <= extentsX && context.position.y >= worldPos.y && context.position.y <= extentsY) {
-        // Send the c onfigured message. 
-        _message.Message.send(this._messageCode, this);
+          return facet;
+        });
+        this.setFacets(facets);
       }
     }
-  };
+  }, {
+    key: "addFacets",
+    value: function addFacets(colourRenderer, textureRenderer) {
+      var facets = this.getFacets();
+      colourRenderer.addFacets(facets);
 
-  return MouseClickBehavior;
-}(_baseBehavior.BaseBehavior);
-
-exports.MouseClickBehavior = MouseClickBehavior;
-},{"./baseBehavior":"node_modules/xgl/dist/behaviors/baseBehavior.js","../message/message":"node_modules/xgl/dist/message/message.js"}],"node_modules/xgl/dist/behaviors/VisibilityOnMessageBehavior.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.VisibilityOnMessageBehavior = exports.VisibilityOnMessageBehaviorBuilder = exports.VisibilityOnMessageBehaviorData = void 0;
-
-var _baseBehavior = require("./baseBehavior");
-
-var _message = require("../message/message");
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
+      _get(_getPrototypeOf(ColouredCanvasElement.prototype), "addFacets", this).call(this, colourRenderer, textureRenderer);
     }
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(Class, properties, coordinates, indexes, colour) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 5 ? _len - 5 : 0), _key = 5; _key < _len; _key++) {
+        remainingArguments[_key - 5] = arguments[_key];
+      }
 
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var VisibilityOnMessageBehaviorData =
-/** @class */
-function () {
-  function VisibilityOnMessageBehaviorData() {}
-
-  VisibilityOnMessageBehaviorData.prototype.setFromJson = function (json) {
-    if (json.messageCode === undefined) {
-      throw new Error("VisibilityOnMessageBehaviorData requires 'messageCode' to be defined.");
-    } else {
-      this.messageCode = String(json.messageCode);
+      return CanvasElement.fromProperties.apply(CanvasElement, [Class, properties, coordinates, indexes, colour].concat(remainingArguments));
     }
+  }]);
 
-    if (json.visible === undefined) {
-      throw new Error("VisibilityOnMessageBehaviorData requires 'visible' to be defined.");
-    } else {
-      this.visible = Boolean(json.visible);
-    }
-  };
+  return ColouredCanvasElement;
+}(CanvasElement);
 
-  return VisibilityOnMessageBehaviorData;
-}();
+module.exports = ColouredCanvasElement;
 
-exports.VisibilityOnMessageBehaviorData = VisibilityOnMessageBehaviorData;
+},{"../../primitive/facet/coloured":"node_modules/xgl/lib/primitive/facet/coloured.js","../../element/canvas":"node_modules/xgl/lib/element/canvas.js"}],"node_modules/xgl/lib/utilities/texture.js":[function(require,module,exports) {
+'use strict';
 
-var VisibilityOnMessageBehaviorBuilder =
-/** @class */
-function () {
-  function VisibilityOnMessageBehaviorBuilder() {}
+var matrixMaths = require('../maths/matrix'),
+    vectorMaths = require('../maths/vector'),
+    arrayUtilities = require('../utilities/array'),
+    verticesUtilities = require('../utilities/vertices'),
+    quaternionUtilities = require('../utilities/quaternion');
 
-  Object.defineProperty(VisibilityOnMessageBehaviorBuilder.prototype, "type", {
-    get: function () {
-      return "visibilityOnMessage";
-    },
-    enumerable: true,
-    configurable: true
-  });
+var rotateVertices = verticesUtilities.rotateVertices,
+    invert2 = matrixMaths.invert2,
+    invert3 = matrixMaths.invert3,
+    first = arrayUtilities.first,
+    second = arrayUtilities.second,
+    third = arrayUtilities.third,
+    calculateArbitraryRotationQuaternion = quaternionUtilities.calculateArbitraryRotationQuaternion,
+    add2 = vectorMaths.add2,
+    multiply2 = vectorMaths.multiply2,
+    transform2 = vectorMaths.transform2,
+    transform3 = vectorMaths.transform3;
 
-  VisibilityOnMessageBehaviorBuilder.prototype.buildFromJson = function (json) {
-    var data = new VisibilityOnMessageBehaviorData();
-    data.setFromJson(json);
-    return new VisibilityOnMessageBehavior(data);
-  };
+function cloneTextureCoordinateTuples(textureCoordinateTuples) {
+  textureCoordinateTuples = textureCoordinateTuples.map(function (textureCoordinateTuple) {
+    return textureCoordinateTuple.slice();
+  }); ///
 
-  return VisibilityOnMessageBehaviorBuilder;
-}();
+  return textureCoordinateTuples;
+}
 
-exports.VisibilityOnMessageBehaviorBuilder = VisibilityOnMessageBehaviorBuilder;
+function calculateMappedTextureCoordinateTuples(textureCoordinateTuples, extent) {
+  var left = extent.left,
+      bottom = extent.bottom,
+      width = extent.width,
+      height = extent.height,
+      mappedTextureCoordinateTuples = textureCoordinateTuples.map(function (textureCoordinateTuple) {
+    return add2(multiply2(textureCoordinateTuple, [width, height]), [left, bottom]);
+  }); ///
 
-/**
- * A behavior which enables or disables visibility when the configured message is recieved.
- */
-var VisibilityOnMessageBehavior =
-/** @class */
-function (_super) {
-  __extends(VisibilityOnMessageBehavior, _super);
-  /**
-   * Creates a new VisibilityOnMessageBehavior.
-   * @param data The data for this behavior.
-   */
+  return mappedTextureCoordinateTuples;
+}
 
+function calculateAdjustedTextureCoordinateTuples(vertices, normal, parentVertices, textureCoordinateTuples) {
+  var arbitraryRotationQuaternion = calculateArbitraryRotationQuaternion(normal),
+      rotationQuaternion = arbitraryRotationQuaternion; ///
 
-  function VisibilityOnMessageBehavior(data) {
-    var _this = _super.call(this, data) || this;
+  var tempVertices = rotateVertices(vertices, rotationQuaternion);
+  parentVertices = rotateVertices(parentVertices, rotationQuaternion);
+  vertices = tempVertices; ///
 
-    _this._messageCode = data.messageCode;
-    _this._visible = data.visible;
+  var firstVertex = first(vertices),
+      secondVertex = second(vertices),
+      thirdVertex = third(vertices),
+      firstParentVertex = first(parentVertices),
+      secondParentVertex = second(parentVertices),
+      thirdParentVertex = third(parentVertices),
+      firstTextureCoordinateTuple = first(textureCoordinateTuples),
+      secondTextureCoordinateTuple = second(textureCoordinateTuples),
+      thirdTextureCoordinateTuple = third(textureCoordinateTuples),
+      firstVertexPosition = firstVertex.getPosition(),
+      secondVertexPosition = secondVertex.getPosition(),
+      thirdVertexPosition = thirdVertex.getPosition(),
+      firstParentVertexPosition = firstParentVertex.getPosition(),
+      secondParentVertexPosition = secondParentVertex.getPosition(),
+      thirdParentVertexPosition = thirdParentVertex.getPosition(),
+      R1x = firstVertexPosition[0],
+      ///
+  R1y = firstVertexPosition[1],
+      ///
+  R2x = secondVertexPosition[0],
+      ///
+  R2y = secondVertexPosition[1],
+      ///
+  R3x = thirdVertexPosition[0],
+      ///
+  R3y = thirdVertexPosition[1],
+      ///
+  P1x = firstParentVertexPosition[0],
+      ///
+  P2x = secondParentVertexPosition[0],
+      ///
+  P3x = thirdParentVertexPosition[0],
+      ///
+  P1y = firstParentVertexPosition[1],
+      ///
+  P2y = secondParentVertexPosition[1],
+      ///
+  P3y = thirdParentVertexPosition[1],
+      ///
+  P1u = firstTextureCoordinateTuple[0],
+      ///
+  P1v = firstTextureCoordinateTuple[1],
+      ///
+  P2u = secondTextureCoordinateTuple[0],
+      ///
+  P2v = secondTextureCoordinateTuple[1],
+      ///
+  P3u = thirdTextureCoordinateTuple[0],
+      ///
+  P3v = thirdTextureCoordinateTuple[1],
+      ///
+  textureCoordinatesMatrix = invert3([1, 1, 1, P1u, P2u, P3u, P1v, P2v, P3v]),
+      firstTransformedParentVerticesComponent = transform3([P1x, P2x, P3x], textureCoordinatesMatrix),
+      secondTransformedParentVerticesComponent = transform3([P1y, P2y, P3y], textureCoordinatesMatrix),
+      Ox = firstTransformedParentVerticesComponent[0],
+      ///
+  Ux = firstTransformedParentVerticesComponent[1],
+      ///
+  Vx = firstTransformedParentVerticesComponent[2],
+      ///
+  Oy = secondTransformedParentVerticesComponent[0],
+      ///
+  Uy = secondTransformedParentVerticesComponent[1],
+      ///
+  Vy = secondTransformedParentVerticesComponent[2],
+      ///
+  transformedParentVerticesMatrix = invert2([Ux, Uy, Vx, Vy]),
+      firstAdjustedTextureCoordinate = transform2([R1x - Ox, R1y - Oy], transformedParentVerticesMatrix),
+      secondAdjustedTextureCoordinate = transform2([R2x - Ox, R2y - Oy], transformedParentVerticesMatrix),
+      thirdAdjustedTextureCoordinate = transform2([R3x - Ox, R3y - Oy], transformedParentVerticesMatrix),
+      adjustedTextureCoordinateTuple = [firstAdjustedTextureCoordinate, secondAdjustedTextureCoordinate, thirdAdjustedTextureCoordinate];
+  return adjustedTextureCoordinateTuple;
+}
 
-    _message.Message.subscribe(_this._messageCode, _this);
+module.exports = {
+  cloneTextureCoordinateTuples: cloneTextureCoordinateTuples,
+  calculateMappedTextureCoordinateTuples: calculateMappedTextureCoordinateTuples,
+  calculateAdjustedTextureCoordinateTuples: calculateAdjustedTextureCoordinateTuples
+};
 
+},{"../maths/matrix":"node_modules/xgl/lib/maths/matrix.js","../maths/vector":"node_modules/xgl/lib/maths/vector.js","../utilities/array":"node_modules/xgl/lib/utilities/array.js","../utilities/vertices":"node_modules/xgl/lib/utilities/vertices.js","../utilities/quaternion":"node_modules/xgl/lib/utilities/quaternion.js"}],"node_modules/xgl/lib/primitive/facet/textured.js":[function(require,module,exports) {
+'use strict';
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Edge = require('../edge'),
+    Facet = require('../facet'),
+    Normal = require('../normal'),
+    Vertex = require('../vertex'),
+    arrayUtilities = require('../../utilities/array'),
+    facetUtilities = require('../../utilities/facet'),
+    textureUtilities = require('../../utilities/texture'),
+    verticesUtilities = require('../../utilities/vertices'),
+    approximateUtilities = require('../../utilities/approximate');
+
+var _permute = arrayUtilities.permute,
+    isApproximatelyEqualToZero = approximateUtilities.isApproximatelyEqualToZero,
+    verticesFromCoordinateTuplesAndIndexTuple = verticesUtilities.verticesFromCoordinateTuplesAndIndexTuple,
+    cloneEdges = facetUtilities.cloneEdges,
+    cloneNormal = facetUtilities.cloneNormal,
+    cloneVertices = facetUtilities.cloneVertices,
+    calculateArea = facetUtilities.calculateArea,
+    calculateEdges = facetUtilities.calculateEdges,
+    calculateNormal = facetUtilities.calculateNormal,
+    cloneTextureCoordinateTuples = textureUtilities.cloneTextureCoordinateTuples,
+    calculateMappedTextureCoordinateTuples = textureUtilities.calculateMappedTextureCoordinateTuples,
+    calculateAdjustedTextureCoordinateTuples = textureUtilities.calculateAdjustedTextureCoordinateTuples;
+
+var TexturedFacet = /*#__PURE__*/function (_Facet) {
+  _inherits(TexturedFacet, _Facet);
+
+  function TexturedFacet(vertices, normal, edges, imageName, textureCoordinateTuples) {
+    var _this;
+
+    _classCallCheck(this, TexturedFacet);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TexturedFacet).call(this, vertices, normal, edges));
+    _this.imageName = imageName;
+    _this.textureCoordinateTuples = textureCoordinateTuples;
     return _this;
   }
-  /**
-   * The message handler.
-   * @param message The message to be handled.
-   */
 
-
-  VisibilityOnMessageBehavior.prototype.onMessage = function (message) {
-    if (message.code === this._messageCode) {
-      this._owner.isVisible = this._visible;
+  _createClass(TexturedFacet, [{
+    key: "clone",
+    value: function clone() {
+      var vertices = this.getVertices(),
+          normal = this.getNormal(),
+          edges = this.getEdges();
+      vertices = cloneVertices(vertices);
+      normal = cloneNormal(normal);
+      edges = cloneEdges(edges);
+      var imageName = this.imageName,
+          ///
+      textureCoordinateTuples = cloneTextureCoordinateTuples(this.textureCoordinateTuples),
+          texturedFacet = new TexturedFacet(vertices, normal, edges, imageName, textureCoordinateTuples);
+      return texturedFacet;
     }
-  };
+  }, {
+    key: "getImageName",
+    value: function getImageName() {
+      return this.imageName;
+    }
+  }, {
+    key: "getTextureCoordinateTuples",
+    value: function getTextureCoordinateTuples() {
+      return this.textureCoordinateTuples;
+    }
+  }, {
+    key: "getMappedTextureCoordinateTuples",
+    value: function getMappedTextureCoordinateTuples(imageMapJSON) {
+      var json = imageMapJSON[this.imageName],
+          extent = json,
+          ///
+      mappedTextureCoordinateTuples = calculateMappedTextureCoordinateTuples(this.textureCoordinateTuples, extent);
+      return mappedTextureCoordinateTuples;
+    }
+  }, {
+    key: "permute",
+    value: function permute(places) {
+      _get(_getPrototypeOf(TexturedFacet.prototype), "permute", this).call(this, places);
 
-  return VisibilityOnMessageBehavior;
-}(_baseBehavior.BaseBehavior);
+      this.textureCoordinateTuples = _permute(this.textureCoordinateTuples, places);
+    }
+  }, {
+    key: "fromVertices",
+    value: function fromVertices(vertices) {
+      var texturedFacet = null;
+      var area = calculateArea(vertices),
+          areaApproximatelyEqualToZero = isApproximatelyEqualToZero(area),
+          largeEnough = !areaApproximatelyEqualToZero; ///
 
-exports.VisibilityOnMessageBehavior = VisibilityOnMessageBehavior;
-},{"./baseBehavior":"node_modules/xgl/dist/behaviors/baseBehavior.js","../message/message":"node_modules/xgl/dist/message/message.js"}],"node_modules/xgl/dist/xgl.js":[function(require,module,exports) {
-"use strict";
+      if (largeEnough) {
+        var normal = calculateNormal(vertices, Normal),
+            parentVertices = this.vertices,
+            ///
+        adjustedTextureCoordinateTuple = calculateAdjustedTextureCoordinateTuples(vertices, normal, parentVertices, this.textureCoordinateTuples),
+            edges = calculateEdges(vertices, Edge),
+            imageName = this.imageName,
+            textureCoordinateTuples = adjustedTextureCoordinateTuple; ///
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.XGLEngine = void 0;
+        texturedFacet = new TexturedFacet(vertices, normal, edges, imageName, textureCoordinateTuples);
+      }
 
-var _glMatrix = require("gl-matrix");
+      return texturedFacet;
+    }
+  }], [{
+    key: "fromTextureCoordinateTuplesCoordinatesTuplesIndexTupleAndImageName",
+    value: function fromTextureCoordinateTuplesCoordinatesTuplesIndexTupleAndImageName(textureCoordinateTuples, coordinateTuples, indexTuple, imageName) {
+      var texturedFacet = null;
+      var vertices = verticesFromCoordinateTuplesAndIndexTuple(coordinateTuples, indexTuple, Vertex),
+          area = calculateArea(vertices),
+          areaApproximatelyEqualToZero = isApproximatelyEqualToZero(area),
+          largeEnough = !areaApproximatelyEqualToZero; ///
 
-var _gl = require("./gl/gl");
+      if (largeEnough) {
+        var normal = calculateNormal(vertices, Normal),
+            edges = calculateEdges(vertices, Edge);
+        texturedFacet = new TexturedFacet(vertices, normal, edges, imageName, textureCoordinateTuples);
+      }
 
-var _basicShader = require("./gl/shaders/basicShader");
+      return texturedFacet;
+    }
+  }]);
 
-var _spriteComponent = require("./components/spriteComponent");
+  return TexturedFacet;
+}(Facet);
 
-var _animatedSpriteComponent = require("./components/animatedSpriteComponent");
+module.exports = TexturedFacet;
 
-var _assetManager = require("./assets/assetManager");
+},{"../edge":"node_modules/xgl/lib/primitive/edge.js","../facet":"node_modules/xgl/lib/primitive/facet.js","../normal":"node_modules/xgl/lib/primitive/normal.js","../vertex":"node_modules/xgl/lib/primitive/vertex.js","../../utilities/array":"node_modules/xgl/lib/utilities/array.js","../../utilities/facet":"node_modules/xgl/lib/utilities/facet.js","../../utilities/texture":"node_modules/xgl/lib/utilities/texture.js","../../utilities/vertices":"node_modules/xgl/lib/utilities/vertices.js","../../utilities/approximate":"node_modules/xgl/lib/utilities/approximate.js"}],"node_modules/xgl/lib/element/canvas/textured.js":[function(require,module,exports) {
+'use strict';
 
-var _messageBus = require("./message/messageBus");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
-var _materialManager = require("./graphics/materialManager");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _material = require("./graphics/material");
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-var _color = require("./graphics/color");
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
-var _zoneManager = require("./world/zoneManager");
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-var _componentManager = require("./components/componentManager");
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-var _behaviorManager = require("./behaviors/behaviorManager");
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
 
-var _rotationBehavior = require("./behaviors/rotationBehavior");
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 
-var _keyboardMovementBehavior = require("./behaviors/keyboardMovementBehavior");
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
-var _inputManager = require("./input/inputManager");
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
-var _audioManager = require("./audio/audioManager");
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-var _collisionComponent = require("./components/collisionComponent");
+var TexturedFacet = require('../../primitive/facet/textured'),
+    CanvasElement = require('../../element/canvas');
 
-var _CollisionManager = require("./collision/CollisionManager");
+var TexturedCanvasElement = /*#__PURE__*/function (_CanvasElement) {
+  _inherits(TexturedCanvasElement, _CanvasElement);
 
-var _PlayerBehavior = require("./behaviors/PlayerBehavior");
+  function TexturedCanvasElement(transform, facets, mask, hidden, coordinates, indexes, imageName, textureCoordinates) {
+    var _this;
 
-var _ScrollBehavior = require("./behaviors/ScrollBehavior");
+    _classCallCheck(this, TexturedCanvasElement);
 
-var _BitmapFontManager = require("./graphics/BitmapFontManager");
-
-var _BitmapTextComponent = require("./components/BitmapTextComponent");
-
-var _MouseClickBehavior = require("./behaviors/MouseClickBehavior");
-
-var _VisibilityOnMessageBehavior = require("./behaviors/VisibilityOnMessageBehavior");
-
-var _matrix4x = require("./math/matrix4x4");
-
-var _vector = require("./math/vector2");
-
-var XGLEngine =
-/** @class */
-function () {
-  function XGLEngine(width, height) {
-    this._previousTime = 0;
-    this._isFirstUpdate = true;
-    if (width) this._gameWidth = width;
-    if (height) this._gameHeight = height;
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TexturedCanvasElement).call(this, transform, facets, mask, hidden));
+    _this.coordinates = coordinates;
+    _this.indexes = indexes;
+    _this.imageName = imageName;
+    _this.textureCoordinates = textureCoordinates;
+    return _this;
   }
 
-  XGLEngine.prototype.start = function (elementName) {
-    this._canvas = _gl.GLUtilities.init(elementName);
+  _createClass(TexturedCanvasElement, [{
+    key: "createFacets",
+    value: function createFacets(hidden) {
+      var _this2 = this;
 
-    if (this._gameWidth !== undefined && this._gameHeight !== undefined) {
-      this._aspect = this._gameWidth / this._gameHeight;
-    }
+      hidden = _get(_getPrototypeOf(TexturedCanvasElement.prototype), "createFacets", this).call(this, hidden); ///
 
-    _componentManager.ComponentManager.registerBuilder(new _spriteComponent.SpriteComponentBuilder());
+      if (!hidden) {
+        var indexTuples = this.indexes,
+            ///
+        facets = indexTuples.map(function (indexTuple, index) {
+          var vertexTextureCoordinateTuples = _this2.textureCoordinates[index],
+              ///
+          coordinateTuples = _this2.coordinates,
+              ///
+          texturedFacet = TexturedFacet.fromTextureCoordinateTuplesCoordinatesTuplesIndexTupleAndImageName(vertexTextureCoordinateTuples, coordinateTuples, indexTuple, _this2.imageName),
+              facet = texturedFacet; ///
 
-    _componentManager.ComponentManager.registerBuilder(new _animatedSpriteComponent.AnimatedSpriteComponentBuilder());
-
-    _componentManager.ComponentManager.registerBuilder(new _collisionComponent.CollisionComponentBuilder());
-
-    _componentManager.ComponentManager.registerBuilder(new _BitmapTextComponent.BitmapTextComponentBuilder());
-
-    _behaviorManager.BehaviorManager.registerBuilder(new _rotationBehavior.RotationBehaviorBuilder());
-
-    _behaviorManager.BehaviorManager.registerBuilder(new _keyboardMovementBehavior.KeyboardMovementBehaviorBuilder());
-
-    _behaviorManager.BehaviorManager.registerBuilder(new _PlayerBehavior.PlayerBehaviorBuilder());
-
-    _behaviorManager.BehaviorManager.registerBuilder(new _ScrollBehavior.ScrollBehaviorBuilder());
-
-    _behaviorManager.BehaviorManager.registerBuilder(new _MouseClickBehavior.MouseClickBehaviorBuilder());
-
-    _behaviorManager.BehaviorManager.registerBuilder(new _VisibilityOnMessageBehavior.VisibilityOnMessageBehaviorBuilder());
-
-    _assetManager.AssetManager.initialize();
-
-    _inputManager.InputManager.initialize(this._canvas);
-
-    _zoneManager.ZoneManager.initialize();
-
-    this._basicShader = new _basicShader.BasicShader();
-
-    this._basicShader.use();
-
-    _BitmapFontManager.BitmapFontManager.addFont("default", "assets/fonts/text.txt");
-
-    _BitmapFontManager.BitmapFontManager.load(); // TODO: This should not be here. This is part of the game
-
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('bg', 'assets/textures/bg.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('end', 'assets/textures/end.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('middle', 'assets/textures/middle.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('grass', 'assets/textures/grass.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('duck', 'assets/textures/duck.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('playbtn', 'assets/textures/playbtn.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('restartbtn', 'assets/textures/restartbtn.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('score', 'assets/textures/score.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('title', 'assets/textures/title.png', new _color.Color(255, 255, 255, 255)));
-
-    _materialManager.MaterialManager.registerMaterial(new _material.Material('tutorial', 'assets/textures/tutorial.png', new _color.Color(255, 255, 255, 255)));
-
-    _audioManager.AudioManager.loadSoundFile('flap', 'assets/sounds/flap.mp3', false);
-
-    _audioManager.AudioManager.loadSoundFile('ting', 'assets/sounds/ting.mp3', false);
-
-    _audioManager.AudioManager.loadSoundFile('dead', 'assets/sounds/dead.mp3', false);
-
-    this._projection = _matrix4x.Matrix4x4.orthographic(0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0);
-    this.resize(); // Begin preloading phase waiting for all assets to be loaded before starting the game
-
-    this.preloading();
-  };
-  /**
-   * Resizes to fit the window.
-   */
-
-
-  XGLEngine.prototype.resize = function () {
-    if (this._canvas !== undefined) {
-      if (this._gameWidth === undefined || this._gameHeight === undefined) {
-        this._canvas.width = window.innerWidth;
-        this._canvas.height = window.innerHeight;
-
-        _gl.gl.viewport(0, 0, window.innerWidth, window.innerHeight);
-
-        this._projection = _matrix4x.Matrix4x4.orthographic(0, window.innerWidth, window.innerHeight, 0, -100.0, 100.0);
-      } else {
-        var newWidth = window.innerWidth;
-        var newHeight = window.innerHeight;
-        var newWidthToHeight = newWidth / newHeight;
-        var gameArea = document.getElementById("gameArea");
-
-        if (newWidthToHeight > this._aspect) {
-          newWidth = newHeight * this._aspect;
-        } else {
-          newHeight = newWidth * this._aspect;
-        }
-
-        gameArea.style.width = newWidth + 'px';
-        gameArea.style.height = newHeight + 'px';
-        gameArea.style.marginTop = -newHeight / 2 + 'px';
-        gameArea.style.marginLeft = -newWidth / 2 + 'px';
-        this._canvas.width = newWidth;
-        this._canvas.height = newHeight;
-
-        _gl.gl.viewport(0, 0, newWidth, newHeight);
-
-        this._projection = _matrix4x.Matrix4x4.orthographic(0, this._gameWidth, this._gameHeight, 0, -100.0, 100.0);
-        var resolutionScale = new _vector.Vector2(newWidth / this._gameWidth, newHeight / this._gameHeight);
-
-        _inputManager.InputManager.setResolutionScale(resolutionScale);
+          return facet;
+        });
+        this.setFacets(facets);
       }
     }
-  };
+  }, {
+    key: "addFacets",
+    value: function addFacets(colourRenderer, textureRenderer) {
+      var facets = this.getFacets();
+      textureRenderer.addFacets(facets);
 
-  XGLEngine.prototype.onMessage = function (message) {
-    if (message.code === 'MOUSE_UP') {
-      var context = message.context;
-      document.title = "Pos: [" + context.position.x + "], [" + context.position.y + "]";
+      _get(_getPrototypeOf(TexturedCanvasElement.prototype), "addFacets", this).call(this, colourRenderer, textureRenderer);
     }
-  };
+  }], [{
+    key: "fromProperties",
+    value: function fromProperties(Class, properties, coordinates, indexes, imageName, textureCoordinates) {
+      for (var _len = arguments.length, remainingArguments = new Array(_len > 6 ? _len - 6 : 0), _key = 6; _key < _len; _key++) {
+        remainingArguments[_key - 6] = arguments[_key];
+      }
 
-  XGLEngine.prototype.loop = function () {
-    if (this._isFirstUpdate) {}
+      return CanvasElement.fromProperties.apply(CanvasElement, [Class, properties, coordinates, indexes, imageName, textureCoordinates].concat(remainingArguments));
+    }
+  }]);
 
-    this.update();
-    this.render();
-    requestAnimationFrame(this.loop.bind(this));
-  };
+  return TexturedCanvasElement;
+}(CanvasElement);
 
-  XGLEngine.prototype.preloading = function () {
-    // Make sure we always update message bus
-    _messageBus.MessageBus.update(0);
+module.exports = TexturedCanvasElement;
 
-    if (!_BitmapFontManager.BitmapFontManager.updateReady()) {
-      requestAnimationFrame(this.preloading.bind(this));
-      return;
-    } // Load up Zone. Make this configurable
+},{"../../primitive/facet/textured":"node_modules/xgl/lib/primitive/facet/textured.js","../../element/canvas":"node_modules/xgl/lib/element/canvas.js"}],"node_modules/xgl/index.js":[function(require,module,exports) {
+'use strict';
 
+require('./lib/xgl');
 
-    _zoneManager.ZoneManager.changeZone(0);
+module.exports = {
+  Canvas: require('./lib/canvas'),
+  Mask: require('./lib/element/mask'),
+  Part: require('./lib/element/part'),
+  Scene: require('./lib/element/scene'),
+  Camera: require('./lib/element/camera'),
+  GamingCamera: require('./lib/element/camera/gaming'),
+  DesignCamera: require('./lib/element/camera/design'),
+  CanvasElement: require('./lib/element/canvas'),
+  ColouredCanvasElement: require('./lib/element/canvas/coloured'),
+  TexturedCanvasElement: require('./lib/element/canvas/textured')
+};
 
-    this.loop();
-  };
-
-  XGLEngine.prototype.update = function () {
-    var delta = performance.now() - this._previousTime;
-
-    _messageBus.MessageBus.update(delta);
-
-    _zoneManager.ZoneManager.update(delta);
-
-    _CollisionManager.CollisionManager.update(delta);
-
-    this._previousTime = performance.now();
-  };
-
-  XGLEngine.prototype.render = function () {
-    _gl.GLUtilities.clearFrame();
-
-    _zoneManager.ZoneManager.render(this._basicShader);
-
-    var projectionPosition = this._basicShader.getUniformLocation('u_projection');
-
-    _gl.gl.uniformMatrix4fv(projectionPosition, false, this._projection.toFloat32Array());
-  };
-
-  XGLEngine.prototype.createProjection = function () {
-    var m = _glMatrix.mat4.create();
-
-    return _glMatrix.mat4.ortho(m, 0, this._canvas.width, this._canvas.height, 0, -100.0, 100.0);
-  };
-
-  return XGLEngine;
-}();
-
-exports.XGLEngine = XGLEngine;
-},{"gl-matrix":"node_modules/xgl/node_modules/gl-matrix/esm/index.js","./gl/gl":"node_modules/xgl/dist/gl/gl.js","./gl/shaders/basicShader":"node_modules/xgl/dist/gl/shaders/basicShader.js","./components/spriteComponent":"node_modules/xgl/dist/components/spriteComponent.js","./components/animatedSpriteComponent":"node_modules/xgl/dist/components/animatedSpriteComponent.js","./assets/assetManager":"node_modules/xgl/dist/assets/assetManager.js","./message/messageBus":"node_modules/xgl/dist/message/messageBus.js","./graphics/materialManager":"node_modules/xgl/dist/graphics/materialManager.js","./graphics/material":"node_modules/xgl/dist/graphics/material.js","./graphics/color":"node_modules/xgl/dist/graphics/color.js","./world/zoneManager":"node_modules/xgl/dist/world/zoneManager.js","./components/componentManager":"node_modules/xgl/dist/components/componentManager.js","./behaviors/behaviorManager":"node_modules/xgl/dist/behaviors/behaviorManager.js","./behaviors/rotationBehavior":"node_modules/xgl/dist/behaviors/rotationBehavior.js","./behaviors/keyboardMovementBehavior":"node_modules/xgl/dist/behaviors/keyboardMovementBehavior.js","./input/inputManager":"node_modules/xgl/dist/input/inputManager.js","./audio/audioManager":"node_modules/xgl/dist/audio/audioManager.js","./components/collisionComponent":"node_modules/xgl/dist/components/collisionComponent.js","./collision/CollisionManager":"node_modules/xgl/dist/collision/CollisionManager.js","./behaviors/PlayerBehavior":"node_modules/xgl/dist/behaviors/PlayerBehavior.js","./behaviors/ScrollBehavior":"node_modules/xgl/dist/behaviors/ScrollBehavior.js","./graphics/BitmapFontManager":"node_modules/xgl/dist/graphics/BitmapFontManager.js","./components/BitmapTextComponent":"node_modules/xgl/dist/components/BitmapTextComponent.js","./behaviors/MouseClickBehavior":"node_modules/xgl/dist/behaviors/MouseClickBehavior.js","./behaviors/VisibilityOnMessageBehavior":"node_modules/xgl/dist/behaviors/VisibilityOnMessageBehavior.js","./math/matrix4x4":"node_modules/xgl/dist/math/matrix4x4.js","./math/vector2":"node_modules/xgl/dist/math/vector2.js"}],"src/main.ts":[function(require,module,exports) {
+},{"./lib/xgl":"node_modules/xgl/lib/xgl.js","./lib/canvas":"node_modules/xgl/lib/canvas.js","./lib/element/mask":"node_modules/xgl/lib/element/mask.js","./lib/element/part":"node_modules/xgl/lib/element/part.js","./lib/element/scene":"node_modules/xgl/lib/element/scene.js","./lib/element/camera":"node_modules/xgl/lib/element/camera.js","./lib/element/camera/gaming":"node_modules/xgl/lib/element/camera/gaming.js","./lib/element/camera/design":"node_modules/xgl/lib/element/camera/design.js","./lib/element/canvas":"node_modules/xgl/lib/element/canvas.js","./lib/element/canvas/coloured":"node_modules/xgl/lib/element/canvas/coloured.js","./lib/element/canvas/textured":"node_modules/xgl/lib/element/canvas/textured.js"}],"src/main.ts":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -14629,7 +8214,7 @@ var Island;
     xgl && xgl.resize();
   };
 })(Island || (Island = {}));
-},{"xgl":"node_modules/xgl/dist/xgl.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"xgl":"node_modules/xgl/index.js"}],"../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -14657,7 +8242,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49487" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60298" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
@@ -14834,4 +8419,4 @@ function hmrAcceptRun(bundle, id) {
   }
 }
 },{}]},{},["../../../../../usr/local/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js","src/main.ts"], null)
-//# sourceMappingURL=/main.b0a109ad.js.map
+//# sourceMappingURL=stupidduck/main.b0a109ad.js.map
