@@ -681,22 +681,18 @@
                         1,
                         2,
                         1
-                    ],
-                    "origin": {
-                        "x": 0.5,
-                        "y": 0.5
-                    }
+                    ]
                 },
                 {
                     "name": "duckCollision",
                     "type": "collision",
                     "shape": {
                         "type": "rectangle",
-                        "width": 34,
-                        "height": 24,
-                        "origin": {
-                            "x": 0.5,
-                            "y": 0.5
+                        "width": 17,
+                        "height": 12,
+                        "scale": {
+                            "x": 2,
+                            "y": 2
                         }
                     },
                     "static": false

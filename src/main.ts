@@ -47,6 +47,7 @@ namespace StupidDuck {
                 new Material('middle', 'assets/textures/middle.png', new Color(255, 255, 255, 255)),
                 new Material('grass', 'assets/textures/grass.png', new Color(255, 255, 255, 255)),
                 new Material('duck', 'assets/textures/duck.png', new Color(255, 255, 255, 255)),
+                new Material('1px', 'assets/textures/1px.png', new Color(255, 0, 0, 100)),
                 new Material('playbtn', 'assets/textures/playbtn.png', new Color(255, 255, 255, 255)),
                 new Material('restartbtn', 'assets/textures/restartbtn.png', new Color(255, 255, 255, 255)),
                 new Material('score', 'assets/textures/score.png', new Color(255, 255, 255, 255)),
